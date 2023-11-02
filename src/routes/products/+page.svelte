@@ -1,4 +1,5 @@
 <script>
+	import { getCart } from '$lib/client/cart';
 	import ProductCard from '$lib/client/components/ProductCard.svelte';
 
 	export let data;
@@ -16,11 +17,19 @@
 	<main class="flex-grow p-4 flex items-center justify-center">
 		{#each data.products as product}
 			<ProductCard
-				name={product.name}
-				price={product.price}
-				productId={product.stripeId}
-				cloudinaryId={product.images[0].cloudinaryId}
+				itemData={{
+					...product,
+					quantity: 1,
+					productId: product.stripeId,
+					cloudinaryId: product.images[0].cloudinaryId
+				}}
 			/>
 		{/each}
 	</main>
+	<button
+		on:click={() => {
+			const cart = getCart();
+			console.log(cart);
+		}}>TEST CART</button
+	>
 </div>

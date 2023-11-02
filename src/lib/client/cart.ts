@@ -16,15 +16,26 @@ export const addToCart = (data: TCartEntry) => {
 	if (cur) {
 		const items = JSON.parse(cur) as TCartEntry[];
 		items.push(data);
-		localStorage.setItem('cart', items.toString());
+		localStorage.setItem('cart', JSON.stringify(items));
 	} else {
 		const items = [data];
-		localStorage.setItem('cart', items.toString());
+		localStorage.setItem('cart', JSON.stringify(items));
+	}
+};
+
+export const removeRemoveFromCart = (idx: number) => {
+	if (!browser) return;
+
+	const cur = localStorage.getItem('cart');
+	if (cur) {
+		const items = JSON.parse(cur) as TCartEntry[];
+		const nItems = items.splice(idx, 1);
+		localStorage.setItem('cart', JSON.stringify(nItems));
 	}
 };
 
 export const getCart = () => {
-	if (!browser) return;
+	if (!browser) return [];
 
 	const cur = localStorage.getItem('cart');
 	if (cur) {
