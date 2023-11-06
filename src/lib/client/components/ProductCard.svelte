@@ -8,9 +8,6 @@
 </script>
 
 <div class="relative group overflow-hidden rounded-lg">
-	<!-- <a class="absolute inset-0 z-10" href={`/products/${itemData.productId}`}>
-		<span class="sr-only">View</span>
-	</a> -->
 	<CldImage
 		width={200}
 		height={200}
@@ -30,5 +27,6 @@
 		>
 			Add to Cart
 		</button>
+		<a class="font-bold" href={`/products/${itemData.productId}`}>View Product</a>
 	</div>
 </div>

@@ -1,8 +1,8 @@
-<main
-	class="w-screen h-screen flex justify-center items-center from-neutral-950 to-neutral-800 bg-gradient-to-br"
->
-	<div>
-		<img src="/logo.png" alt="guji logo" class=" w-[300px] md:w-[400px]" />
-		<h2 class="w-full text-center font-sans italic py-4 text-lg text-white">Coming Soon</h2>
-	</div>
+<main class="w-full grow flex items-center justify-center">
+	<h1 class="text-6xl font-bold">
+		Insert <span
+			class="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 text-transparent bg-clip-text"
+			>Beautiful</span
+		> Landing Page Here
+	</h1>
 </main>
