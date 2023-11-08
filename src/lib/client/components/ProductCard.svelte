@@ -4,6 +4,7 @@
 
 	export let itemData: TCartEntry & {
 		cloudinaryId: string;
+		productId: string;
 	};
 </script>
 

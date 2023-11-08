@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 
 export type TCartEntry = {
-	productId: string;
+	priceId: string;
 	quantity: number;
 	price: number;
 	name: string;
@@ -23,14 +23,20 @@ export const addToCart = (data: TCartEntry) => {
 	}
 };
 
-export const removeRemoveFromCart = (idx: number) => {
+export const clearCart = () => {
+	if (!browser) return;
+
+	localStorage.setItem('cart', JSON.stringify([]));
+};
+
+export const removeFromCart = (idx: number) => {
 	if (!browser) return;
 
 	const cur = localStorage.getItem('cart');
 	if (cur) {
 		const items = JSON.parse(cur) as TCartEntry[];
-		const nItems = items.splice(idx, 1);
-		localStorage.setItem('cart', JSON.stringify(nItems));
+		items.splice(idx, 1);
+		localStorage.setItem('cart', JSON.stringify(items));
 	}
 };
 

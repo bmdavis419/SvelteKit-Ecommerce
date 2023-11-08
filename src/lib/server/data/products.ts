@@ -6,13 +6,14 @@ export const fetchOneProduct = async (id: string) => {
 	const result = await db
 		.select()
 		.from(product)
-		.where(eq(product.stripeId, id))
-		.leftJoin(productImage, eq(product.stripeId, productImage.productId));
+		.where(eq(product.stripeProductId, id))
+		.leftJoin(productImage, eq(product.stripeProductId, productImage.productId));
 
 	if (result.length === 0) return null;
 
 	const item = {
-		stripeId: result[0].product.stripeId,
+		stripeId: result[0].product.stripeProductId,
+		stripePriceId: result[0].product.stripePriceId,
 		price: result[0].product.price,
 		name: result[0].product.name,
 		desc: result[0].product.desc,
@@ -30,13 +31,14 @@ export const fetchAllProducts = async (take: number, skip: number) => {
 	const result = await db
 		.select()
 		.from(product)
-		.leftJoin(productImage, eq(product.stripeId, productImage.productId))
+		.leftJoin(productImage, eq(product.stripeProductId, productImage.productId))
 		.offset(skip)
 		.limit(take);
 
 	// collapse the results into the form of products
 	const updatedResults: {
-		stripeId: string;
+		stripeProductId: string;
+		stripePriceId: string;
 		price: number;
 		name: string;
 		desc: string;
@@ -45,9 +47,11 @@ export const fetchAllProducts = async (take: number, skip: number) => {
 		}[];
 	}[] = [];
 	if (result.length > 0) {
-		let curId = result[0].product.stripeId;
+		let curId = result[0].product.stripeProductId;
 		updatedResults.push({
-			stripeId: result[0].product.stripeId,
+			stripeProductId: result[0].product.stripeProductId,
+			stripePriceId: result[0].product.stripePriceId,
+
 			price: result[0].product.price,
 			name: result[0].product.name,
 			desc: result[0].product.desc,
@@ -60,13 +64,14 @@ export const fetchAllProducts = async (take: number, skip: number) => {
 		let curIdx = 0;
 		for (let i = 1; i < result.length; i++) {
 			const curResult = result[i];
-			if (curId === curResult.product.stripeId) {
+			if (curId === curResult.product.stripeProductId) {
 				updatedResults[curIdx].images.push({
 					cloudinaryId: curResult.product_image?.cloudinaryId ?? ''
 				});
 			} else {
 				updatedResults.push({
-					stripeId: curResult.product.stripeId,
+					stripePriceId: curResult.product.stripePriceId,
+					stripeProductId: curResult.product.stripeProductId,
 					price: curResult.product.price,
 					name: curResult.product.name,
 					desc: curResult.product.desc,
@@ -77,7 +82,7 @@ export const fetchAllProducts = async (take: number, skip: number) => {
 					]
 				});
 				curIdx += 1;
-				curId = curResult.product.stripeId;
+				curId = curResult.product.stripeProductId;
 			}
 		}
 	}

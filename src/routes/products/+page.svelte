@@ -12,7 +12,8 @@
 				itemData={{
 					...product,
 					quantity: 1,
-					productId: product.stripeId,
+					priceId: product.stripePriceId,
+					productId: product.stripeProductId,
 					cloudinaryId: product.images[0].cloudinaryId
 				}}
 			/>

@@ -31,7 +31,8 @@ export const key = sqliteTable('user_key', {
 });
 
 export const product = sqliteTable('product', {
-	stripeId: text('stripe_id').primaryKey(),
+	stripePriceId: text('stripe_price_id').notNull(),
+	stripeProductId: text('stripe_product_id').primaryKey(),
 	price: integer('price', { mode: 'number' }).notNull(),
 	name: text('name').notNull(),
 	desc: text('desc').notNull()
@@ -40,19 +41,21 @@ export const product = sqliteTable('product', {
 export const productImage = sqliteTable('product_image', {
 	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
 	cloudinaryId: text('cloudinary_id'),
-	productId: text('product_id').references(() => product.stripeId)
+	productId: text('product_id').references(() => product.stripeProductId),
+	width: integer('width').notNull(),
+	height: integer('height').notNull()
 });
 
 export const productReview = sqliteTable('product_review', {
 	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
 	rating: integer('rating').notNull(),
 	reviewText: text('review_text'),
-	productId: text('product_id').references(() => product.stripeId)
+	productId: text('product_id').references(() => product.stripeProductId)
 });
 
 export const order = sqliteTable('order', {
-	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-	stripeOrderId: text('stripe_order_id').notNull(),
+	// this is really the checkout session id
+	stripeOrderId: text('stripe_order_id').primaryKey(),
 	stripeCustomerId: text('stripe_customer_id').notNull(),
 	totalPrice: integer('total_price').notNull(),
 	timestamp: text('timestamp').default(sql`CURRENT_TIMESTAMP`)
@@ -60,7 +63,8 @@ export const order = sqliteTable('order', {
 
 export const orderProduct = sqliteTable('order_product', {
 	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-	productId: text('product_id').references(() => product.stripeId),
+	productId: text('product_id').references(() => product.stripeProductId),
 	quantity: integer('quantity'),
-	status: text('status', { enum: ['placed', 'fulfilled'] }).notNull()
+	status: text('status', { enum: ['placed', 'fulfilled'] }).notNull(),
+	orderId: text('order_id').references(() => order.stripeOrderId)
 });
