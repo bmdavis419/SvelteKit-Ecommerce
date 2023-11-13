@@ -1,6 +1,16 @@
 import { db } from '../db';
 import { order, orderProduct } from '../db/schema';
 
+export const fetchAllOrders = async (take?: number, skip?: number) => {
+	const orders = await db
+		.select()
+		.from(order)
+		.offset(skip ?? 0)
+		.limit(take ?? 10);
+
+	return orders;
+};
+
 export const createNewOrder = async (data: {
 	orderId: string;
 	customerId: string;

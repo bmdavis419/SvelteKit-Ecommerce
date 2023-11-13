@@ -27,13 +27,13 @@ export const fetchOneProduct = async (id: string) => {
 	return item;
 };
 
-export const fetchAllProducts = async (take: number, skip: number) => {
+export const fetchAllProducts = async (take?: number, skip?: number) => {
 	const result = await db
 		.select()
 		.from(product)
 		.leftJoin(productImage, eq(product.stripeProductId, productImage.productId))
-		.offset(skip)
-		.limit(take);
+		.offset(skip ?? 0)
+		.limit(take ?? 10);
 
 	// collapse the results into the form of products
 	const updatedResults: {
