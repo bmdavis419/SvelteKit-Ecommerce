@@ -5,13 +5,15 @@
 	export let itemData: TCartEntry & {
 		cloudinaryId: string;
 		productId: string;
+		width: number;
+		height: number;
 	};
 </script>
 
 <div class="relative group overflow-hidden rounded-lg">
 	<CldImage
-		width={200}
-		height={200}
+		width={itemData.width}
+		height={itemData.height}
 		objectFit="fill"
 		src={itemData.cloudinaryId}
 		alt="Description of my image"

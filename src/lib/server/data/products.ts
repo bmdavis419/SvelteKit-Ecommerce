@@ -44,6 +44,8 @@ export const fetchAllProducts = async (take?: number, skip?: number) => {
 		desc: string;
 		images: {
 			cloudinaryId: string;
+			width: number;
+			height: number;
 		}[];
 	}[] = [];
 	if (result.length > 0) {
@@ -57,7 +59,9 @@ export const fetchAllProducts = async (take?: number, skip?: number) => {
 			desc: result[0].product.desc,
 			images: [
 				{
-					cloudinaryId: result[0].product_image?.cloudinaryId ?? ''
+					cloudinaryId: result[0].product_image?.cloudinaryId ?? '',
+					width: result[0].product_image?.width ?? 1920,
+					height: result[0].product_image?.height ?? 1280
 				}
 			]
 		});
@@ -66,7 +70,9 @@ export const fetchAllProducts = async (take?: number, skip?: number) => {
 			const curResult = result[i];
 			if (curId === curResult.product.stripeProductId) {
 				updatedResults[curIdx].images.push({
-					cloudinaryId: curResult.product_image?.cloudinaryId ?? ''
+					cloudinaryId: curResult.product_image?.cloudinaryId ?? '',
+					width: curResult.product_image?.width ?? 1920,
+					height: curResult.product_image?.height ?? 1280
 				});
 			} else {
 				updatedResults.push({
@@ -77,7 +83,9 @@ export const fetchAllProducts = async (take?: number, skip?: number) => {
 					desc: curResult.product.desc,
 					images: [
 						{
-							cloudinaryId: curResult.product_image?.cloudinaryId ?? ''
+							cloudinaryId: curResult.product_image?.cloudinaryId ?? '',
+							width: curResult.product_image?.width ?? 1920,
+							height: curResult.product_image?.height ?? 1280
 						}
 					]
 				});

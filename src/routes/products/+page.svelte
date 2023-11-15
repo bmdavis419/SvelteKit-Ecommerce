@@ -14,7 +14,9 @@
 					quantity: 1,
 					priceId: product.stripePriceId,
 					productId: product.stripeProductId,
-					cloudinaryId: product.images[0].cloudinaryId
+					cloudinaryId: product.images[0].cloudinaryId,
+					width: product.images[0].width,
+					height: product.images[0].height
 				}}
 			/>
 		{/each}
