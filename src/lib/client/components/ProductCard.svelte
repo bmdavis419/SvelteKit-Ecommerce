@@ -11,14 +11,29 @@
 </script>
 
 <div class="relative group overflow-hidden rounded-lg">
-	<CldImage
-		width={itemData.width}
-		height={itemData.height}
-		objectFit="fill"
-		src={itemData.cloudinaryId}
-		alt="Description of my image"
-		sizes="100vw"
-	/>
+	<div class="flex flex-row gap-x-3">
+		<div class="w-[355px] h-[200px]">
+			<CldImage
+				width={355 * 2}
+				height={200 * 2}
+				objectFit="fill"
+				crop="fill"
+				src={itemData.cloudinaryId}
+				alt="Description of my image"
+				sizes="100vw"
+			/>
+		</div>
+
+		<CldImage
+			width={355}
+			height={200}
+			objectFit="fill"
+			crop="fill"
+			src={itemData.cloudinaryId}
+			alt="Description of my image"
+			sizes="100vw"
+		/>
+	</div>
 	<div class="bg-white p-4">
 		<h3 class="font-semibold text-lg md:text-xl">{itemData.name}</h3>
 		<h4 class="font-semibold text-base md:text-lg">${itemData.price / 100}</h4>
