@@ -11,9 +11,9 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"generate": "drizzle-kit generate:sqlite",
-		"push": "drizzle-kit push:sqlite --config=drizzle.config.ts",
-		"studio": "drizzle-kit studio",
-		"seed": "tsx seed.ts"
+		"db:push": "drizzle-kit push:sqlite --config=drizzle.config.ts",
+		"db:studio": "drizzle-kit studio",
+		"db:seed": "tsx seed.ts"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -21,7 +21,7 @@
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"autoprefixer": "^10.4.16",
-		"drizzle-kit": "^0.19.13",
+		"drizzle-kit": "^0.20.6",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
@@ -44,7 +44,7 @@
 		"better-sqlite3": "^9.0.0",
 		"bits-ui": "^0.9.8",
 		"clsx": "^2.0.0",
-		"drizzle-orm": "^0.28.6",
+		"drizzle-orm": "^0.29.1",
 		"lucia": "^2.7.1",
 		"lucide-svelte": "^0.294.0",
 		"stripe": "^14.2.0",
