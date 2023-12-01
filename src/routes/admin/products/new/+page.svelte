@@ -31,7 +31,7 @@
 <form
 	class="w-full h-full p-4 flex flex-col gap-y-3"
 	method="post"
-	use:enhance={() => {
+	use:enhance={({ formData }) => {
 		return ({ result }) => {
 			if (result.type === 'redirect') {
 				goto(result.location);

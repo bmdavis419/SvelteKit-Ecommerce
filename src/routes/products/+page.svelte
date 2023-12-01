@@ -1,12 +1,12 @@
 <script>
 	import { getCart } from '$lib/client/cart';
-	import ProductCard from '$lib/client/components/ProductCard.svelte';
+	import ProductCard from '$lib/components/ProductCard.svelte';
 
 	export let data;
 </script>
 
-<main class="grow w-full p-8">
-	<div>
+<main class="grow w-full p-8 container">
+	<div class="flex flex-row justify-between flex-wrap gap-y-8">
 		{#each data.products as product}
 			<ProductCard
 				itemData={{

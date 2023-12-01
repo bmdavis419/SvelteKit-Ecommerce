@@ -5,3 +5,9 @@ export const load = async () => {
 
 	return { products };
 };
+
+export const actions = {
+	delete: async (event) => {
+		console.log(event.request.formData);
+	}
+};

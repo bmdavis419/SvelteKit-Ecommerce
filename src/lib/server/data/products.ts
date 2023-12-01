@@ -2,6 +2,12 @@ import { db } from '$lib/server/db';
 import { product, productImage } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
+export const deleteOneProduct = async (id: string) => {
+	// clear out the images
+	await db.delete(productImage).where(eq(productImage.productId, id));
+	await db.delete(product).where(eq(product.stripeProductId, id));
+};
+
 export const fetchOneProduct = async (id: string) => {
 	const result = await db
 		.select()
