@@ -21,10 +21,4 @@
 			/>
 		{/each}
 	</div>
-	<button
-		on:click={() => {
-			const cart = getCart();
-			console.log(cart);
-		}}>TEST CART</button
-	>
 </main>

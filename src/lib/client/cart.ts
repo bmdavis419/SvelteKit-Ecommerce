@@ -6,6 +6,7 @@ export type TCartEntry = {
 	price: number;
 	name: string;
 	desc: string;
+	cloudinaryId: string;
 };
 
 // methods for handling the cart

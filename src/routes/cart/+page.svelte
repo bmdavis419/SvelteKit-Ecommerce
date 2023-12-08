@@ -2,6 +2,9 @@
 	import { clearCart, getCart, removeFromCart } from '$lib/client/cart';
 	import { applyAction, deserialize, enhance } from '$app/forms';
 	import type { ActionResult } from '@sveltejs/kit';
+	import * as Table from '$lib/components/ui/table';
+	import { CldImage } from 'svelte-cloudinary';
+	import { Button } from '$lib/components/ui/button';
 
 	$: cart = getCart();
 
@@ -17,41 +20,58 @@
 	}
 </script>
 
-<div class="w-full flex items-center justify-center">
-	<div class="flex flex-col w-1/2 px-16 gap-y-4">
-		{#each cart as item, i}
-			<div class="flex flex-row justify-between items-center">
-				<h2 class="font-bold text-lg text-slate-800">{item.name}</h2>
-				<div class="flex flex-row items-center gap-x-4">
-					<div class="text-md text-slate-600">{`$${item.price / 100}`}</div>
-					<div>x</div>
-					<div class="text-md text-slate-600">{item.quantity}</div>
-					<button
-						class="bg-red-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-red-500 hover:cursor-pointer"
-						on:click={() => {
-							removeFromCart(i);
-							cart = getCart();
-						}}>Remove</button
-					>
-				</div>
-			</div>
-			<div class="w-full border-t border-slate-900 border-opacity-50" />
-		{/each}
+<div class="w-full flex flex-col justify-center items-center">
+	<div class="w-1/2">
+		<Table.Root class="shadow-lg">
+			<Table.Caption>Your Cart</Table.Caption>
+			<Table.Body>
+				{#each cart as item, i}
+					<Table.Row>
+						<Table.Cell class={`w-[150px] h-[75px]`}>
+							<CldImage
+								src={item.cloudinaryId}
+								width={200}
+								height={100}
+								objectFit="cover"
+								class="rounded-lg shadow-md"
+							/>
+						</Table.Cell>
+						<Table.Cell class="text-lg  font-bold">
+							{item.name}
+						</Table.Cell>
+						<Table.Cell class="font-light">
+							{`$${item.price / 100}`}
+							x
+							{item.quantity}
+						</Table.Cell>
+						<Table.Cell class="text-right">
+							<Button
+								class="bg-red-600 text-white"
+								on:click={() => {
+									removeFromCart(i);
+									cart = getCart();
+								}}>Remove</Button
+							>
+						</Table.Cell>
+					</Table.Row>
+				{/each}
+			</Table.Body>
+		</Table.Root>
+
 		<form
-			class="w-full flex justify-end gap-x-4"
+			class="flex flex-row justify-end gap-x-5"
 			method="post"
 			on:submit|preventDefault={handleSubmit}
 		>
-			<button
-				class="bg-red-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-red-500 hover:cursor-pointer"
+			<Button
+				class="bg-red-600 text-white"
 				type="button"
-				on:click={() => clearCart()}>Clear Cart</button
+				on:click={() => {
+					clearCart();
+					cart = getCart();
+				}}>Clear Cart</Button
 			>
-			<button
-				type="submit"
-				class="bg-green-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-green-500 hover:cursor-pointer"
-				>Checkout</button
-			>
+			<Button type="submit" class="bg-green-600 text-white">Checkout</Button>
 		</form>
 	</div>
 </div>

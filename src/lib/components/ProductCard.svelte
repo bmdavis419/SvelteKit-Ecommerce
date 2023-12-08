@@ -2,17 +2,25 @@
 	import { CldImage } from 'svelte-cloudinary';
 	import { addToCart, type TCartEntry } from '../client/cart';
 	import Button from './ui/button/button.svelte';
+	import * as Card from '$lib/components/ui/card';
+	import * as Alert from '$lib/components/ui/alert';
+	import { fade } from 'svelte/transition';
 
 	export let itemData: TCartEntry & {
-		cloudinaryId: string;
 		productId: string;
 		width: number;
 		height: number;
 	};
+
+	let addedProduct: string | null = null;
 </script>
 
-<div class="relative group overflow-hidden rounded-lg">
-	<div class="flex flex-row gap-x-3">
+<Card.Root class="w-[400px]">
+	<Card.Header>
+		<h2 class="text-xl font-bold tracking-wide">{itemData.name}</h2>
+	</Card.Header>
+
+	<Card.Content>
 		<div class="w-[355px] h-[200px]">
 			<CldImage
 				width={355 * 2}
@@ -24,12 +32,18 @@
 				class="rounded-lg shadow-md"
 			/>
 		</div>
-	</div>
-	<div class="bg-white py-2">
-		<h3 class="font-semibold text-lg md:text-xl pb-2">{itemData.name} - ${itemData.price / 100}</h3>
+
+		<h3 class="font-semibold p-2">${itemData.price / 100}</h3>
+	</Card.Content>
+
+	<Card.Footer class="flex flex-row gap-x-4">
 		<Button
 			on:click={() => {
 				addToCart(itemData);
+				addedProduct = itemData.name;
+				setTimeout(() => {
+					addedProduct = null;
+				}, 4000);
 			}}
 		>
 			Add to Cart
@@ -37,5 +51,14 @@
 		<Button class="font-bold" href={`/products/${itemData.productId}`} variant="outline"
 			>View Product</Button
 		>
+	</Card.Footer>
+</Card.Root>
+
+{#if addedProduct}
+	<div transition:fade class="absolute bottom-12 right-12">
+		<Alert.Root class="w-[500px]">
+			<Alert.Title>{addedProduct} Added to Your Cart!</Alert.Title>
+			<Alert.Description>Please proceed to the cart to checkout.</Alert.Description>
+		</Alert.Root>
 	</div>
-</div>
+{/if}
