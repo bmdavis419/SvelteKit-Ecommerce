@@ -1,5 +1,11 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+
+	export let user: {
+		first_name: string;
+		last_name: string;
+		email: string;
+	} | null;
 </script>
 
 <nav class="flex flex-row items-center justify-between px-12 py-4">
@@ -11,5 +17,10 @@
 			>Repo</Button
 		>
 		<Button href="/cart" variant="link">Cart</Button>
+		{#if user}
+			<Button href="/profile">My Stuff</Button>
+		{:else}
+			<Button href="/auth/signup">Login/Signup</Button>
+		{/if}
 	</div>
 </nav>

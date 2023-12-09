@@ -3,12 +3,13 @@
 import { product, productImage } from './src/lib/server/db/schema';
 import { drizzle } from 'drizzle-orm/libsql';
 import { createClient } from '@libsql/client';
+import 'dotenv/config';
 
 const seed = async () => {
 	// crete db client
 	const libSQLClient = createClient({
-		url: 'file:./local.db',
-		authToken: 'none'
+		url: process.env.DATABASE_URL ?? '',
+		authToken: process.env.DATABASE_AUTH_TOKEN ?? ''
 	});
 
 	const db = drizzle(libSQLClient);

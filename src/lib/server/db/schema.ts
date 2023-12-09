@@ -1,33 +1,23 @@
 import { sql } from 'drizzle-orm';
-import { sqliteTable, text, blob, integer } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text, integer, int } from 'drizzle-orm/sqlite-core';
 
 export const user = sqliteTable('user', {
 	id: text('id').primaryKey(),
-	first_name: text('first_name'),
-	last_name: text('last_name'),
-	is_admin: integer('is_admin', { mode: 'boolean' }),
-	email: text('email')
+	first_name: text('first_name').notNull(),
+	last_name: text('last_name').notNull(),
+	is_admin: integer('is_admin', { mode: 'boolean' }).notNull(),
+	email: text('email').notNull().unique(),
+	hashedPassword: text('hashed_password').notNull()
 });
 
-export const session = sqliteTable('user_session', {
+export const session = sqliteTable('session', {
 	id: text('id').primaryKey(),
 	userId: text('user_id')
 		.notNull()
 		.references(() => user.id),
-	activeExpires: blob('active_expires', {
-		mode: 'bigint'
-	}).notNull(),
-	idleExpires: blob('idle_expires', {
-		mode: 'bigint'
+	expires_at: int('expires_at', {
+		mode: 'timestamp'
 	}).notNull()
-});
-
-export const key = sqliteTable('user_key', {
-	id: text('id').primaryKey(),
-	userId: text('user_id')
-		.notNull()
-		.references(() => user.id),
-	hashedPassword: text('hashed_password')
 });
 
 export const product = sqliteTable('product', {

@@ -1,24 +1,37 @@
-import { lucia } from 'lucia';
-import { libsql } from '@lucia-auth/adapter-sqlite';
+import { Lucia } from 'lucia';
+import { LibSQLAdapter } from '@lucia-auth/adapter-sqlite';
 import { libSQLClient } from './db';
-import { sveltekit } from 'lucia/middleware';
 
-export const auth = lucia({
-	adapter: libsql(libSQLClient, {
-		user: 'user',
-		session: 'user_session',
-		key: 'user_key'
-	}),
-	middleware: sveltekit(),
-	env: 'DEV',
+const adapter = new LibSQLAdapter(libSQLClient, {
+	user: 'user',
+	session: 'session'
+});
+
+export const lucia = new Lucia(adapter, {
+	sessionCookie: {
+		attributes: {
+			// set to `true` when using HTTPS
+			secure: process.env.NODE_ENV === 'production'
+		}
+	},
 	getUserAttributes: (data) => {
 		return {
 			first_name: data.first_name,
 			last_name: data.last_name,
-			is_admin: data.is_admin,
-			email: data.email
+			email: data.email,
+			is_admin: data.is_admin
 		};
 	}
 });
 
-export type Auth = typeof auth;
+declare module 'lucia' {
+	interface Register {
+		Lucia: typeof lucia;
+		DatabaseUserAttributes: {
+			first_name: string;
+			last_name: string;
+			is_admin: boolean;
+			email: string;
+		};
+	}
+}

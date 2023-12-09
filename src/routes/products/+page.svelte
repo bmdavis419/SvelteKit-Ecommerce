@@ -6,7 +6,7 @@
 </script>
 
 <main class="grow w-full p-8 container">
-	<div class="flex flex-row justify-between flex-wrap gap-y-8">
+	<div class="flex flex-row flex-wrap gap-8">
 		{#each data.products as product}
 			<ProductCard
 				itemData={{
