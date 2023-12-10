@@ -4,7 +4,6 @@ import { createClient } from '@libsql/client';
 import 'dotenv/config';
 
 async function main() {
-	console.log(process.env);
 	const db = drizzle(
 		createClient({
 			url: process.env.DATABASE_URL ?? '',
