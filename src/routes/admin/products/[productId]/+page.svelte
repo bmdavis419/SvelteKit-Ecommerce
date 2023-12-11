@@ -6,12 +6,25 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import Button from '$lib/components/ui/button/button.svelte';
+	import { onMount } from 'svelte';
+
+	export let data;
 
 	let images: {
 		publicId: string;
 		width: number;
 		height: number;
 	}[] = [];
+
+	onMount(() => {
+		// I know the map is extremely silly, should probably have the naming standardized but whatever
+		images = data.product.images.map((image) => {
+			return {
+				publicId: image.cloudinaryId,
+				...image
+			};
+		});
+	});
 
 	const addImage = (info: Record<string, unknown>) => {
 		// the type on res.info for success is Record<string, unknown>
@@ -45,6 +58,8 @@
 		// ensure there is at least one image
 		const images = formData.getAll('images');
 
+		console.log(images);
+
 		if (images.length === 0) {
 			alert('must include at least one image');
 			cancel();
@@ -64,28 +79,46 @@
 	<h2 class="text-gray-200 text-3xl font-bold">Create New Product</h2>
 	<div class="gap-1.5 grid">
 		<Label for="name">Name</Label>
-		<Input name="name" required id="name" class="w-1/3" type="text" placeholder="My Product" />
+		<Input
+			name="name"
+			required
+			id="name"
+			class="w-1/3"
+			type="text"
+			placeholder="My Product"
+			value={data.product.name}
+		/>
 	</div>
 
 	<div class="gap-1.5 grid">
-		<Label for="stripeProductId">Stripe Product Id</Label>
+		<Label for="stripeProductIdNO">Stripe Product Id</Label>
 		<Input
-			name="stripeProductId"
+			name="stripeProductIdNO"
 			required
 			type="text"
-			id="stripeProductId"
+			value={data.product.stripeId}
+			id="stripeProductIdNO"
+			disabled={true}
 			placeholder="prod_10AF..."
 			class="w-1/3"
 		/>
-		<p class="text-sm text-muted-foreground w-1/3">
-			The id of the product you created in Stripe, make sure you get this from the dashboard!
-		</p>
+		<!-- this is in the top 5 most unhinged things I have ever written but idk it seems to work -->
+		<input
+			class="hidden"
+			required
+			type="text"
+			value={data.product.stripeId}
+			id="stripeProductId"
+			name="stripeProductId"
+		/>
+		<p class="text-sm text-muted-foreground w-1/3 italic">This cannot be changed...</p>
 	</div>
 
 	<div class="gap-1.5 grid">
 		<Label for="stripePriceId">Stripe Price Id</Label>
 		<Input
 			name="stripePriceId"
+			value={data.product.stripePriceId}
 			required
 			id="stripePriceId"
 			class="w-1/3"
@@ -99,7 +132,15 @@
 
 	<div class="gap-1.5 grid">
 		<Label for="price">Price</Label>
-		<Input name="price" required type="number" id="price" class="w-1/3" placeholder="1000" />
+		<Input
+			name="price"
+			required
+			type="number"
+			id="price"
+			class="w-1/3"
+			placeholder="1000"
+			value={data.product.price}
+		/>
 		<p class="text-sm text-muted-foreground w-1/3">
 			Enter the number of cents your product costs. This is done to stay in line with Stripe.
 		</p>
@@ -111,13 +152,14 @@
 			name="desc"
 			id="desc"
 			class="w-1/3"
+			value={data.product.desc}
 			required
 			placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 		/>
 	</div>
 
 	<!-- cloudinary section -->
-	<div class="flex flex-row items-center">
+	<div class="flex flex-row items-center flex-wrap gap-4">
 		{#each images as image, i}
 			<div class="relative w-[168px] h-[100px] rounded-lg overflow-hidden">
 				<CldImage src={image.publicId} width={168 * 2} height={100 * 2} objectFit="cover" />
@@ -146,7 +188,7 @@
 				}
 			}}
 		/>
-		<Button type="submit">Create</Button>
+		<Button type="submit">Update</Button>
 	</div>
 </form>
 

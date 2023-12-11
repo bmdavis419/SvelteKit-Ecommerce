@@ -25,7 +25,9 @@ export const fetchOneProduct = async (id: string) => {
 		desc: result[0].product.desc,
 		images: result.map((res) => {
 			return {
-				cloudinaryId: res.product_image?.cloudinaryId ?? ''
+				cloudinaryId: res.product_image?.cloudinaryId ?? '',
+				width: res.product_image?.width ?? 1920,
+				height: res.product_image?.height ?? 1080
 			};
 		})
 	};
