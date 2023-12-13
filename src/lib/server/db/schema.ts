@@ -21,11 +21,18 @@ export const session = sqliteTable('session', {
 });
 
 export const product = sqliteTable('product', {
-	stripePriceId: text('stripe_price_id').notNull(),
-	stripeProductId: text('stripe_product_id').primaryKey(),
-	price: integer('price', { mode: 'number' }).notNull(),
+	id: text('id').primaryKey(),
 	name: text('name').notNull(),
 	desc: text('desc').notNull()
+});
+
+export const productSize = sqliteTable('product_size', {
+	code: text('code').primaryKey(),
+	width: integer('width').notNull(),
+	height: integer('height').notNull(),
+	price: integer('price', { mode: 'number' }).notNull(),
+	stripePriceId: text('stripe_price_id').notNull(),
+	stripeProductId: text('stripe_product_id').primaryKey()
 });
 
 export const productImage = sqliteTable('product_image', {

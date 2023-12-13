@@ -4,7 +4,7 @@
   "tailwind": {
     "config": "tailwind.config.js",
     "css": "src/app.css",
-    "baseColor": "gray"
+    "baseColor": "neutral"
   },
   "aliases": {
     "components": "$lib/components",
