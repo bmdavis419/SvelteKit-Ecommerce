@@ -1,5 +1,4 @@
 <script>
-	import { getCart } from '$lib/client/cart';
 	import ProductCard from '$lib/components/ProductCard.svelte';
 
 	export let data;
@@ -10,13 +9,10 @@
 		{#each data.products as product}
 			<ProductCard
 				itemData={{
-					...product,
-					quantity: 1,
-					priceId: product.stripePriceId,
-					productId: product.stripeProductId,
-					cloudinaryId: product.images[0].cloudinaryId,
-					width: product.images[0].width,
-					height: product.images[0].height
+					name: product.name,
+					productId: product.id,
+					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
+					tags: product.tags.map((tag) => tag.tag.name)
 				}}
 			/>
 		{/each}

@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { sqliteTable, text, integer, int, primaryKey } from 'drizzle-orm/sqlite-core';
 
 export const user = sqliteTable('user', {
@@ -11,6 +11,10 @@ export const user = sqliteTable('user', {
 	stripeCustomerId: text('stripe_customer_id').notNull()
 });
 
+export const userRelations = relations(user, ({ many }) => ({
+	sessions: many(session)
+}));
+
 export const session = sqliteTable('session', {
 	id: text('id').primaryKey(),
 	userId: text('user_id')
@@ -21,17 +25,35 @@ export const session = sqliteTable('session', {
 	}).notNull()
 });
 
+export const sessionRelations = relations(session, ({ one }) => ({
+	user: one(user, {
+		fields: [session.userId],
+		references: [user.id]
+	})
+}));
+
 export const product = sqliteTable('product', {
 	id: text('id').primaryKey(),
 	name: text('name').notNull(),
 	desc: text('desc').notNull()
 });
 
+export const productRelations = relations(product, ({ many }) => ({
+	tags: many(productToProductTag),
+	sizes: many(productSize),
+	images: many(productImage),
+	reviews: many(productReview)
+}));
+
 export const productToProductTag = sqliteTable(
 	'product_to_product_tag',
 	{
-		productId: text('product_id').references(() => product.id),
-		tagId: text('tag_id').references(() => productTag.id)
+		productId: text('product_id')
+			.notNull()
+			.references(() => product.id),
+		tagId: text('tag_id')
+			.notNull()
+			.references(() => productTag.name)
 	},
 	(table) => {
 		return {
@@ -40,11 +62,25 @@ export const productToProductTag = sqliteTable(
 	}
 );
 
+export const productToProductTagRelations = relations(productToProductTag, ({ one }) => ({
+	product: one(product, {
+		fields: [productToProductTag.productId],
+		references: [product.id]
+	}),
+	tag: one(productTag, {
+		fields: [productToProductTag.tagId],
+		references: [productTag.name]
+	})
+}));
+
 export const productTag = sqliteTable('product_tag', {
-	id: text('id').primaryKey(),
-	name: text('name').notNull(),
+	name: text('name').primaryKey(),
 	desc: text('desc').notNull()
 });
+
+export const productTagRelations = relations(productTag, ({ many }) => ({
+	products: many(productToProductTag)
+}));
 
 export const productSize = sqliteTable('product_size', {
 	code: text('code').primaryKey(),
@@ -52,8 +88,18 @@ export const productSize = sqliteTable('product_size', {
 	height: integer('height').notNull(),
 	price: integer('price', { mode: 'number' }).notNull(),
 	stripePriceId: text('stripe_price_id').notNull(),
-	stripeProductId: text('stripe_product_id').primaryKey()
+	stripeProductId: text('stripe_product_id').notNull(),
+	productId: text('product_id')
+		.notNull()
+		.references(() => product.id)
 });
+
+export const productSizeRelations = relations(productSize, ({ one }) => ({
+	product: one(product, {
+		fields: [productSize.productId],
+		references: [product.id]
+	})
+}));
 
 export const productImage = sqliteTable('product_image', {
 	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
@@ -63,6 +109,13 @@ export const productImage = sqliteTable('product_image', {
 	height: integer('height').notNull()
 });
 
+export const productImageRelations = relations(productImage, ({ one }) => ({
+	product: one(product, {
+		fields: [productImage.productId],
+		references: [product.id]
+	})
+}));
+
 export const productReview = sqliteTable('product_review', {
 	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
 	rating: integer('rating').notNull(),
@@ -70,6 +123,13 @@ export const productReview = sqliteTable('product_review', {
 	productId: text('product_id').references(() => product.id),
 	timestamp: int('timestamp', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
 });
+
+export const productReviewRelations = relations(productReview, ({ one }) => ({
+	product: one(product, {
+		fields: [productReview.productId],
+		references: [product.id]
+	})
+}));
 
 export const order = sqliteTable('order', {
 	// this is really the checkout session id
@@ -79,6 +139,10 @@ export const order = sqliteTable('order', {
 	timestamp: int('timestamp', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
 });
 
+export const orderRelations = relations(order, ({ many }) => ({
+	products: many(orderProduct)
+}));
+
 export const orderProduct = sqliteTable('order_product', {
 	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
 	productSizeCode: text('product_size_code').references(() => productSize.code),
@@ -87,3 +151,10 @@ export const orderProduct = sqliteTable('order_product', {
 	trackingNumber: text('tracking_number'),
 	orderId: text('order_id').references(() => order.stripeOrderId)
 });
+
+export const orderProductRelations = relations(orderProduct, ({ one }) => ({
+	order: one(order, {
+		fields: [orderProduct.orderId],
+		references: [order.stripeOrderId]
+	})
+}));

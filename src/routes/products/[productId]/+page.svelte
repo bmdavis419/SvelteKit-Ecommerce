@@ -1,5 +1,4 @@
 <script>
-	import { addToCart } from '$lib/client/cart';
 	import * as Alert from '$lib/components/ui/alert';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
@@ -10,7 +9,7 @@
 
 	let addedProduct = false;
 
-	let focusedImage = data.product.images[0].cloudinaryId;
+	let focusedImage = data.product.images[0].cloudinaryId || '';
 </script>
 
 <div class="grow p-24 flex flex-col">
@@ -24,9 +23,9 @@
 				{#each data.product.images as image}
 					<button
 						class="w-[150px] h-[100px] rounded-lg overflow-hidden hover:cursor-pointer hover:border border-gray-800"
-						on:click={() => (focusedImage = image.cloudinaryId)}
+						on:click={() => (focusedImage = image.cloudinaryId || '')}
 					>
-						<CldImage src={image.cloudinaryId} width={300} height={200} objectFit="cover" />
+						<CldImage src={image.cloudinaryId || ''} width={300} height={200} objectFit="cover" />
 					</button>
 				{/each}
 			</div>
@@ -38,22 +37,21 @@
 			</Card.Header>
 
 			<Card.Content class="font-light text-lg">
-				${(data.product.price / 100).toFixed(2)}
+				<!-- ${(data.product.price / 100).toFixed(2)} -->
+				price
 			</Card.Content>
 
 			<Card.Footer>
 				<Button
 					on:click={() => {
-						const itemData = {
-							...data.product,
-							quantity: 1,
-							priceId: data.product.stripePriceId,
-							productId: data.product.stripeId,
-							cloudinaryId: data.product.images[0].cloudinaryId,
-							width: data.product.images[0].width,
-							height: data.product.images[0].height
-						};
-						addToCart(itemData);
+						// const itemData: TCartEntry = {
+						// 	productId: data.product.id,
+						// 	name: data.product.name,
+						// 	price: data.product.price,
+						// 	cloudinaryId: data.product.images.length > 0 ? data.product.images[0].cloudinaryId : null,
+						// 	quantity: 1,
+						// };
+						// addToCart(itemData);
 						addedProduct = true;
 						setTimeout(() => {
 							addedProduct = false;

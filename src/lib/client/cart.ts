@@ -1,12 +1,16 @@
 import { browser } from '$app/environment';
 
 export type TCartEntry = {
-	priceId: string;
+	productId: string;
+	productName: string;
+	size: {
+		width: number;
+		height: number;
+		code: string;
+		stripePriceId: string;
+		price: number;
+	};
 	quantity: number;
-	price: number;
-	name: string;
-	desc: string;
-	cloudinaryId: string;
 };
 
 // methods for handling the cart

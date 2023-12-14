@@ -1,14 +1,9 @@
-import { stripe } from '$lib/server/stripe';
+import { fetchAllProducts } from '$lib/server/data/products';
 
 export const GET = async () => {
-	const session = await stripe.checkout.sessions.retrieve(
-		'cs_test_b13JMNbKbNWEvT2C6yS9d2Lbdat12O3LyV1wBtQu9hFvF0yp5B1PfYVU7b',
-		{
-			expand: ['line_items']
-		}
-	);
+	const products = await fetchAllProducts(10, 0);
 
-	console.log(session.line_items?.data);
+	console.log(products);
 
 	return new Response(String('TESTING'));
 };
