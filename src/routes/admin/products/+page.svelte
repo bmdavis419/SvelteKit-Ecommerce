@@ -34,13 +34,10 @@
 		<Table.Body>
 			{#each data.products as product, i}
 				<Table.Row class="flex justify-between items-center">
-					<Table.Cell class="font-bold">{product.name} - {product.stripeProductId}</Table.Cell>
+					<Table.Cell class="font-bold">{product.name} - {product.id}</Table.Cell>
 
 					<Table.Cell class="flex flex-row items-center gap-x-4">
-						<Button
-							class="bg-blue-600 text-white"
-							href={`/admin/products/${product.stripeProductId}`}
-						>
+						<Button class="bg-blue-600 text-white" href={`/admin/products/${product.id}/basics`}>
 							<Edit class="mr-2 h-4 w-4" />
 							Edit
 						</Button>
@@ -62,7 +59,7 @@
 									<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 									<AlertDialog.Action
 										on:click={() => {
-											deleteItem(product.stripeProductId, i);
+											deleteItem(product.id, i);
 										}}>Continue</AlertDialog.Action
 									>
 								</AlertDialog.Footer>
