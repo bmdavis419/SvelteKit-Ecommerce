@@ -54,7 +54,7 @@ export const POST = async ({ request }) => {
 		}
 	} catch (err) {
 		console.log(`⚠️  Webhook signature verification failed.`, err);
-		throw error(500);
+		error(500);
 	}
 
 	return json({ success: true });

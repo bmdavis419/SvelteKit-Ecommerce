@@ -16,7 +16,8 @@ export const actions = {
 		const res = schema.safeParse(data);
 
 		if (!res.success) {
-			throw error(400, res.error.name);
+			error(400, res.error.name);
+			return;
 		}
 
 		await db

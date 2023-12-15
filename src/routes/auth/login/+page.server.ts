@@ -37,6 +37,6 @@ export const actions = {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
-		throw redirect(302, '/profile');
+		redirect(302, '/profile');
 	}
 };

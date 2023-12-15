@@ -5,9 +5,9 @@ export const load = async ({ params }) => {
 	const product = await fetchOneProduct(params.productId);
 
 	if (!product) {
-		throw error(404, {
-			message: 'Not found'
-		});
+		error(404, {
+        			message: 'Not found'
+        		});
 	}
 
 	return { product };

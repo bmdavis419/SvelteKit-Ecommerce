@@ -13,7 +13,7 @@ export const load = async ({ params }) => {
 	});
 
 	if (!firstProduct) {
-		throw error(404);
+		error(404);
 	}
 
 	return { productId: params.productId, productBasics: firstProduct };

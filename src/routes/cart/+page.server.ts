@@ -22,10 +22,10 @@ export const actions = {
 		});
 
 		if (session.url) {
-			throw redirect(307, session.url);
+			redirect(307, session.url);
 		}
 
 		// TODO: make these errors not suck
-		throw error(500);
+		error(500);
 	}
 };

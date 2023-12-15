@@ -29,6 +29,10 @@
 					showSuccess = false;
 				}, 3000);
 			}
+
+			if (result.type === 'error') {
+				console.error(result.error);
+			}
 		};
 	}}
 >

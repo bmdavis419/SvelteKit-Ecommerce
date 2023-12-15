@@ -16,7 +16,8 @@ export const actions = {
 		const res = schema.safeParse(data);
 
 		if (!res.success) {
-			throw error(400, res.error.name);
+			error(400, res.error.name);
+			return;
 		}
 
 		const productId = generateId(15);
@@ -27,6 +28,6 @@ export const actions = {
 			desc: res.data.desc
 		});
 
-		throw redirect(300, `/admin/products/${productId}/sizes`);
+		redirect(300, `/admin/products/${productId}/sizes`);
 	}
 };

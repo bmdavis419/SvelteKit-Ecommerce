@@ -5,5 +5,5 @@ export const GET = async ({ cookies }) => {
 	const sessionCookie = lucia.createBlankSessionCookie();
 	cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
-	throw redirect(307, '/auth/login');
+	redirect(307, '/auth/login');
 };
