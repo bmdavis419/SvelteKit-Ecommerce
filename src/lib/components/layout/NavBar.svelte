@@ -9,7 +9,7 @@
 </script>
 
 <nav class="flex flex-row items-center justify-between px-12 py-4">
-	<a class="text-2xl font-extrabold" href="/">LOGO HERE</a>
+	<a class="text-4xl font-light" href="/">Rock Art Glass</a>
 	<div class="flex flex-row items-center">
 		<Button href="/products" class="" variant="link">Products</Button>
 		<Button href="/about" variant="link">About</Button>
