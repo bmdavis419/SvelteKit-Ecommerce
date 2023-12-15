@@ -17,7 +17,6 @@ export const actions = {
 
 		if (!res.success) {
 			error(400, res.error.name);
-			return;
 		}
 
 		await db

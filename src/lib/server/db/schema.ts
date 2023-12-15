@@ -102,9 +102,10 @@ export const productSizeRelations = relations(productSize, ({ one }) => ({
 }));
 
 export const productImage = sqliteTable('product_image', {
-	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-	cloudinaryId: text('cloudinary_id'),
-	productId: text('product_id').references(() => product.id),
+	cloudinaryId: text('cloudinary_id').primaryKey(),
+	productId: text('product_id')
+		.notNull()
+		.references(() => product.id),
 	width: integer('width').notNull(),
 	height: integer('height').notNull()
 });

@@ -37,13 +37,13 @@
 					<Table.Cell class="font-bold">{product.name} - {product.id}</Table.Cell>
 
 					<Table.Cell class="flex flex-row items-center gap-x-4">
-						<Button class="bg-blue-600 text-white" href={`/admin/products/${product.id}/basics`}>
+						<Button class="bg-sky-600 text-white" href={`/admin/products/${product.id}/basics`}>
 							<Edit class="mr-2 h-4 w-4" />
 							Edit
 						</Button>
 						<AlertDialog.Root>
 							<AlertDialog.Trigger asChild let:builder>
-								<Button class="bg-red-500 text-white" builders={[builder]}>
+								<Button class="bg-red-600 text-white" builders={[builder]}>
 									<Trash class="mr-2 h-4 w-4" />
 									Delete</Button
 								>
