@@ -17,11 +17,12 @@ export const createUser = async (data: {
 	// create user in db
 	await db.insert(user).values({
 		email: data.email,
-		first_name: data.first_name,
-		last_name: data.last_name,
+		firstName: data.first_name,
+		lastName: data.last_name,
 		hashedPassword,
 		id: userId,
-		is_admin: false
+		isAdmin: false,
+		stripeCustomerId: ''
 	});
 
 	return userId;
