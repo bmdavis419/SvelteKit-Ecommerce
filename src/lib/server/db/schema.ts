@@ -107,7 +107,8 @@ export const productImage = sqliteTable('product_image', {
 		.notNull()
 		.references(() => product.id),
 	width: integer('width').notNull(),
-	height: integer('height').notNull()
+	height: integer('height').notNull(),
+	isPrimary: integer('is_primary', { mode: 'boolean' }).default(false).notNull()
 });
 
 export const productImageRelations = relations(productImage, ({ one }) => ({

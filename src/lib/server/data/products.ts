@@ -6,7 +6,7 @@ import {
 	productSize,
 	productToProductTag
 } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 
 export const deleteOneProduct = async (id: string) => {
 	// clear out the images
@@ -28,7 +28,9 @@ export const fetchOneProduct = async (id: string) => {
 	const firstProduct = await db.query.product.findFirst({
 		where: eq(product.id, id),
 		with: {
-			images: true,
+			images: {
+				orderBy: desc(productImage.isPrimary)
+			},
 			tags: {
 				with: {
 					tag: true
@@ -47,7 +49,9 @@ export const fetchAllProducts = async (take?: number, skip?: number) => {
 		offset: skip,
 		with: {
 			sizes: true,
-			images: true,
+			images: {
+				orderBy: desc(productImage.isPrimary)
+			},
 			tags: {
 				with: {
 					tag: true
