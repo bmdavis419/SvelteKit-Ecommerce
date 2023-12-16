@@ -50,7 +50,7 @@
 </script>
 
 <div class="w-full h-full p-8 flex flex-col">
-	<div class="flex flex-row flex-wrap grow gap-4 overflow-scroll">
+	<div class="flex flex-row flex-wrap grow gap-4">
 		{#each data.images as image}
 			<div class="w-[300px] h-[200px] rounded-md overflow-hidden relative">
 				<CldImage src={image.cloudinaryId} width={600} height={400} objectFit="cover" />
