@@ -4,8 +4,11 @@
 	import * as Card from '$lib/components/ui/card';
 	import { CldImage } from 'svelte-cloudinary';
 	import { fade } from 'svelte/transition';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 
 	export let data;
+
+	let selectedSizeIdx = 0;
 
 	let addedProduct = false;
 
@@ -36,12 +39,28 @@
 				{data.product.name}
 			</Card.Header>
 
-			<Card.Content class="font-light text-lg">
-				<!-- ${(data.product.price / 100).toFixed(2)} -->
-				price
-			</Card.Content>
+			<Card.Content class="font-light text-lg" />
 
-			<Card.Footer>
+			<Card.Footer class="flex flex-row gap-x-4 items-center">
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger>
+						<Button variant="outline">
+							{data.product.sizes[selectedSizeIdx].width} x {data.product.sizes[selectedSizeIdx]
+								.height}
+						</Button>
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Content>
+						<DropdownMenu.Group>
+							<DropdownMenu.Label>Select a Size</DropdownMenu.Label>
+							<DropdownMenu.Separator />
+							{#each data.product.sizes as size, i}
+								<DropdownMenu.Item on:click={() => (selectedSizeIdx = i)}
+									>{size.width} x {size.height}</DropdownMenu.Item
+								>
+							{/each}
+						</DropdownMenu.Group>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
 				<Button
 					on:click={() => {
 						// const itemData: TCartEntry = {
@@ -56,7 +75,7 @@
 						setTimeout(() => {
 							addedProduct = false;
 						}, 4000);
-					}}>Add to Cart</Button
+					}}>Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}</Button
 				>
 			</Card.Footer>
 		</Card.Root>
