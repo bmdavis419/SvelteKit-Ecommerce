@@ -3,9 +3,11 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import * as Table from '$lib/components/ui/table';
-	import { Plus, Trash } from 'lucide-svelte';
+	import { Plus, Trash, Pencil, MinusCircle } from 'lucide-svelte';
 	import { invalidateAll } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
+	import * as Tooltip from '$lib/components/ui/tooltip';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 
 	export let data;
 
@@ -28,6 +30,40 @@
 		}, 400);
 	}
 
+	async function handleRemoveTagFromProduct(tagName: string) {
+		const formData = new FormData();
+
+		formData.append('tagName', tagName);
+
+		const response = await fetch(`/admin/products/${data.productId}/tags?/removeTagFromProduct`, {
+			method: 'POST',
+			body: formData
+		});
+
+		const result = deserialize(await response.text());
+
+		if (result.type === 'success') {
+			invalidateAll();
+		}
+	}
+
+	async function handleDeleteTag(tagName: string) {
+		const formData = new FormData();
+
+		formData.append('tagName', tagName);
+
+		const response = await fetch(`/admin/products/${data.productId}/tags?/deleteTag`, {
+			method: 'POST',
+			body: formData
+		});
+
+		const result = deserialize(await response.text());
+
+		if (result.type === 'success') {
+			invalidateAll();
+		}
+	}
+
 	async function handleCreateNewTag(tagName: string) {
 		const formData = new FormData();
 
@@ -41,7 +77,6 @@
 		const result = deserialize(await response.text());
 
 		if (result.type === 'success') {
-			searchQuery = '';
 			invalidateAll();
 		}
 	}
@@ -137,8 +172,60 @@
 					<Table.Cell class="font-medium">{tagSelected.name}</Table.Cell>
 					<Table.Cell>{tagSelected.desc}</Table.Cell>
 					<Table.Cell class="text-right flex flex-row gap-x-3 justify-end items-center">
-						<Button class="text-white bg-red-600"><Trash class="w-4 h-4 mr-2" />Delete Tag</Button>
-						<Button class="text-white bg-red-600"><Trash class="w-4 h-4 mr-2" />Remove Tag</Button>
+						<Tooltip.Root>
+							<Tooltip.Trigger asChild let:builder>
+								<Button builders={[builder]} class="bg-blue-600 text-white hover:bg-blue-500">
+									<Pencil class="w-4 h-4" />
+								</Button>
+							</Tooltip.Trigger>
+							<Tooltip.Content>
+								<p>Edit Tag</p>
+							</Tooltip.Content>
+						</Tooltip.Root>
+
+						<Tooltip.Root>
+							<Tooltip.Trigger asChild let:builder>
+								<Button
+									builders={[builder]}
+									class="bg-yellow-600 text-white hover:bg-yellow-500"
+									on:click={() => handleRemoveTagFromProduct(tagSelected.name)}
+								>
+									<MinusCircle class="w-4 h-4" />
+								</Button>
+							</Tooltip.Trigger>
+							<Tooltip.Content>
+								<p>Remove Tag From Product</p>
+							</Tooltip.Content>
+						</Tooltip.Root>
+						<Tooltip.Root>
+							<AlertDialog.Root>
+								<Tooltip.Trigger asChild let:builder>
+									<AlertDialog.Trigger>
+										<Button builders={[builder]} class="bg-red-600 text-white hover:bg-red-500">
+											<Trash class="w-4 h-4" />
+										</Button>
+									</AlertDialog.Trigger>
+								</Tooltip.Trigger>
+								<AlertDialog.Content>
+									<AlertDialog.Header>
+										<AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+										<AlertDialog.Description>
+											This action cannot be undone. This will permanently delete your tag and remove
+											this tag from our servers.
+										</AlertDialog.Description>
+									</AlertDialog.Header>
+									<AlertDialog.Footer>
+										<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+										<AlertDialog.Action on:click={() => handleDeleteTag(tagSelected.name)}
+											>Delete</AlertDialog.Action
+										>
+									</AlertDialog.Footer>
+								</AlertDialog.Content>
+							</AlertDialog.Root>
+							<Tooltip.Content>
+								<p>Delete Tag</p>
+							</Tooltip.Content>
+						</Tooltip.Root>
 					</Table.Cell>
 				</Table.Row>
 			{/each}

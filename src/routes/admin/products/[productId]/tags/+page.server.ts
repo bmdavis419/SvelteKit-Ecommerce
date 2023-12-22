@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db';
 import { productTag, productToProductTag } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
-import { eq, like } from 'drizzle-orm';
+import { and, eq, like } from 'drizzle-orm';
 import { except } from 'drizzle-orm/sqlite-core';
 import { zfd } from 'zod-form-data';
 
@@ -24,6 +24,50 @@ export const load = async ({ params }) => {
 };
 
 export const actions = {
+	removeTagFromProduct: async ({ request, params }) => {
+		const data = await request.formData();
+
+		const schema = zfd.formData({
+			tagName: zfd.text()
+		});
+
+		const res = schema.safeParse(data);
+
+		if (!res.success) {
+			error(400, res.error.name);
+		}
+
+		await db
+			.delete(productToProductTag)
+			.where(
+				and(
+					eq(productToProductTag.tagId, res.data.tagName),
+					eq(productToProductTag.productId, params.productId)
+				)
+			);
+
+		return { success: true };
+	},
+	deleteTag: async ({ request }) => {
+		const data = await request.formData();
+
+		const schema = zfd.formData({
+			tagName: zfd.text()
+		});
+
+		const res = schema.safeParse(data);
+
+		if (!res.success) {
+			error(400, res.error.name);
+		}
+
+		// delete the product to tag relation
+		await db.delete(productToProductTag).where(eq(productToProductTag.tagId, res.data.tagName));
+
+		await db.delete(productTag).where(eq(productTag.name, res.data.tagName));
+
+		return { success: true };
+	},
 	createNewTag: async ({ request, params }) => {
 		const data = await request.formData();
 
