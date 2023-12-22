@@ -59,6 +59,8 @@
 								>
 							{/each}
 						</DropdownMenu.Group>
+						<!-- TODO: come up with note to explain that we only have x number of sizes for each one -->
+						<!-- we want to ensure that the sizes we offer are ideal for the actual image -->
 					</DropdownMenu.Content>
 				</DropdownMenu.Root>
 				<Button

@@ -13,23 +13,7 @@ export const load = async ({ params }) => {
 		}
 	});
 
-	const searchedTags = db
-		.select({
-			tagName: productTag.name
-		})
-		.from(productTag)
-		.where(like(productTag.name, '%Nat%'));
-	const currentlySelected = db
-		.select({
-			tagName: productToProductTag.tagId
-		})
-		.from(productToProductTag)
-		.where(eq(productToProductTag.productId, params.productId));
-
-	const result = await except(searchedTags, currentlySelected);
-
 	return {
-		result,
 		tagsSelected: tagsRel.map((item) => {
 			return {
 				name: item.tag.name,
@@ -40,6 +24,51 @@ export const load = async ({ params }) => {
 };
 
 export const actions = {
+	createNewTag: async ({ request, params }) => {
+		const data = await request.formData();
+
+		const schema = zfd.formData({
+			tagName: zfd.text()
+		});
+
+		const res = schema.safeParse(data);
+
+		if (!res.success) {
+			error(400, res.error.name);
+		}
+
+		await db.insert(productTag).values({
+			name: res.data.tagName,
+			desc: ''
+		});
+
+		await db.insert(productToProductTag).values({
+			tagId: res.data.tagName,
+			productId: params.productId
+		});
+
+		return { success: true };
+	},
+	addTagToProduct: async ({ request, params }) => {
+		const data = await request.formData();
+
+		const schema = zfd.formData({
+			tagName: zfd.text()
+		});
+
+		const res = schema.safeParse(data);
+
+		if (!res.success) {
+			error(400, res.error.name);
+		}
+
+		await db.insert(productToProductTag).values({
+			tagId: res.data.tagName,
+			productId: params.productId
+		});
+
+		return { success: true };
+	},
 	search: async ({ request, params }) => {
 		const data = await request.formData();
 
@@ -59,7 +88,7 @@ export const actions = {
 				tagName: productTag.name
 			})
 			.from(productTag)
-			.where(like(productTag.name, res.data.query));
+			.where(like(productTag.name, `%${res.data.query}%`));
 		const currentlySelected = db
 			.select({
 				tagName: productToProductTag.tagId
@@ -67,8 +96,8 @@ export const actions = {
 			.from(productToProductTag)
 			.where(eq(productToProductTag.productId, params.productId));
 
-		const result = await except(searchedTags, currentlySelected);
+		const tags = await except(searchedTags, currentlySelected).limit(6);
 
-		return { result };
+		return { tags };
 	}
 };
