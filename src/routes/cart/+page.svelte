@@ -29,7 +29,7 @@
 					<Table.Row>
 						<Table.Cell class={`w-[150px] h-[75px]`}>
 							<CldImage
-								src={item.cloudinaryId}
+								src={item.productImage}
 								width={200}
 								height={100}
 								objectFit="cover"
@@ -37,10 +37,10 @@
 							/>
 						</Table.Cell>
 						<Table.Cell class="text-lg  font-bold">
-							{item.name}
+							{item.productName}
 						</Table.Cell>
 						<Table.Cell class="font-light">
-							{`$${item.price / 100}`}
+							{`$${item.size.price / 100}`}
 							x
 							{item.quantity}
 						</Table.Cell>

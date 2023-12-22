@@ -5,6 +5,7 @@
 	import { CldImage } from 'svelte-cloudinary';
 	import { fade } from 'svelte/transition';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import { addToCart } from '$lib/client/cart';
 
 	export let data;
 
@@ -39,46 +40,57 @@
 				{data.product.name}
 			</Card.Header>
 
-			<Card.Content class="font-light text-lg" />
+			<Card.Content class="font-light">
+				<p>{data.product.desc}</p>
+			</Card.Content>
 
-			<Card.Footer class="flex flex-row gap-x-4 items-center">
-				<DropdownMenu.Root>
-					<DropdownMenu.Trigger>
-						<Button variant="outline">
-							{data.product.sizes[selectedSizeIdx].width} x {data.product.sizes[selectedSizeIdx]
-								.height}
-						</Button>
-					</DropdownMenu.Trigger>
-					<DropdownMenu.Content>
-						<DropdownMenu.Group>
-							<DropdownMenu.Label>Select a Size</DropdownMenu.Label>
-							<DropdownMenu.Separator />
-							{#each data.product.sizes as size, i}
-								<DropdownMenu.Item on:click={() => (selectedSizeIdx = i)}
-									>{size.width} x {size.height}</DropdownMenu.Item
-								>
-							{/each}
-						</DropdownMenu.Group>
-						<!-- TODO: come up with note to explain that we only have x number of sizes for each one -->
-						<!-- we want to ensure that the sizes we offer are ideal for the actual image -->
-					</DropdownMenu.Content>
-				</DropdownMenu.Root>
-				<Button
-					on:click={() => {
-						// const itemData: TCartEntry = {
-						// 	productId: data.product.id,
-						// 	name: data.product.name,
-						// 	price: data.product.price,
-						// 	cloudinaryId: data.product.images.length > 0 ? data.product.images[0].cloudinaryId : null,
-						// 	quantity: 1,
-						// };
-						// addToCart(itemData);
-						addedProduct = true;
-						setTimeout(() => {
-							addedProduct = false;
-						}, 4000);
-					}}>Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}</Button
-				>
+			<Card.Footer class="flex flex-col gap-y-4">
+				<div class="w-full flex flex-row justify-start gap-x-2">
+					<DropdownMenu.Root>
+						<DropdownMenu.Trigger>
+							<Button variant="outline">
+								{data.product.sizes[selectedSizeIdx].width} x {data.product.sizes[selectedSizeIdx]
+									.height}
+							</Button>
+						</DropdownMenu.Trigger>
+						<DropdownMenu.Content>
+							<DropdownMenu.Group>
+								<DropdownMenu.Label>Select a Size</DropdownMenu.Label>
+								<DropdownMenu.Separator />
+								{#each data.product.sizes as size, i}
+									<DropdownMenu.Item on:click={() => (selectedSizeIdx = i)}
+										>{size.width} x {size.height}</DropdownMenu.Item
+									>
+								{/each}
+							</DropdownMenu.Group>
+						</DropdownMenu.Content>
+					</DropdownMenu.Root>
+					<Button
+						on:click={() => {
+							addToCart({
+								productId: data.product.id,
+								productName: data.product.name,
+								productImage: data.product.images[0].cloudinaryId,
+								size: {
+									width: data.product.sizes[selectedSizeIdx].width,
+									height: data.product.sizes[selectedSizeIdx].height,
+									code: data.product.sizes[selectedSizeIdx].code,
+									stripePriceId: data.product.sizes[selectedSizeIdx].stripePriceId,
+									price: data.product.sizes[selectedSizeIdx].price
+								},
+								quantity: 1
+							});
+							addedProduct = true;
+							setTimeout(() => {
+								addedProduct = false;
+							}, 4000);
+						}}>Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}</Button
+					>
+				</div>
+				<p class="text-xs italic font-light text-neutral-300">
+					NOTE: not all images are available in all sizes, to ensure maximum quality we limit the
+					sizes for each image
+				</p>
 			</Card.Footer>
 		</Card.Root>
 	</div>

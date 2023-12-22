@@ -2,6 +2,7 @@ import { browser } from '$app/environment';
 
 export type TCartEntry = {
 	productId: string;
+	productImage: string;
 	productName: string;
 	size: {
 		width: number;
