@@ -9,18 +9,18 @@
 </script>
 
 <nav class="flex flex-row items-center justify-between px-12 py-4">
-	<a class="text-4xl font-light" href="/">Rock Art Glass</a>
+	<a class="text-4xl font-light" href="/">rock art glass</a>
 	<div class="flex flex-row items-center">
-		<Button href="/products" class="" variant="link">Products</Button>
-		<Button href="/about" variant="link">About</Button>
+		<Button href="/products" class="" variant="link">products</Button>
+		<Button href="/about" variant="link">about</Button>
 		<Button variant="link" href="https://github.com/bmdavis419/SvelteKit-Ecommerce" target="_blank"
-			>Repo</Button
+			>repo</Button
 		>
-		<Button href="/cart" variant="link">Cart</Button>
+		<Button href="/cart" variant="link">cart</Button>
 		{#if user}
-			<Button href="/profile">My Stuff</Button>
+			<Button href="/profile">my stuff</Button>
 		{:else}
-			<Button href="/auth/signup">Login/Signup</Button>
+			<Button href="/auth/signup">login/signup</Button>
 		{/if}
 	</div>
 </nav>
