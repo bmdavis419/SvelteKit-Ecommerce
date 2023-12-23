@@ -9,7 +9,7 @@ export const actions = {
 		const session = await stripe.checkout.sessions.create({
 			line_items: body.map((item) => {
 				return {
-					price: item.priceId,
+					price: item.size.stripePriceId,
 					quantity: item.quantity
 				};
 			}),
