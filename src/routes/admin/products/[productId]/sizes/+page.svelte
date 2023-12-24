@@ -78,7 +78,6 @@
 <div class="w-full h-full flex flex-col p-4">
 	<div class="grow">
 		<Table.Root>
-			<Table.Caption>All sizes.</Table.Caption>
 			<Table.Header>
 				<Table.Row>
 					<Table.Head class="w-[100px]">Code</Table.Head>

@@ -3,7 +3,7 @@
 	import * as Table from '$lib/components/ui/table';
 	import * as Alert from '$lib/components/ui/alert';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
-	import { Trash, Edit } from 'lucide-svelte';
+	import { Trash, Edit, PlusSquare } from 'lucide-svelte';
 	import { fade } from 'svelte/transition';
 
 	export let data;
@@ -37,13 +37,13 @@
 					<Table.Cell class="font-bold">{product.name} - {product.id}</Table.Cell>
 
 					<Table.Cell class="flex flex-row items-center gap-x-4">
-						<Button class="bg-sky-600 text-white" href={`/admin/products/${product.id}/basics`}>
+						<Button class="" href={`/admin/products/${product.id}/basics`}>
 							<Edit class="mr-2 h-4 w-4" />
 							Edit
 						</Button>
 						<AlertDialog.Root>
 							<AlertDialog.Trigger asChild let:builder>
-								<Button class="bg-red-600 text-white" builders={[builder]}>
+								<Button class=" " builders={[builder]}>
 									<Trash class="mr-2 h-4 w-4" />
 									Delete</Button
 								>
@@ -71,7 +71,10 @@
 		</Table.Body>
 	</Table.Root>
 	<div class="h-1/10 w-full flex items-center flex-row justify-end">
-		<Button href="/admin/products/new" class="bg-green-500 text-white">New Product</Button>
+		<Button href="/admin/products/new" class=" ">
+			<PlusSquare class="w-4 h-4 mr-2" />
+			New Product</Button
+		>
 	</div>
 </div>
 

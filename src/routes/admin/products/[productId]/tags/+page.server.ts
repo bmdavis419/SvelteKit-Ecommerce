@@ -93,6 +93,29 @@ export const actions = {
 
 		return { success: true };
 	},
+	editTag: async ({ request }) => {
+		const data = await request.formData();
+
+		const schema = zfd.formData({
+			tagName: zfd.text(),
+			tagDesc: zfd.text()
+		});
+
+		const res = schema.safeParse(data);
+
+		if (!res.success) {
+			error(400, res.error.name);
+		}
+
+		await db
+			.update(productTag)
+			.set({
+				desc: res.data.tagDesc
+			})
+			.where(eq(productTag.name, res.data.tagName));
+
+		return { success: true };
+	},
 	addTagToProduct: async ({ request, params }) => {
 		const data = await request.formData();
 

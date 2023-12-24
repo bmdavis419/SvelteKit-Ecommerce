@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { deserialize } from '$app/forms';
+	import { deserialize, enhance } from '$app/forms';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import * as Table from '$lib/components/ui/table';
@@ -8,8 +8,12 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
+	import * as Sheet from '$lib/components/ui/sheet';
+	import { Textarea } from '$lib/components/ui/textarea';
 
 	export let data;
+
+	let selectedEditTagIdx = -1;
 
 	let debounceTimer: NodeJS.Timeout | undefined;
 
@@ -122,7 +126,7 @@
 
 <div class="w-full h-full flex flex-col">
 	<div class="gap-1.5 grid w-full relative pb-8">
-		<Label for="name">Add a Tag</Label>
+		<Label for="name">add a tag</Label>
 		<Input
 			name="name"
 			required
@@ -159,24 +163,92 @@
 	</div>
 
 	<Table.Root>
-		<Table.Caption>A list of your recent invoices.</Table.Caption>
 		<Table.Header>
 			<Table.Row>
-				<Table.Head class="w-[250px]">Tag Name</Table.Head>
-				<Table.Head class="">Tag Desc</Table.Head>
+				<Table.Head class="w-[250px]">tag name</Table.Head>
+				<Table.Head class="">tag description</Table.Head>
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
-			{#each data.tagsSelected as tagSelected}
+			{#each data.tagsSelected as tagSelected, i}
 				<Table.Row>
 					<Table.Cell class="font-medium">{tagSelected.name}</Table.Cell>
 					<Table.Cell>{tagSelected.desc}</Table.Cell>
 					<Table.Cell class="text-right flex flex-row gap-x-3 justify-end items-center">
 						<Tooltip.Root>
 							<Tooltip.Trigger asChild let:builder>
-								<Button builders={[builder]} class="bg-blue-600 text-white hover:bg-blue-500">
+								<Button builders={[builder]} class="" on:click={() => (selectedEditTagIdx = i)}>
 									<Pencil class="w-4 h-4" />
 								</Button>
+								<Sheet.Root
+									open={selectedEditTagIdx === i}
+									onOpenChange={(open) => {
+										if (!open) {
+											selectedEditTagIdx = -1;
+										}
+									}}
+								>
+									<Sheet.Content>
+										<Sheet.Header>
+											<Sheet.Title>edit the tag description</Sheet.Title>
+										</Sheet.Header>
+
+										<form
+											class="mt-8"
+											action="?/editTag"
+											method="post"
+											use:enhance={() => {
+												return ({ result }) => {
+													if (result.type === 'success') {
+														invalidateAll();
+														selectedEditTagIdx = -1;
+													}
+
+													if (result.type === 'error') {
+														console.error(result.error);
+													}
+												};
+											}}
+										>
+											<div class="gap-1.5 grid">
+												<Label for="tagNameShow">tag name</Label>
+												<Input
+													name="tagName"
+													required
+													id="tagName"
+													class="hidden"
+													value={tagSelected.name}
+												/>
+												<Input
+													name="tagNameShow"
+													id="tagNameShow"
+													class="w-full"
+													placeholder="tag name"
+													disabled={true}
+													value={tagSelected.name}
+												/>
+											</div>
+
+											<div class="gap-1.5 grid mt-4">
+												<Label for="tagDesc">tag description</Label>
+												<Textarea
+													placeholder="Tag description here..."
+													id="tagDesc"
+													name="tagDesc"
+													required
+													class="w-full"
+													value={tagSelected.desc}
+												/>
+											</div>
+
+											<div class="w-full flex flex-row justify-end mt-6">
+												<Button type="submit">
+													<Pencil class="w-4 h-4 mr-2" />edit
+												</Button>
+											</div>
+										</form>
+									</Sheet.Content>
+								</Sheet.Root>
 							</Tooltip.Trigger>
 							<Tooltip.Content>
 								<p>Edit Tag</p>
@@ -187,7 +259,6 @@
 							<Tooltip.Trigger asChild let:builder>
 								<Button
 									builders={[builder]}
-									class="bg-yellow-600 text-white hover:bg-yellow-500"
 									on:click={() => handleRemoveTagFromProduct(tagSelected.name)}
 								>
 									<MinusCircle class="w-4 h-4" />
@@ -201,7 +272,7 @@
 							<AlertDialog.Root>
 								<Tooltip.Trigger asChild let:builder>
 									<AlertDialog.Trigger>
-										<Button builders={[builder]} class="bg-red-600 text-white hover:bg-red-500">
+										<Button builders={[builder]}>
 											<Trash class="w-4 h-4" />
 										</Button>
 									</AlertDialog.Trigger>
