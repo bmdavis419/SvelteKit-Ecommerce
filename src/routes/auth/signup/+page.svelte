@@ -51,7 +51,7 @@
 			{/if}
 
 			<div class="flex flex-row justify-center items-center w-full gap-1.5">
-				<Button type="submit" class="bg-blue-800 dark:text-white hover:text-black">
+				<Button type="submit">
 					<Mail class="mr-2 h-4 w-4" />
 					Sign Up with Email
 				</Button>
