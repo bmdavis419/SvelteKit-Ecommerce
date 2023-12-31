@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/private';
-import { createNewOrder, createNewOrderProduct } from '$lib/server/data/orders.js';
+import { createNewOrder, createNewOrderProduct } from '$lib/server/data/orders';
 import { stripe } from '$lib/server/stripe';
 import { error, json } from '@sveltejs/kit';
 import type Stripe from 'stripe';
@@ -26,28 +26,29 @@ export const POST = async ({ request }) => {
 		const eventType = event.type;
 
 		if (eventType === 'checkout.session.completed') {
-			const sessionWithLineItems = await stripe.checkout.sessions.retrieve(event.data.object.id, {
-				expand: ['line_items', 'customer']
+			const sessionWithCustomer = await stripe.checkout.sessions.retrieve(event.data.object.id, {
+				expand: ['customer']
 			});
 
-			if (sessionWithLineItems.line_items && sessionWithLineItems.customer) {
-				// SAVE INTO DB
-				const customer = sessionWithLineItems.customer as Stripe.Customer;
+			if (sessionWithCustomer.metadata && sessionWithCustomer.customer) {
+				const codes = JSON.parse(sessionWithCustomer.metadata.codes) as {
+					quantity: number;
+					code: string;
+				}[];
+
+				const customer = sessionWithCustomer.customer as Stripe.Customer;
 				await createNewOrder({
-					orderId: sessionWithLineItems.id,
+					orderId: sessionWithCustomer.id,
 					customerId: customer.id,
-					totalPrice: sessionWithLineItems.amount_total ?? 0
+					totalPrice: sessionWithCustomer.amount_total ?? 0
 				});
 
-				// SAVE THE PRODUCTS
-				for (let i = 0; i < sessionWithLineItems.line_items.data.length; i++) {
-					const item = sessionWithLineItems.line_items.data[i];
-
+				for (let i = 0; i < codes.length; i++) {
 					await createNewOrderProduct({
-						productId: item.price?.product.toString() ?? '',
-						quantity: item.quantity ?? 1,
-						orderId: sessionWithLineItems.id,
-						status: 'placed'
+						productSizeCode: codes[i].code,
+						quantity: codes[i].quantity,
+						status: 'placed',
+						orderId: sessionWithCustomer.id
 					});
 				}
 			}

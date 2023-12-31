@@ -147,7 +147,9 @@ export const orderRelations = relations(order, ({ many }) => ({
 
 export const orderProduct = sqliteTable('order_product', {
 	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-	productSizeCode: text('product_size_code').references(() => productSize.code),
+	productSizeCode: text('product_size_code')
+		.notNull()
+		.references(() => productSize.code),
 	quantity: integer('quantity'),
 	status: text('status', { enum: ['placed', 'fulfilled'] }).notNull(),
 	trackingNumber: text('tracking_number'),

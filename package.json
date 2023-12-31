@@ -14,7 +14,7 @@
 		"db:push": "drizzle-kit push:sqlite --config=drizzle.config.ts",
 		"db:studio": "drizzle-kit studio",
 		"db:seed": "tsx seed.ts",
-		"stripe:listen": "stripe run --forward-to http://localhost:5173/api/stripe"
+		"stripe:listen": "stripe listen --forward-to http://localhost:5173/api/stripe"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
