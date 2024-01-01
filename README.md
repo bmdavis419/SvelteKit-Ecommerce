@@ -17,5 +17,5 @@ The idea is to make a super bare bones version with core functionality that we c
 This project includes a basic system for setting up a local db, in this case we are using LibSQL, so our DB will be a file called ```local.db```. To set this up do the following:
 
 1. Update your ```seed.ts``` file to have the correct ids in it for Stripe and Cloudinary.
-2. Create your database with ```pnpm run push```
-3. Seed your database with ```pnpm run seed```
+2. Create your database with ```pnpm run db:push```
+3. Seed your database with ```pnpm run db:seed```
