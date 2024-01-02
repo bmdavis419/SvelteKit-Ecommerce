@@ -57,7 +57,7 @@
 							<DropdownMenu.Item asChild>
 								<form method="POST" use:enhance action="?/markPrimary">
 									<input type="hidden" name="cloudinaryId" value={image.cloudinaryId} />
-									<Button variant="secondary" type="submit" class="flex w-full justify-start" disabled={image.isPrimary}>
+									<Button size="sm" variant="secondary" type="submit" class="flex w-full justify-start" disabled={image.isPrimary}>
 										<Crown class="w-4 h-4 mr-2" />
 										Set Primary
 									</Button>
@@ -66,7 +66,7 @@
 							<DropdownMenu.Item asChild>
 								<form method="POST" use:enhance action="?/delete">
 									<input type="hidden" name="cloudinaryId" value={image.cloudinaryId} />
-									<Button variant="destructive" type="submit" class="flex w-full justify-start">
+									<Button size="sm" variant="destructive" type="submit" class="flex w-full justify-start">
 										<Trash class="w-4 h-4 mr-2" />
 										Delete
 									</Button>
