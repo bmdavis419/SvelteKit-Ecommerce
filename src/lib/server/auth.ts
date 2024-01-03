@@ -1,11 +1,17 @@
 import { Lucia } from 'lucia';
 import { LibSQLAdapter } from '@lucia-auth/adapter-sqlite';
 import { libSQLClient } from './db';
+import { GitHub } from 'arctic';
 
 const adapter = new LibSQLAdapter(libSQLClient, {
 	user: 'user',
 	session: 'session'
 });
+
+export const github = new GitHub(
+	import.meta.env.GITHUB_CLIENT_ID,
+	import.meta.env.GITHUB_CLIENT_SECRET
+);
 
 export const lucia = new Lucia(adapter, {
 	sessionCookie: {

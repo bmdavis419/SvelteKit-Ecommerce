@@ -79,7 +79,7 @@
 					: '$0.00'}
 			</h3>
 			<Separator />
-			<h3 class="py-3">shipping: ${(cart.length * 25).toFixed(2)}</h3>
+			<h3 class="py-3 italic">free shipping!</h3>
 			<Separator />
 			<h5 class="italic text-sm font-light text-neutral-400 py-3">
 				taxes are calculated at checkout

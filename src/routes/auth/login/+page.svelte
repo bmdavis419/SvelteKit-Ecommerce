@@ -2,7 +2,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import * as Card from '$lib/components/ui/card';
 	import { Label } from '$lib/components/ui/label';
-	import { Mail } from 'lucide-svelte';
+	import { Mail, Github } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 
 	export let form;
@@ -33,6 +33,12 @@
 				<Button type="submit">
 					<Mail class="mr-2 h-4 w-4" />
 					Sign In with Email
+				</Button>
+			</div>
+			<div class="flex flex-row justify-center items-center w-full gap-1.5">
+				<Button href="/auth/login/github">
+					<Github class="mr-2 h-4 w-4" />
+					Sign In Github
 				</Button>
 			</div>
 		</form>

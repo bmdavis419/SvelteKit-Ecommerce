@@ -7,6 +7,7 @@ export const actions = {
 		const body = (await event.request.json()) as TCartEntry[];
 
 		// calculate the shipping price
+		// TODO: roll this into the price of the products (remove the shipping line item)
 		const shippingPrice = body.length * 2500;
 
 		const session = await stripe.checkout.sessions.create({

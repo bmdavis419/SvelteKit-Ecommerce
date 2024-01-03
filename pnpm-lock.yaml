@@ -11,6 +11,9 @@ dependencies:
   '@lucia-auth/adapter-sqlite':
     specifier: 3.0.0-beta.9
     version: 3.0.0-beta.9(@libsql/client@0.3.6)(better-sqlite3@9.0.0)(lucia@3.0.0-beta.11)
+  arctic:
+    specifier: ^0.10.2
+    version: 0.10.2
   better-sqlite3:
     specifier: ^9.0.0
     version: 9.0.0
@@ -1813,6 +1816,12 @@ packages:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
+
+  /arctic@0.10.2:
+    resolution: {integrity: sha512-S+oUxgTX4e2DE7xk0tXcJAfaaxkkJR9jRbTlKD4xrROQtTDxW4ib+PtfIFQjDQNwY1ahIzNcb3q4ELi+/5PIWA==}
+    dependencies:
+      oslo: 0.24.0
+    dev: false
 
   /arg@5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
