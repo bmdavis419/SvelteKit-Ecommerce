@@ -2,12 +2,13 @@ import { relations, sql } from 'drizzle-orm';
 import { sqliteTable, text, integer, int, primaryKey } from 'drizzle-orm/sqlite-core';
 
 export const user = sqliteTable('user', {
+	// the id is in the following format: {PROVIDER}|{USER_ID}
+	// PROVIDER can be one of the following: "github", "google", "apple"
 	id: text('id').primaryKey(),
 	firstName: text('first_name').notNull(),
 	lastName: text('last_name').notNull(),
 	isAdmin: integer('is_admin', { mode: 'boolean' }).notNull(),
 	email: text('email').notNull().unique(),
-	hashedPassword: text('hashed_password').notNull(),
 	stripeCustomerId: text('stripe_customer_id').notNull()
 });
 

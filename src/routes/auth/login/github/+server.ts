@@ -6,7 +6,9 @@ import type { RequestEvent } from '@sveltejs/kit';
 
 export async function GET(event: RequestEvent): Promise<Response> {
 	const state = generateState();
-	const url = await github.createAuthorizationURL(state);
+	const url = await github.createAuthorizationURL(state, {
+		scopes: ['user:email']
+	});
 
 	event.cookies.set('github_oauth_state', state, {
 		path: '/',
