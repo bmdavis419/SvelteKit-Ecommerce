@@ -23,7 +23,8 @@ export const lucia = new Lucia(adapter, {
 			first_name: data.first_name,
 			last_name: data.last_name,
 			email: data.email,
-			is_admin: data.is_admin
+			is_admin: data.is_admin,
+			stripe_customer_id: data.stripe_customer_id
 		};
 	}
 });
@@ -36,6 +37,7 @@ declare module 'lucia' {
 			last_name: string;
 			is_admin: boolean;
 			email: string;
+			stripe_customer_id: string | null;
 		};
 	}
 }

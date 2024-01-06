@@ -1,7 +1,10 @@
 import { env } from '$env/dynamic/private';
 import { createNewOrder, createNewOrderProduct } from '$lib/server/data/orders';
+import { db } from '$lib/server/db/index';
+import { user } from '$lib/server/db/schema';
 import { stripe } from '$lib/server/stripe';
 import { error, json } from '@sveltejs/kit';
+import { eq } from 'drizzle-orm';
 import type Stripe from 'stripe';
 
 function toBuffer(ab: ArrayBuffer): Buffer {
@@ -30,16 +33,29 @@ export const POST = async ({ request }) => {
 				expand: ['customer']
 			});
 
-			if (sessionWithCustomer.metadata && sessionWithCustomer.customer) {
+			if (sessionWithCustomer.metadata) {
 				const codes = JSON.parse(sessionWithCustomer.metadata.codes) as {
 					quantity: number;
 					code: string;
 				}[];
 
-				const customer = sessionWithCustomer.customer as Stripe.Customer;
+				const customer = sessionWithCustomer.customer as Stripe.Customer | null;
+				if (customer) {
+					// add customer to user
+					const userId = sessionWithCustomer.metadata.userId as string;
+					if (userId !== '') {
+						await db
+							.update(user)
+							.set({
+								stripeCustomerId: customer.id
+							})
+							.where(eq(user.id, userId));
+					}
+				}
+
 				await createNewOrder({
 					orderId: sessionWithCustomer.id,
-					customerId: customer.id,
+					customerId: customer?.id ?? null,
 					totalPrice: sessionWithCustomer.amount_total ?? 0
 				});
 

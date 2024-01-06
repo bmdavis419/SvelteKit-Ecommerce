@@ -6,9 +6,9 @@ export const actions = {
 	default: async (event) => {
 		const body = (await event.request.json()) as TCartEntry[];
 
-		// calculate the shipping price
-		// TODO: roll this into the price of the products (remove the shipping line item)
-		const shippingPrice = body.length * 2500;
+		const user = event.locals.user;
+
+		const customerId = user ? user.stripe_customer_id ?? undefined : undefined;
 
 		const session = await stripe.checkout.sessions.create({
 			line_items: [
@@ -17,31 +17,24 @@ export const actions = {
 						price: item.size.stripePriceId,
 						quantity: item.quantity
 					};
-				}),
-				{
-					price_data: {
-						currency: 'USD',
-						unit_amount: shippingPrice,
-						product_data: {
-							name: 'shipping'
-						}
-					},
-					quantity: 1
-				}
+				})
 			],
-			customer_creation: 'always',
+			customer: customerId,
+			customer_creation: user && !customerId ? 'always' : undefined,
 			metadata: {
 				codes: JSON.stringify(
 					body.map((item) => ({
 						quantity: item.quantity,
 						code: item.size.code
 					}))
-				)
+				),
+				userId: user ? user.id : ''
 			},
 			mode: 'payment',
 			success_url: `${event.url.origin}/success`,
 			cancel_url: `${event.url.origin}/cancel`,
-			automatic_tax: { enabled: true }
+			automatic_tax: { enabled: true },
+			billing_address_collection: 'required'
 		});
 
 		if (session.url) {

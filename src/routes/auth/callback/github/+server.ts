@@ -1,11 +1,9 @@
 import { github, lucia } from '$lib/server/auth';
 import { OAuth2RequestError } from 'arctic';
-
 import type { RequestEvent } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 import { user } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
-import { stripe } from '$lib/server/stripe';
 
 export async function GET(event: RequestEvent): Promise<Response> {
 	const code = event.url.searchParams.get('code');
@@ -56,18 +54,13 @@ export async function GET(event: RequestEvent): Promise<Response> {
 		} else {
 			// TODO: clean this up...
 			if (primary) {
-				// create a stripe customer for the user
-				const nCustomer = await stripe.customers.create({
-					email: primary.email
-				});
 				const nameParts = githubUser.name.split(' ');
 				await db.insert(user).values({
 					id: userId,
 					email: primary.email,
 					firstName: nameParts[0] ?? '',
 					lastName: nameParts[1] ?? '',
-					isAdmin: false,
-					stripeCustomerId: nCustomer.id
+					isAdmin: false
 				});
 				const session = await lucia.createSession(userId, {});
 				const sessionCookie = lucia.createSessionCookie(session.id);

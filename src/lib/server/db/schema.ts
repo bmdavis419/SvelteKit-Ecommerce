@@ -9,7 +9,7 @@ export const user = sqliteTable('user', {
 	lastName: text('last_name').notNull(),
 	isAdmin: integer('is_admin', { mode: 'boolean' }).notNull(),
 	email: text('email').notNull().unique(),
-	stripeCustomerId: text('stripe_customer_id').notNull()
+	stripeCustomerId: text('stripe_customer_id').unique()
 });
 
 export const userRelations = relations(user, ({ many }) => ({
@@ -137,7 +137,7 @@ export const productReviewRelations = relations(productReview, ({ one }) => ({
 export const order = sqliteTable('order', {
 	// this is really the checkout session id
 	stripeOrderId: text('stripe_order_id').primaryKey(),
-	stripeCustomerId: text('stripe_customer_id').notNull(),
+	stripeCustomerId: text('stripe_customer_id'),
 	totalPrice: integer('total_price').notNull(),
 	timestamp: int('timestamp', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
 });

@@ -13,7 +13,7 @@ export const fetchAllOrders = async (take?: number, skip?: number) => {
 
 export const createNewOrder = async (data: {
 	orderId: string;
-	customerId: string;
+	customerId: string | null;
 	totalPrice: number;
 }) => {
 	const nOrder = await db.insert(order).values({

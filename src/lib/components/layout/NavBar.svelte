@@ -5,6 +5,7 @@
 		first_name: string;
 		last_name: string;
 		email: string;
+		is_admin: boolean;
 	} | null;
 </script>
 
@@ -17,10 +18,13 @@
 			>repo</Button
 		>
 		<Button href="/cart" variant="link">cart</Button>
+		{#if user?.is_admin}
+			<Button variant="link" href="/admin/products">admin</Button>
+		{/if}
 		{#if user}
 			<Button href="/profile">my stuff</Button>
 		{:else}
-			<Button href="/auth/signup">login/signup</Button>
+			<Button href="/auth/login">login/signup</Button>
 		{/if}
 	</div>
 </nav>
