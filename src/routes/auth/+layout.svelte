@@ -4,7 +4,7 @@
 
 <div class="grow flex flex-row px-8">
 	<div class="p-12 grow flex items-center justify-center">
-		<div class="w-[800px] h-[800px] border border-gray-800 rounded-xl overflow-hidden">
+		<div class="w-[800px] h-[800px] rounded-xl overflow-hidden shadow-lg">
 			<CldImage
 				src="txvp48xxnytjd024vnye"
 				width={1600}

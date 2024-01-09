@@ -87,7 +87,7 @@
 						}}>Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}</Button
 					>
 				</div>
-				<p class="text-xs italic font-light text-neutral-300">
+				<p class="text-xs italic font-light text-neutral-700">
 					NOTE: not all images are available in all sizes, to ensure maximum quality we limit the
 					sizes for each image
 				</p>

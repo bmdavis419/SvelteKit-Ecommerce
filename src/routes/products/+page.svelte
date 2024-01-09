@@ -10,7 +10,7 @@
 </script>
 
 <main class="grow w-full p-8 container grid grid-cols-4 gap-4">
-	<div class="  h-full col-span-1">
+	<div class="h-full col-span-1">
 		<div class="gap-1.5 grid relative">
 			<Label for="name">Filter by Tag</Label>
 			<Input
@@ -22,7 +22,7 @@
 				value={''}
 				class="border-t-0 border-r-0 border-l-0 border-b rounded-none"
 			/>
-			<div class="w-full absolute top-20 flex flex-col bg-neutral-900 rounded-md p-3">
+			<div class="w-full absolute top-20 flex flex-col bg-neutral-200 rounded-md p-3">
 				{#each testResults as result}
 					<Button variant="ghost" class="w-full">{result}</Button>
 				{/each}

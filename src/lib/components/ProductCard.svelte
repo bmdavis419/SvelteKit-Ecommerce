@@ -25,7 +25,7 @@
 		/>
 	</div>
 	<div class="grow">
-		<h2 class=" text-2xl text-neutral-100 pb-2">{itemData.name}</h2>
+		<h2 class=" text-2xl text-neutral-900 pb-2">{itemData.name}</h2>
 		<div class="flex flex-row items-center gap-x-2">
 			{#each itemData.tags as tag}
 				<Badge>{tag}</Badge>

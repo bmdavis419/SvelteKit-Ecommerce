@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+	import Logo from '$lib/client/images/logo.png';
 
 	export let user: {
 		first_name: string;
@@ -10,7 +11,10 @@
 </script>
 
 <nav class="flex flex-row items-center justify-between px-12 py-4">
-	<a class="text-4xl font-light" href="/">rock art glass</a>
+	<a class="text-4xl font-light" href="/">
+		<img src={Logo} alt="Sediment" class="w-[203px] h-[70px]" />
+	</a>
+
 	<div class="flex flex-row items-center">
 		<Button href="/products" class="" variant="link">products</Button>
 		<Button href="/about" variant="link">about</Button>
