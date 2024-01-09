@@ -36,7 +36,7 @@
 		};
 	}}
 >
-	<h2 class="text-gray-200 text-3xl font-bold">Update Product</h2>
+	<h2 class="text-neutral-900 text-3xl font-bold">Update Product</h2>
 	<div class="gap-1.5 grid">
 		<Label for="name">Name</Label>
 		<Input

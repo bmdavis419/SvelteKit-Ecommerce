@@ -47,6 +47,14 @@
 					tags: product.tags.map((tag) => tag.tag.name)
 				}}
 			/>
+			<ProductCard
+				itemData={{
+					name: product.name,
+					productId: product.id,
+					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
+					tags: product.tags.map((tag) => tag.tag.name)
+				}}
+			/>
 		{/each}
 	</div>
 </main>

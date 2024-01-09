@@ -38,7 +38,7 @@
 	<div class="flex flex-row flex-wrap grow gap-4">
 		{#each data.images as image}
 			<div
-				class={`w-[300px] h-[200px] rounded-md overflow-hidden relative border-white ${
+				class={`w-[300px] h-[200px] rounded-md overflow-hidden relative border-black ${
 					image.isPrimary && 'border-4'
 				}`}
 			>
@@ -51,7 +51,7 @@
 				/>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger
-						class="w-full h-full absolute top-0 left-0 bg-neutral-800 z-40 hover:opacity-100 opacity-0 bg-opacity-60 flex flex-row items-center justify-center"
+						class="w-full h-full absolute top-0 left-0 bg-neutral-800 z-40 hover:opacity-100 opacity-0 bg-opacity-60 flex flex-row items-center justify-center text-white"
 					>
 						<FolderKanban class="w-4 h-4 mr-2" />
 						Manage</DropdownMenu.Trigger
