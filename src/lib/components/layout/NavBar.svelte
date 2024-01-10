@@ -10,7 +10,7 @@
 	} | null;
 </script>
 
-<nav class="flex flex-row items-center justify-between px-12 py-4">
+<nav class="flex flex-row items-center justify-between px-12 py-4 fixed w-full dark z-20">
 	<a class="text-4xl font-light" href="/">
 		<img src={Logo} alt="Sediment" class="w-[203px] h-[70px]" />
 	</a>
