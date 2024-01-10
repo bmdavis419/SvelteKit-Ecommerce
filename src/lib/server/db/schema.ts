@@ -139,7 +139,7 @@ export const order = sqliteTable('order', {
 	stripeOrderId: text('stripe_order_id').primaryKey(),
 	stripeCustomerId: text('stripe_customer_id'),
 	totalPrice: integer('total_price').notNull(),
-	timestamp: int('timestamp', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
+	timestamp: int('timestamp', { mode: 'timestamp' }).notNull()
 });
 
 export const orderRelations = relations(order, ({ many }) => ({

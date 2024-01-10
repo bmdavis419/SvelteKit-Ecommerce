@@ -7,7 +7,7 @@
 </script>
 
 <head>
-	<title>SvelteKit E-Commerce</title>
+	<title>sediment</title>
 </head>
 
 <body class="flex justify-between w-full flex-col min-h-screen">

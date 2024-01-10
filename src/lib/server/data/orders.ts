@@ -19,7 +19,8 @@ export const createNewOrder = async (data: {
 	const nOrder = await db.insert(order).values({
 		stripeOrderId: data.orderId,
 		stripeCustomerId: data.customerId,
-		totalPrice: data.totalPrice
+		totalPrice: data.totalPrice,
+		timestamp: new Date()
 	});
 
 	return nOrder.lastInsertRowid;

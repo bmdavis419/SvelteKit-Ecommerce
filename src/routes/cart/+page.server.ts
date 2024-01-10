@@ -11,6 +11,9 @@ export const actions = {
 		const customerId = user ? user.stripe_customer_id ?? undefined : undefined;
 
 		const session = await stripe.checkout.sessions.create({
+			shipping_address_collection: {
+				allowed_countries: ['US']
+			},
 			line_items: [
 				...body.map((item) => {
 					return {
