@@ -79,7 +79,7 @@ export const actions = {
 		}
 
 		// find all tags which are not currently applied to the product, but also fit the query
-		const searchedTags = db
+		const searchedTags = await db
 			.select({
 				tagName: productTag.name,
 				tagDesc: productTag.desc

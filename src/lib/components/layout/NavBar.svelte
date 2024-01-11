@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import Logo from '$lib/client/images/logo.png';
+	import { page } from '$app/stores';
 
 	export let user: {
 		first_name: string;
@@ -10,7 +11,11 @@
 	} | null;
 </script>
 
-<nav class="flex flex-row items-center justify-between px-12 py-4 fixed w-full dark z-20">
+<nav
+	class={`flex flex-row items-center justify-between px-12 py-4  w-full  z-20 ${
+		$page.url.pathname === '/' && 'fixed dark'
+	}`}
+>
 	<a class="text-4xl font-light" href="/">
 		<img src={Logo} alt="Sediment" class="w-[203px] h-[70px]" />
 	</a>
