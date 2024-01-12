@@ -2,13 +2,13 @@
 	import { CldImage } from 'svelte-cloudinary';
 	import Button from './ui/button/button.svelte';
 	import { ShoppingCart, Link } from 'lucide-svelte';
-	import { Badge } from '$lib/components/ui/badge';
 
 	export let itemData: {
 		name: string;
 		productId: string;
 		cloudinaryId: string | null;
 		tags: string[];
+		selectTag: (tagName: string) => void;
 	};
 </script>
 
@@ -28,7 +28,12 @@
 		<h2 class=" text-2xl text-neutral-900 pb-2">{itemData.name}</h2>
 		<div class="flex flex-row items-center gap-x-2">
 			{#each itemData.tags as tag}
-				<Badge>{tag}</Badge>
+				<Button
+					on:click={() => itemData.selectTag(tag)}
+					class="rounded-full text-sm font-light py-1 px-2  h-auto"
+				>
+					{tag}
+				</Button>
 			{/each}
 		</div>
 	</div>

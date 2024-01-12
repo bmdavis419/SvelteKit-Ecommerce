@@ -6,6 +6,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { X } from 'lucide-svelte';
 
 	export let data;
 
@@ -115,6 +116,7 @@
 					class="text-lg font-light hover:cursor-pointer rounded-full"
 					on:click={() => removeParam(tag)}
 				>
+					<X class="w-4 h-4 mr-2" />
 					{tag}
 				</Button>
 			{/each}
@@ -127,7 +129,8 @@
 					name: product.name,
 					productId: product.id,
 					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tag.name)
+					tags: product.tags.map((tag) => tag.tag.name),
+					selectTag: addParam
 				}}
 			/>
 			<ProductCard
@@ -135,7 +138,8 @@
 					name: product.name,
 					productId: product.id,
 					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tag.name)
+					tags: product.tags.map((tag) => tag.tag.name),
+					selectTag: addParam
 				}}
 			/>
 			<ProductCard
@@ -143,7 +147,8 @@
 					name: product.name,
 					productId: product.id,
 					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tag.name)
+					tags: product.tags.map((tag) => tag.tag.name),
+					selectTag: addParam
 				}}
 			/>
 		{/each}
