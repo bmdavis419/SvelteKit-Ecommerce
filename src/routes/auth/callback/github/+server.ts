@@ -25,17 +25,6 @@ export async function GET(event: RequestEvent): Promise<Response> {
 		});
 		const githubUser: GitHubUser = await githubUserResponse.json();
 
-		const githubEmailResponse = await fetch('https://api.github.com/user/emails', {
-			headers: {
-				Authorization: `Bearer ${tokens.accessToken}`
-			}
-		});
-
-		const githubEmail: GitHubEmail[] = await githubEmailResponse.json();
-
-		// get the primary email
-		const primary = githubEmail.find((entry) => entry.primary);
-
 		const userId = 'github|' + githubUser.id;
 
 		// const existingUser = await b.table("user").where("github_id", "=", githubUser.id).get();
@@ -52,6 +41,16 @@ export async function GET(event: RequestEvent): Promise<Response> {
 				...sessionCookie.attributes
 			});
 		} else {
+			const githubEmailResponse = await fetch('https://api.github.com/user/emails', {
+				headers: {
+					Authorization: `Bearer ${tokens.accessToken}`
+				}
+			});
+
+			const githubEmail: GitHubEmail[] = await githubEmailResponse.json();
+
+			// get the primary email
+			const primary = githubEmail.find((entry) => entry.primary);
 			// TODO: clean this up...
 			if (primary) {
 				const nameParts = githubUser.name.split(' ');
