@@ -1,19 +1,25 @@
 import { db } from '$lib/server/db';
-import { productImage, productTag } from '$lib/server/db/schema';
+import { productImage, productTag, productToProductTag } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
-import { desc, like } from 'drizzle-orm';
+import { desc, inArray, like } from 'drizzle-orm';
 import { zfd } from 'zod-form-data';
 
 export const load = async ({ url }) => {
 	const params = url.searchParams;
-	const tags = params.getAll('tag');
+	const allTags = params.getAll('tag');
+
+	const sq = db
+		.select({ id: productToProductTag.productId })
+		.from(productToProductTag)
+		.where(allTags.length > 0 ? inArray(productToProductTag.tagId, allTags) : undefined);
 
 	const newProductsQuery = await db.query.product.findMany({
-		where: (productToProductTag, { inArray }) =>
-			tags.length > 0 ? inArray(productToProductTag.name, tags) : undefined,
+		where: (product, { inArray }) => inArray(product.id, sq),
 		with: {
-			tags: true,
-
+			tags: {
+				where: (tags, { inArray }) =>
+					allTags.length > 0 ? inArray(tags.tagId, allTags) : undefined
+			},
 			images: {
 				orderBy: desc(productImage.isPrimary),
 				limit: 1
