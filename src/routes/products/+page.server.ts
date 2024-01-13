@@ -1,67 +1,30 @@
 import { db } from '$lib/server/db';
-import { productImage, productTag, productToProductTag } from '$lib/server/db/schema';
+import { productImage, productTag } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
-import { desc, eq, like, or } from 'drizzle-orm';
+import { desc, like } from 'drizzle-orm';
 import { zfd } from 'zod-form-data';
 
 export const load = async ({ url }) => {
 	const params = url.searchParams;
 	const tags = params.getAll('tag');
 
-	const tagEqs = tags.map((tag) => eq(productToProductTag.tagId, tag));
-
-	const pTTag = await db.query.productToProductTag.findMany({
-		where: tags.length > 0 ? or(...tagEqs) : undefined,
+	const newProductsQuery = await db.query.product.findMany({
+		where: (productToProductTag, { inArray }) =>
+			tags.length > 0 ? inArray(productToProductTag.name, tags) : undefined,
 		with: {
-			product: {
-				with: {
-					images: {
-						orderBy: desc(productImage.isPrimary),
-						limit: 1
-					},
-					tags: {
-						with: {
-							tag: true
-						}
-					}
-				}
+			tags: true,
+
+			images: {
+				orderBy: desc(productImage.isPrimary),
+				limit: 1
 			}
-		}
+		},
+		// TODO: Change to params
+		limit: 6,
+		offset: 0
 	});
 
-	const products: {
-		id: string;
-		name: string;
-		desc: string;
-		tags: {
-			productId: string;
-			tagId: string;
-			tag: {
-				name: string;
-				desc: string;
-			};
-		}[];
-		images: {
-			productId: string;
-			width: number;
-			height: number;
-			cloudinaryId: string;
-			isPrimary: boolean;
-		}[];
-	}[] = [];
-	const usedIds: string[] = [];
-
-	// TODO: change for pagination
-	const max = 6;
-
-	pTTag.forEach((p) => {
-		if (!usedIds.includes(p.productId) && usedIds.length < max) {
-			products.push(p.product);
-			usedIds.push(p.product.id);
-		}
-	});
-
-	return { products };
+	return { products: newProductsQuery };
 };
 
 export const actions = {
