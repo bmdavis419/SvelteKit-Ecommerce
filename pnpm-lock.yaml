@@ -44,9 +44,6 @@ dependencies:
   svelte-cloudinary:
     specifier: ^1.1.2
     version: 1.1.2(svelte@4.2.8)
-  svelte-device-info:
-    specifier: ^1.0.0
-    version: 1.0.0
   tailwind-merge:
     specifier: ^2.2.0
     version: 2.2.0
@@ -3805,10 +3802,6 @@ packages:
       '@unpic/svelte': 0.0.25(svelte@4.2.8)
       cloudinary: 1.41.2
       svelte: 4.2.8
-    dev: false
-
-  /svelte-device-info@1.0.0:
-    resolution: {integrity: sha512-KL5/fXmhKVtM4ogoj9xrFTPjoWtTy/a8VFA5kEooIJiL48+aETCG2/owMvrsoyBRybUkzVf4ixkj+DncpNWMqw==}
     dev: false
 
   /svelte-eslint-parser@0.33.1(svelte@4.2.8):

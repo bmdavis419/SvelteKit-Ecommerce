@@ -54,7 +54,6 @@
 		"oslo": "^0.24.0",
 		"stripe": "^14.11.0",
 		"svelte-cloudinary": "^1.1.2",
-		"svelte-device-info": "^1.0.0",
 		"tailwind-merge": "^2.2.0",
 		"tailwind-variants": "^0.1.20",
 		"zod": "^3.22.4",
