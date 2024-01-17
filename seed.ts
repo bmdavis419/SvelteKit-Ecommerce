@@ -6,18 +6,16 @@ import {
 	productTag,
 	productToProductTag
 } from './src/lib/server/db/schema';
-import { drizzle } from 'drizzle-orm/mysql2';
-import mysql from 'mysql2/promise';
+import { drizzle } from 'drizzle-orm/planetscale-serverless';
+import { connect } from '@planetscale/database';
 import 'dotenv/config';
 
 const seed = async () => {
 	// crete db client
-	const connection = await mysql.createConnection({
-		host: 'localhost',
-		port: 3306,
-		user: 'root',
-		database: 'sedimentart',
-		password: 'password'
+	const connection = connect({
+		host: process.env.DATABASE_HOST ?? '',
+		username: process.env.DATABASE_USERNAME ?? '',
+		password: process.env.DATABASE_PASSWORD ?? ''
 	});
 
 	const db = drizzle(connection);
@@ -42,7 +40,7 @@ const seed = async () => {
 		}
 	];
 
-	const insertedProducts = await db.insert(product).values(products);
+	const insertedProducts = (await db.insert(product).values(products)).rows;
 
 	console.log(`INSERTED: ${insertedProducts.length} products`);
 
@@ -104,7 +102,7 @@ const seed = async () => {
 		}
 	];
 
-	const insertedProductSizes = await db.insert(productSize).values(productSizes);
+	const insertedProductSizes = (await db.insert(productSize).values(productSizes)).rows;
 
 	console.log(`INSERTED: ${insertedProductSizes.length} product sizes`);
 
@@ -137,7 +135,7 @@ const seed = async () => {
 		}
 	];
 
-	const insertedImages = await db.insert(productImage).values(images);
+	const insertedImages = (await db.insert(productImage).values(images)).rows;
 
 	console.log(`INSERTED: ${insertedImages.length} product images`);
 
@@ -153,7 +151,7 @@ const seed = async () => {
 		}
 	];
 
-	const insertedTags = await db.insert(productTag).values(productTags);
+	const insertedTags = (await db.insert(productTag).values(productTags)).rows;
 
 	console.log(`INSERTED ${insertedTags.length} product tags`);
 
@@ -169,7 +167,7 @@ const seed = async () => {
 		}
 	];
 
-	const insertedTagsToProducts = await db.insert(productToProductTag).values(productsToTags);
+	const insertedTagsToProducts = (await db.insert(productToProductTag).values(productsToTags)).rows;
 
 	console.log(`INSERTED ${insertedTagsToProducts.length} product tag relations`);
 };

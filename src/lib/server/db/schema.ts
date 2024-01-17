@@ -27,9 +27,7 @@ export const userRelations = relations(user, ({ many }) => ({
 
 export const session = mysqlTable('session', {
 	id: varchar('id', { length: 100 }).primaryKey(),
-	userId: varchar('user_id', { length: 100 })
-		.notNull()
-		.references(() => user.id),
+	userId: varchar('user_id', { length: 100 }).notNull(),
 	expiresAt: timestamp('expires_at').notNull()
 });
 
@@ -56,12 +54,8 @@ export const productRelations = relations(product, ({ many }) => ({
 export const productToProductTag = mysqlTable(
 	'product_to_product_tag',
 	{
-		productId: varchar('product_id', { length: 100 })
-			.notNull()
-			.references(() => product.id),
-		tagId: varchar('tag_id', { length: 100 })
-			.notNull()
-			.references(() => productTag.name)
+		productId: varchar('product_id', { length: 100 }).notNull(),
+		tagId: varchar('tag_id', { length: 100 }).notNull()
 	},
 	(table) => {
 		return {
@@ -97,9 +91,7 @@ export const productSize = mysqlTable('product_size', {
 	price: int('price').notNull(),
 	stripePriceId: varchar('stripe_price_id', { length: 100 }).notNull(),
 	stripeProductId: varchar('stripe_product_id', { length: 100 }).notNull(),
-	productId: varchar('product_id', { length: 100 })
-		.notNull()
-		.references(() => product.id)
+	productId: varchar('product_id', { length: 100 }).notNull()
 });
 
 export const productSizeRelations = relations(productSize, ({ one }) => ({
@@ -111,9 +103,7 @@ export const productSizeRelations = relations(productSize, ({ one }) => ({
 
 export const productImage = mysqlTable('product_image', {
 	cloudinaryId: varchar('cloudinary_id', { length: 255 }).primaryKey(),
-	productId: varchar('product_id', { length: 100 })
-		.notNull()
-		.references(() => product.id),
+	productId: varchar('product_id', { length: 100 }).notNull(),
 	width: int('width').notNull(),
 	height: int('height').notNull(),
 	isPrimary: boolean('is_primary').default(false).notNull()
@@ -130,7 +120,7 @@ export const productReview = mysqlTable('product_review', {
 	id: varchar('id', { length: 100 }).primaryKey(),
 	rating: int('rating').notNull(),
 	reviewText: text('review_text'),
-	productId: varchar('product_id', { length: 100 }).references(() => product.id),
+	productId: varchar('product_id', { length: 100 }),
 	timestamp: timestamp('timestamp').$defaultFn(() => new Date())
 });
 
@@ -155,13 +145,11 @@ export const orderRelations = relations(order, ({ many }) => ({
 
 export const orderProduct = mysqlTable('order_product', {
 	id: int('id').primaryKey().autoincrement(),
-	productSizeCode: varchar('product_size_code', { length: 100 })
-		.notNull()
-		.references(() => productSize.code),
+	productSizeCode: varchar('product_size_code', { length: 100 }).notNull(),
 	quantity: int('quantity').notNull(),
 	status: mysqlEnum('status', ['placed', 'fulfilled']).notNull(),
 	trackingNumber: varchar('tracking_number', { length: 300 }),
-	orderId: varchar('order_id', { length: 100 }).references(() => order.stripeOrderId)
+	orderId: varchar('order_id', { length: 100 })
 });
 
 export const orderProductRelations = relations(orderProduct, ({ one }) => ({
