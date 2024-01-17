@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import * as Alert from '$lib/components/ui/alert';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
@@ -13,29 +13,46 @@
 
 	let addedProduct = false;
 
-	let focusedImage = data.product.images[0].cloudinaryId || '';
+	// for top section spinny thing
+	let curIdx = 0;
+	let scrollSection: any;
+
+	function handleScrollTop(e: any) {
+		curIdx = Math.round(e.target.scrollLeft / window.screen.width);
+	}
+
+	function handleSetTopScroll(idx: number) {
+		scrollSection.scrollLeft = idx * window.screen.width;
+	}
 </script>
 
-<div class="grow p-24 flex flex-col">
-	<div class="w-full flex flex-row justify-center gap-x-8 items-start">
+<div class="grow flex flex-col pt-10">
+	<div class="w-full flex flex-col justify-center items-center gap-y-2 overflow-hidden">
 		<!-- images section -->
-		<div>
-			<div class="w-[600px] h-[400px] rounded-lg border-2 border-gray-800 overflow-hidden">
-				<CldImage src={focusedImage} width={1200} height={800} objectFit="cover" />
-			</div>
-			<div class="flex flex-row items-center gap-x-4 py-4">
+		<div class="w-screen overflow-hidden">
+			<div
+				class="overflow-x-auto snap-x snap-mandatory scroll-smooth flex slides"
+				on:scroll={(e) => handleScrollTop(e)}
+				bind:this={scrollSection}
+			>
 				{#each data.product.images as image}
-					<button
-						class="w-[150px] h-[100px] rounded-lg overflow-hidden hover:cursor-pointer hover:border border-gray-800"
-						on:click={() => (focusedImage = image.cloudinaryId || '')}
-					>
-						<CldImage src={image.cloudinaryId || ''} width={300} height={200} objectFit="cover" />
-					</button>
+					<div class="snap-start w-full transform origin-center shrink-0">
+						<CldImage src={image.cloudinaryId} width={800} height={800} objectFit="cover" />
+					</div>
 				{/each}
 			</div>
 		</div>
 
-		<Card.Root class="w-[400px]">
+		<div class="flex gap-x-2">
+			{#each data.product.images as _, i}
+				<button
+					on:click={() => handleSetTopScroll(i)}
+					class={`w-[10px] h-[10px] ${i === curIdx && 'bg-white'} rounded-full border border-white`}
+				/>
+			{/each}
+		</div>
+
+		<Card.Root class=" border-0">
 			<Card.Header class="text-xl font-bold tracking-wide">
 				{data.product.name}
 			</Card.Header>
@@ -94,6 +111,16 @@
 			</Card.Footer>
 		</Card.Root>
 	</div>
+	<div class="p-4">
+		<p class="font-light text-sm leading-5">
+			“Five groupings of fabrial have been discovered so far. The methods of their creation are
+			carefully guarded by the artifabrian community, but they appear to be the work of dedicated
+			scientists, as opposed to the more mystical Surgebindings once performed by the Knights
+			Radiant. I am more and more convinced that the creation of these devices requires forced
+			enslavement of transformative cognitive entities, known as “spren” to the local communities.”
+			Excerpt From Rhythm of War Brandon Sanderson.
+		</p>
+	</div>
 </div>
 
 {#if addedProduct}
@@ -104,3 +131,17 @@
 		</Alert.Root>
 	</div>
 {/if}
+
+<style>
+	.slides::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
+	.slides::-webkit-scrollbar-thumb {
+		background: black;
+		border-radius: 10px;
+	}
+	.slides::-webkit-scrollbar-track {
+		background: transparent;
+	}
+</style>
