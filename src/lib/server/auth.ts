@@ -1,13 +1,11 @@
 import { Lucia } from 'lucia';
-import { LibSQLAdapter } from '@lucia-auth/adapter-sqlite';
-import { libSQLClient } from './db';
+import { DrizzleMySQLAdapter } from '@lucia-auth/adapter-drizzle';
 import { GitHub } from 'arctic';
 import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '$env/static/private';
+import { db } from './db';
+import { session, user } from './db/schema';
 
-const adapter = new LibSQLAdapter(libSQLClient, {
-	user: 'user',
-	session: 'session'
-});
+const adapter = new DrizzleMySQLAdapter(db, session, user);
 
 export const github = new GitHub(GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET);
 
@@ -20,11 +18,11 @@ export const lucia = new Lucia(adapter, {
 	},
 	getUserAttributes: (data) => {
 		return {
-			first_name: data.first_name,
-			last_name: data.last_name,
+			firstName: data.firstName,
+			lastName: data.lastName,
 			email: data.email,
-			is_admin: data.is_admin,
-			stripe_customer_id: data.stripe_customer_id
+			isAdmin: data.isAdmin,
+			stripeCustomerId: data.stripeCustomerId
 		};
 	}
 });
@@ -33,11 +31,11 @@ declare module 'lucia' {
 	interface Register {
 		Lucia: typeof lucia;
 		DatabaseUserAttributes: {
-			first_name: string;
-			last_name: string;
-			is_admin: boolean;
+			firstName: string;
+			lastName: string;
+			isAdmin: boolean;
 			email: string;
-			stripe_customer_id: string | null;
+			stripeCustomerId: string | null;
 		};
 	}
 }

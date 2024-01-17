@@ -1,5 +1,4 @@
 // SEED THE DB
-
 import {
 	product,
 	productImage,
@@ -7,18 +6,21 @@ import {
 	productTag,
 	productToProductTag
 } from './src/lib/server/db/schema';
-import { drizzle } from 'drizzle-orm/libsql';
-import { createClient } from '@libsql/client';
+import { drizzle } from 'drizzle-orm/mysql2';
+import mysql from 'mysql2/promise';
 import 'dotenv/config';
 
 const seed = async () => {
 	// crete db client
-	const libSQLClient = createClient({
-		url: process.env.DATABASE_URL ?? '',
-		authToken: process.env.DATABASE_AUTH_TOKEN ?? ''
+	const connection = await mysql.createConnection({
+		host: 'localhost',
+		port: 3306,
+		user: 'root',
+		database: 'sedimentart',
+		password: 'password'
 	});
 
-	const db = drizzle(libSQLClient);
+	const db = drizzle(connection);
 
 	// create some products
 	// NOTE: update the price id and product id to be YOUR ids
@@ -40,7 +42,7 @@ const seed = async () => {
 		}
 	];
 
-	const insertedProducts = await db.insert(product).values(products).returning().all();
+	const insertedProducts = await db.insert(product).values(products);
 
 	console.log(`INSERTED: ${insertedProducts.length} products`);
 
@@ -102,7 +104,7 @@ const seed = async () => {
 		}
 	];
 
-	const insertedProductSizes = await db.insert(productSize).values(productSizes).returning().all();
+	const insertedProductSizes = await db.insert(productSize).values(productSizes);
 
 	console.log(`INSERTED: ${insertedProductSizes.length} product sizes`);
 
@@ -135,7 +137,7 @@ const seed = async () => {
 		}
 	];
 
-	const insertedImages = await db.insert(productImage).values(images).returning().all();
+	const insertedImages = await db.insert(productImage).values(images);
 
 	console.log(`INSERTED: ${insertedImages.length} product images`);
 
@@ -151,7 +153,7 @@ const seed = async () => {
 		}
 	];
 
-	const insertedTags = await db.insert(productTag).values(productTags).returning().all();
+	const insertedTags = await db.insert(productTag).values(productTags);
 
 	console.log(`INSERTED ${insertedTags.length} product tags`);
 
@@ -167,11 +169,7 @@ const seed = async () => {
 		}
 	];
 
-	const insertedTagsToProducts = await db
-		.insert(productToProductTag)
-		.values(productsToTags)
-		.returning()
-		.all();
+	const insertedTagsToProducts = await db.insert(productToProductTag).values(productsToTags);
 
 	console.log(`INSERTED ${insertedTagsToProducts.length} product tag relations`);
 };

@@ -1,29 +1,36 @@
-import { relations, sql } from 'drizzle-orm';
-import { sqliteTable, text, integer, int, primaryKey } from 'drizzle-orm/sqlite-core';
+import { relations } from 'drizzle-orm';
+import {
+	mysqlTable,
+	text,
+	int,
+	primaryKey,
+	boolean,
+	timestamp,
+	varchar,
+	mysqlEnum
+} from 'drizzle-orm/mysql-core';
 
-export const user = sqliteTable('user', {
+export const user = mysqlTable('user', {
 	// the id is in the following format: {PROVIDER}|{USER_ID}
 	// PROVIDER can be one of the following: "github", "google", "apple"
-	id: text('id').primaryKey(),
-	firstName: text('first_name').notNull(),
-	lastName: text('last_name').notNull(),
-	isAdmin: integer('is_admin', { mode: 'boolean' }).notNull(),
-	email: text('email').notNull().unique(),
-	stripeCustomerId: text('stripe_customer_id').unique()
+	id: varchar('id', { length: 100 }).primaryKey(),
+	firstName: varchar('first_name', { length: 100 }).notNull(),
+	lastName: varchar('last_name', { length: 100 }).notNull(),
+	isAdmin: boolean('is_admin').notNull(),
+	email: varchar('email', { length: 100 }).notNull().unique(),
+	stripeCustomerId: varchar('stripe_customer_id', { length: 100 }).unique()
 });
 
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session)
 }));
 
-export const session = sqliteTable('session', {
-	id: text('id').primaryKey(),
-	userId: text('user_id')
+export const session = mysqlTable('session', {
+	id: varchar('id', { length: 100 }).primaryKey(),
+	userId: varchar('user_id', { length: 100 })
 		.notNull()
 		.references(() => user.id),
-	expiresAt: int('expires_at', {
-		mode: 'timestamp'
-	}).notNull()
+	expiresAt: timestamp('expires_at').notNull()
 });
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -33,9 +40,9 @@ export const sessionRelations = relations(session, ({ one }) => ({
 	})
 }));
 
-export const product = sqliteTable('product', {
-	id: text('id').primaryKey(),
-	name: text('name').notNull(),
+export const product = mysqlTable('product', {
+	id: varchar('id', { length: 100 }).primaryKey(),
+	name: varchar('name', { length: 100 }).notNull(),
 	desc: text('desc').notNull()
 });
 
@@ -46,13 +53,13 @@ export const productRelations = relations(product, ({ many }) => ({
 	reviews: many(productReview)
 }));
 
-export const productToProductTag = sqliteTable(
+export const productToProductTag = mysqlTable(
 	'product_to_product_tag',
 	{
-		productId: text('product_id')
+		productId: varchar('product_id', { length: 100 })
 			.notNull()
 			.references(() => product.id),
-		tagId: text('tag_id')
+		tagId: varchar('tag_id', { length: 100 })
 			.notNull()
 			.references(() => productTag.name)
 	},
@@ -74,8 +81,8 @@ export const productToProductTagRelations = relations(productToProductTag, ({ on
 	})
 }));
 
-export const productTag = sqliteTable('product_tag', {
-	name: text('name').primaryKey(),
+export const productTag = mysqlTable('product_tag', {
+	name: varchar('name', { length: 100 }).primaryKey(),
 	desc: text('desc').notNull()
 });
 
@@ -83,14 +90,14 @@ export const productTagRelations = relations(productTag, ({ many }) => ({
 	products: many(productToProductTag)
 }));
 
-export const productSize = sqliteTable('product_size', {
-	code: text('code').primaryKey(),
-	width: integer('width').notNull(),
-	height: integer('height').notNull(),
-	price: integer('price', { mode: 'number' }).notNull(),
-	stripePriceId: text('stripe_price_id').notNull(),
-	stripeProductId: text('stripe_product_id').notNull(),
-	productId: text('product_id')
+export const productSize = mysqlTable('product_size', {
+	code: varchar('code', { length: 100 }).primaryKey(),
+	width: int('width').notNull(),
+	height: int('height').notNull(),
+	price: int('price').notNull(),
+	stripePriceId: varchar('stripe_price_id', { length: 100 }).notNull(),
+	stripeProductId: varchar('stripe_product_id', { length: 100 }).notNull(),
+	productId: varchar('product_id', { length: 100 })
 		.notNull()
 		.references(() => product.id)
 });
@@ -102,14 +109,14 @@ export const productSizeRelations = relations(productSize, ({ one }) => ({
 	})
 }));
 
-export const productImage = sqliteTable('product_image', {
-	cloudinaryId: text('cloudinary_id').primaryKey(),
-	productId: text('product_id')
+export const productImage = mysqlTable('product_image', {
+	cloudinaryId: varchar('cloudinary_id', { length: 255 }).primaryKey(),
+	productId: varchar('product_id', { length: 100 })
 		.notNull()
 		.references(() => product.id),
-	width: integer('width').notNull(),
-	height: integer('height').notNull(),
-	isPrimary: integer('is_primary', { mode: 'boolean' }).default(false).notNull()
+	width: int('width').notNull(),
+	height: int('height').notNull(),
+	isPrimary: boolean('is_primary').default(false).notNull()
 });
 
 export const productImageRelations = relations(productImage, ({ one }) => ({
@@ -119,12 +126,12 @@ export const productImageRelations = relations(productImage, ({ one }) => ({
 	})
 }));
 
-export const productReview = sqliteTable('product_review', {
-	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-	rating: integer('rating').notNull(),
+export const productReview = mysqlTable('product_review', {
+	id: varchar('id', { length: 100 }).primaryKey(),
+	rating: int('rating').notNull(),
 	reviewText: text('review_text'),
-	productId: text('product_id').references(() => product.id),
-	timestamp: int('timestamp', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
+	productId: varchar('product_id', { length: 100 }).references(() => product.id),
+	timestamp: timestamp('timestamp').$defaultFn(() => new Date())
 });
 
 export const productReviewRelations = relations(productReview, ({ one }) => ({
@@ -134,27 +141,27 @@ export const productReviewRelations = relations(productReview, ({ one }) => ({
 	})
 }));
 
-export const order = sqliteTable('order', {
+export const order = mysqlTable('order', {
 	// this is really the checkout session id
-	stripeOrderId: text('stripe_order_id').primaryKey(),
-	stripeCustomerId: text('stripe_customer_id'),
-	totalPrice: integer('total_price').notNull(),
-	timestamp: int('timestamp', { mode: 'timestamp' }).notNull()
+	stripeOrderId: varchar('stripe_order_id', { length: 100 }).primaryKey(),
+	stripeCustomerId: varchar('stripe_customer_id', { length: 100 }),
+	totalPrice: int('total_price').notNull(),
+	timestamp: timestamp('timestamp').notNull()
 });
 
 export const orderRelations = relations(order, ({ many }) => ({
 	products: many(orderProduct)
 }));
 
-export const orderProduct = sqliteTable('order_product', {
-	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-	productSizeCode: text('product_size_code')
+export const orderProduct = mysqlTable('order_product', {
+	id: int('id').primaryKey().autoincrement(),
+	productSizeCode: varchar('product_size_code', { length: 100 })
 		.notNull()
 		.references(() => productSize.code),
-	quantity: integer('quantity'),
-	status: text('status', { enum: ['placed', 'fulfilled'] }).notNull(),
-	trackingNumber: text('tracking_number'),
-	orderId: text('order_id').references(() => order.stripeOrderId)
+	quantity: int('quantity').notNull(),
+	status: mysqlEnum('status', ['placed', 'fulfilled']).notNull(),
+	trackingNumber: varchar('tracking_number', { length: 300 }),
+	orderId: varchar('order_id', { length: 100 }).references(() => order.stripeOrderId)
 });
 
 export const orderProductRelations = relations(orderProduct, ({ one }) => ({

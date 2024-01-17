@@ -38,7 +38,7 @@
 	<div class="flex flex-row flex-wrap grow gap-4">
 		{#each data.images as image}
 			<div
-				class={`w-[300px] h-[200px] rounded-md overflow-hidden relative border-black ${
+				class={`w-[300px] h-[200px] rounded-md overflow-hidden relative border-white ${
 					image.isPrimary && 'border-4'
 				}`}
 			>

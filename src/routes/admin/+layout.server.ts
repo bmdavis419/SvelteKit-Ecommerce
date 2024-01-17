@@ -6,7 +6,7 @@ export const load = async ({ url, locals }) => {
 		redirect(307, '/auth/login');
 	}
 
-	if (!locals.user.is_admin) {
+	if (!locals.user.isAdmin) {
 		redirect(307, '/');
 	}
 

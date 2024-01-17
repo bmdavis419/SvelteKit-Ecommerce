@@ -1,11 +1,13 @@
-import { drizzle } from 'drizzle-orm/libsql';
-import { createClient } from '@libsql/client';
-import { env } from '$env/dynamic/private';
+import { drizzle as mysqlDrizzle } from 'drizzle-orm/mysql2';
 import * as schema from './schema';
+import mysql from 'mysql2/promise';
 
-export const libSQLClient = createClient({
-	url: env.DATABASE_URL,
-	authToken: env.DATABASE_AUTH_TOKEN
+const connection = await mysql.createConnection({
+	host: 'localhost',
+	port: 3306,
+	user: 'root',
+	database: 'sedimentart',
+	password: 'password'
 });
 
-export const db = drizzle(libSQLClient, { schema });
+export const db = mysqlDrizzle(connection, { schema, mode: 'default' });
