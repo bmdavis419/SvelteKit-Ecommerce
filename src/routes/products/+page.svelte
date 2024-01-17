@@ -129,25 +129,7 @@
 					name: product.name,
 					productId: product.id,
 					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tag.name),
-					selectTag: addParam
-				}}
-			/>
-			<ProductCard
-				itemData={{
-					name: product.name,
-					productId: product.id,
-					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tag.name),
-					selectTag: addParam
-				}}
-			/>
-			<ProductCard
-				itemData={{
-					name: product.name,
-					productId: product.id,
-					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tag.name),
+					tags: product.tags.map((tag) => tag.tagId),
 					selectTag: addParam
 				}}
 			/>
