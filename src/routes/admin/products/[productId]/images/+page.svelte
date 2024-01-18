@@ -6,17 +6,21 @@
 	import { enhance } from '$app/forms';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
+	import { env } from '$env/dynamic/public';
 
 	export let data;
 
-	async function handleSubmit(info: Record<string, unknown>) {
-		const publicId = info.public_id as string;
-		const width = parseInt(info.width as string);
-		const height = parseInt(info.height as string);
+	// TODO type this up
+	async function handleSubmit(info: unknown) {
+		const { public_id, width, height } = info as {
+			public_id: string;
+			width: number;
+			height: number;
+		};
 
 		const formData = new FormData();
 
-		formData.append('cloudinaryId', publicId);
+		formData.append('cloudinaryId', public_id);
 		formData.append('width', width.toString());
 		formData.append('height', height.toString());
 
@@ -96,7 +100,7 @@
 	</div>
 	<div class="w-full flex flex-row justify-end">
 		<CldUploadButton
-			uploadPreset="admin-upload"
+			uploadPreset={env.PUBLIC_CLOUDINARY_UPLOAD_PRESET}
 			class="px-4 py-2 rounded-lg border-gray-900 bg-white text-gray-900 border font-semibold hover:bg-gray-200"
 			onUpload={(res) => {
 				if (res.event === 'success') {
