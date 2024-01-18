@@ -61,3 +61,15 @@ In order to run this project you will need to setup **Cloudinary, Stripe, GitHub
 
 1. Install the dependencies with ```pnpm i```
 2. Run the project with ```pnpm run dev```
+
+## Contributors
+
+*thanks to all who have helped out and made this project possible!*
+
+- [llmaboi](https://github.com/llmaboi)
+- [Peter Buschenreiter](https://github.com/Peter-512)
+- [Miguel Gargallo](https://github.com/miguelgargallo)
+
+## License
+
+You are free to use this code as you wish, just not any of the images or text for sediment art. If you do use this code, please give credit to this repo and the contributors.
