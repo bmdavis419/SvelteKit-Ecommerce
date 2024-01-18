@@ -18,12 +18,7 @@
 	// 	DrawerTitle,
 	// 	DrawerTrigger,
 	// } from "../../lib/components/ui/drawer"
-	import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../../lib/components/ui/tabs"
+	import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../lib/components/ui/tabs';
 	export let data;
 
 	let searchResults: { tagName: string; tagDesc: string }[] = [];
@@ -32,7 +27,7 @@
 
 	let searchQuery = '';
 
-	let displayMode = 'sm'
+	let displayMode = 'sm';
 
 	// this feels really stupid...
 	$: searchQuery !== '' && handleInputChange(searchQuery);
@@ -105,36 +100,76 @@
 
 <main class="grow w-full sm:p-8 py-6 sm:container sm:grid sm:grid-cols-4 gap-4 flex flex-col">
 	<div class="flex flex-row w-full sm:hidden gap-2 px-2 justify-center">
-		<Tabs defaultValue="account" class="w-1/2">
+		<Tabs class="w-1/2">
 			<TabsList class="flex flex-row rounded-full py-3 bg-gray-800/80">
-			  <TabsTrigger class="rounded-full w-1/2" value="account" on:click={() => displayMode = 'sm'}>
-				<svg width="18" height="23" viewBox="0 0 18 23" fill={displayMode == 'sm' ? 'white' : 'none'} xmlns="http://www.w3.org/2000/svg">
-					<rect x="0.5" y="0.5" width="7" height="10" rx="0.5" stroke="white"/>
-					<rect x="10.5" y="0.5" width="7" height="10" rx="0.5" stroke="white"/>
-					<rect x="10.5" y="12.5" width="7" height="10" rx="0.5" stroke="white"/>
-					<rect x="0.5" y="12.5" width="7" height="10" rx="0.5" stroke="white"/>
-				</svg>
-					
-				
-					
-			  </TabsTrigger>
-			  <TabsTrigger value="password" class="rounded-full w-1/2" on:click={() => displayMode = 'lg'}>
-				<svg width="18" height="23" viewBox="0 0 18 23" fill={displayMode == 'sm' ? 'none' : 'white'} xmlns="http://www.w3.org/2000/svg">
-					<rect x="0.5" y="0.5" width="17" height="22" rx="0.5" stroke="white"/>
-				</svg>
-			  </TabsTrigger>
+				<TabsTrigger
+					class="rounded-full w-1/2"
+					value="account"
+					on:click={() => (displayMode = 'sm')}
+				>
+					<svg
+						width="18"
+						height="23"
+						viewBox="0 0 18 23"
+						fill={displayMode == 'sm' ? 'white' : 'none'}
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<rect x="0.5" y="0.5" width="7" height="10" rx="0.5" stroke="white" />
+						<rect x="10.5" y="0.5" width="7" height="10" rx="0.5" stroke="white" />
+						<rect x="10.5" y="12.5" width="7" height="10" rx="0.5" stroke="white" />
+						<rect x="0.5" y="12.5" width="7" height="10" rx="0.5" stroke="white" />
+					</svg>
+				</TabsTrigger>
+				<TabsTrigger
+					value="password"
+					class="rounded-full w-1/2"
+					on:click={() => (displayMode = 'lg')}
+				>
+					<svg
+						width="18"
+						height="23"
+						viewBox="0 0 18 23"
+						fill={displayMode == 'sm' ? 'none' : 'white'}
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<rect x="0.5" y="0.5" width="17" height="22" rx="0.5" stroke="white" />
+					</svg>
+				</TabsTrigger>
 			</TabsList>
-			<TabsContent value="account">
-				
-					
-			</TabsContent>
-			<TabsContent value="password">
-				
-					
-			</TabsContent>
+			<TabsContent value="account" />
+			<TabsContent value="password" />
 		</Tabs>
-		<div class="rounded-full w-1/2 h-[40px] bg-gray-800/80 flex flex-row justify-center items-center gap-3 text-md font-semibold uppercase">
-			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+		<div
+			class="rounded-full w-1/2 h-[40px] bg-gray-800/80 flex flex-row justify-center items-center gap-3 text-md font-semibold uppercase"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="20"
+				height="20"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				class="lucide lucide-sliders-horizontal"
+				><line x1="21" x2="14" y1="4" y2="4" /><line x1="10" x2="3" y1="4" y2="4" /><line
+					x1="21"
+					x2="12"
+					y1="12"
+					y2="12"
+				/><line x1="8" x2="3" y1="12" y2="12" /><line x1="21" x2="16" y1="20" y2="20" /><line
+					x1="12"
+					x2="3"
+					y1="20"
+					y2="20"
+				/><line x1="14" x2="14" y1="2" y2="6" /><line x1="8" x2="8" y1="10" y2="14" /><line
+					x1="16"
+					x2="16"
+					y1="18"
+					y2="22"
+				/></svg
+			>
 			Filter
 		</div>
 	</div>

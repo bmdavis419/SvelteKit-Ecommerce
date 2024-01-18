@@ -27,17 +27,88 @@
 </script>
 
 <div class="grow flex flex-col pt-10">
-	<div class="w-full flex flex-col justify-center items-center gap-y-2 overflow-hidden">
-		<!-- images section -->
+	<!-- DESKTOP -->
+	<div class="w-full h-full flex relative">
+		<div class="w-1/2">
+			<CldImage src="txvp48xxnytjd024vnye" width={2000} height={2000} objectFit="cover" />
+		</div>
+		<div class="w-1/2">
+			<CldImage src="gfgvqtml3oujz2biaf9a" width={2000} height={2000} objectFit="cover" />
+		</div>
+
+		<Card.Root
+			class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] flex items-center justify-center flex-col"
+		>
+			<Card.Header class="text-xl font-bold tracking-wide">
+				{data.product.name}
+			</Card.Header>
+
+			<Card.Content class="font-light">
+				<p>{data.product.desc}</p>
+			</Card.Content>
+
+			<Card.Footer class="flex flex-col gap-y-4">
+				<div class="w-full flex flex-row justify-start gap-x-2">
+					<DropdownMenu.Root>
+						<DropdownMenu.Trigger>
+							<Button variant="outline">
+								{data.product.sizes[selectedSizeIdx].width} x {data.product.sizes[selectedSizeIdx]
+									.height}
+							</Button>
+						</DropdownMenu.Trigger>
+						<DropdownMenu.Content>
+							<DropdownMenu.Group>
+								<DropdownMenu.Label>Select a Size</DropdownMenu.Label>
+								<DropdownMenu.Separator />
+								{#each data.product.sizes as size, i}
+									<DropdownMenu.Item on:click={() => (selectedSizeIdx = i)}
+										>{size.width} x {size.height}</DropdownMenu.Item
+									>
+								{/each}
+							</DropdownMenu.Group>
+						</DropdownMenu.Content>
+					</DropdownMenu.Root>
+					<Button
+						on:click={() => {
+							addToCart({
+								productId: data.product.id,
+								productName: data.product.name,
+								productImage: data.product.images[0].cloudinaryId,
+								size: {
+									width: data.product.sizes[selectedSizeIdx].width,
+									height: data.product.sizes[selectedSizeIdx].height,
+									code: data.product.sizes[selectedSizeIdx].code,
+									stripePriceId: data.product.sizes[selectedSizeIdx].stripePriceId,
+									price: data.product.sizes[selectedSizeIdx].price
+								},
+								quantity: 1
+							});
+							addedProduct = true;
+							setTimeout(() => {
+								addedProduct = false;
+							}, 4000);
+						}}>Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}</Button
+					>
+				</div>
+				<p class="text-xs italic font-light text-neutral-700">
+					NOTE: not all images are available in all sizes, to ensure maximum quality we limit the
+					sizes for each image
+				</p>
+			</Card.Footer>
+		</Card.Root>
+	</div>
+	<!-- MOBILE -->
+	<div class="w-full flex flex-col justify-center items-center gap-y-2 overflow-hidden lg:hidden">
+		<!-- images section mobile -->
 		<div class="w-screen overflow-hidden">
 			<div
-				class="overflow-x-auto snap-x snap-mandatory scroll-smooth flex slides"
+				class="overflow-x-auto snap-x snap-mandatory scroll-smooth flex slides w-full"
 				on:scroll={(e) => handleScrollTop(e)}
 				bind:this={scrollSection}
 			>
 				{#each data.product.images as image}
 					<div class="snap-start w-full transform origin-center shrink-0">
-						<CldImage src={image.cloudinaryId} width={800} height={800} objectFit="cover" />
+						<CldImage src={image.cloudinaryId} width={1000} height={1000} objectFit="cover" />
 					</div>
 				{/each}
 			</div>
