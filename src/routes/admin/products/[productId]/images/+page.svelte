@@ -6,6 +6,7 @@
 	import { enhance } from '$app/forms';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
+	import { env } from '$env/dynamic/public';
 
 	export let data;
 
@@ -96,7 +97,7 @@
 	</div>
 	<div class="w-full flex flex-row justify-end">
 		<CldUploadButton
-			uploadPreset="admin-upload"
+			uploadPreset={env.PUBLIC_CLOUDINARY_UPLOAD_PRESET}
 			class="px-4 py-2 rounded-lg border-gray-900 bg-white text-gray-900 border font-semibold hover:bg-gray-200"
 			onUpload={(res) => {
 				if (res.event === 'success') {

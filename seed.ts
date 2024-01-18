@@ -27,16 +27,12 @@ const seed = async () => {
 			name: 'Demo Stripe Product',
 			desc: 'A test product, the first test product made testing testing testing testing',
 			// can be whatever
-			id: 'my_first_product',
-			stripeProductId: 'prod_OveW2G7ruN2Fcl',
-			stripePriceId: 'price_1O7nDPDVy0rtNA6WSGkE6j5T'
+			id: 'my_first_product'
 		},
 		{
 			name: 'My Second Product',
 			desc: 'A second test product...',
-			id: 'my_second_product',
-			stripeProductId: 'prod_OyCy8ckhrmV0IM',
-			stripePriceId: 'price_1OAGYBDVy0rtNA6WZ7fSwK2d'
+			id: 'my_second_product'
 		}
 	];
 
@@ -45,6 +41,8 @@ const seed = async () => {
 	console.log(`INSERTED: ${insertedProducts.length} products`);
 
 	// create some product sizes
+	// TODO STRIPE:
+	// replace the stripeProductId and stripePriceId which you get from the dashboard
 	const productSizes = [
 		{
 			code: 'first_12_12',
@@ -107,7 +105,7 @@ const seed = async () => {
 	console.log(`INSERTED: ${insertedProductSizes.length} product sizes`);
 
 	// create some product images
-	// NOTE: update these ids to be YOUR ids, the ideal aspect ratio is 1920x1280
+	// TODO CLOUDINARY: update the cloudinaryIds with your own cloudinary ids
 	const images = [
 		{
 			cloudinaryId: 'txvp48xxnytjd024vnye',
