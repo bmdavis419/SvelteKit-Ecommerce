@@ -64,7 +64,7 @@ In order to run this project you will need to setup **Cloudinary, Stripe, GitHub
 
 ## Contributors
 
-*thanks to all who have helped out and made this project possible!*
+*Thanks to all who have helped out and made this project possible!*
 
 - [llmaboi](https://github.com/llmaboi)
 - [Peter Buschenreiter](https://github.com/Peter-512)

@@ -10,14 +10,17 @@
 
 	export let data;
 
-	async function handleSubmit(info: Record<string, unknown>) {
-		const publicId = info.public_id as string;
-		const width = parseInt(info.width as string);
-		const height = parseInt(info.height as string);
+	// TODO type this up
+	async function handleSubmit(info: unknown) {
+		const { public_id, width, height } = info as {
+			public_id: string;
+			width: number;
+			height: number;
+		};
 
 		const formData = new FormData();
 
-		formData.append('cloudinaryId', publicId);
+		formData.append('cloudinaryId', public_id);
 		formData.append('width', width.toString());
 		formData.append('height', height.toString());
 

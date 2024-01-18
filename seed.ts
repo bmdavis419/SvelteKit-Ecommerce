@@ -21,7 +21,6 @@ const seed = async () => {
 	const db = drizzle(connection);
 
 	// create some products
-	// NOTE: update the price id and product id to be YOUR ids
 	const products = [
 		{
 			name: 'Demo Stripe Product',
