@@ -1,19 +1,3 @@
-## All the Stripe Ids that Matter
-
-- lineItemId: id of a line item in stripe checkout ("li_1OAF...")
-- priceId: the price id of a product in stripe,
-not the actual id of the product itself ("price_1OAF...")
-- productId: the id of a product in stripe ("prod_1OAF...")
-- checkoutId: the id of a checkout session in stripe ("cs_test_...")
-
-## Setting up a local db
-
-This project includes a basic system for setting up a local db, in this case we are using LibSQL, so our DB will be a file called ```local.db```. To set this up do the following:
-
-1. Update your ```seed.ts``` file to have the correct ids in it for Stripe and Cloudinary.
-2. Create your database with ```pnpm run db:push```
-3. Seed your database with ```pnpm run db:seed```
-
 # SvelteKit E-Commerce Site: Sediment Art
 
 This is a real world e-commerce site which uses Stripe for payments and Cloudinary for image hosting. It is built with SvelteKit and TypeScript, and will be used in the real world (*soon*).
