@@ -29,10 +29,10 @@
 <div class="grow flex flex-col pt-10">
 	<!-- DESKTOP -->
 	<div class="w-full h-full flex relative">
-		<div class="w-1/2">
+		<div class="w-1/2 opacity-70">
 			<CldImage src="txvp48xxnytjd024vnye" width={2000} height={2000} objectFit="cover" />
 		</div>
-		<div class="w-1/2">
+		<div class="w-1/2 opacity-70">
 			<CldImage src="gfgvqtml3oujz2biaf9a" width={2000} height={2000} objectFit="cover" />
 		</div>
 
