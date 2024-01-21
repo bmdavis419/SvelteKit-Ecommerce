@@ -26,13 +26,13 @@
 	}
 </script>
 
-<div class="grow flex flex-col pt-10">
+<div class="grow flex flex-col pt-10 bg-black">
 	<!-- DESKTOP -->
-	<div class="w-full h-full flex relative">
-		<div class="w-1/2 opacity-70">
+	<div class="w-full h-full lg:flex relative hidden">
+		<div class="w-1/2">
 			<CldImage src="txvp48xxnytjd024vnye" width={2000} height={2000} objectFit="cover" />
 		</div>
-		<div class="w-1/2 opacity-70">
+		<div class="w-1/2">
 			<CldImage src="gfgvqtml3oujz2biaf9a" width={2000} height={2000} objectFit="cover" />
 		</div>
 

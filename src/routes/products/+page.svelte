@@ -5,20 +5,11 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
+	import { goto, pushState } from '$app/navigation';
 	import { X } from 'lucide-svelte';
-	// import { product } from '$lib/server/db/schema';
-	// import {
-	// 	Drawer,
-	// 	DrawerClose,
-	// 	DrawerContent,
-	// 	DrawerDescription,
-	// 	DrawerFooter,
-	// 	DrawerHeader,
-	// 	DrawerTitle,
-	// 	DrawerTrigger,
-	// } from "../../lib/components/ui/drawer"
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../lib/components/ui/tabs';
+	import ProductPage from './[productId]/+page.svelte';
+
 	export let data;
 
 	let searchResults: { tagName: string; tagDesc: string }[] = [];
@@ -96,7 +87,21 @@
 			searchResults = searchedTags;
 		}
 	}
+
+	$: selected = ($page.state as any).selected;
 </script>
+
+<!-- MODAL -->
+{#if selected}
+	<button
+		class="w-screen h-screen flex justify-center absolute top-0 left-0 z-40 bg-black bg-opacity-30"
+		on:click={() => pushState('/products', { selected: undefined })}
+	>
+		<div class="w-3/5 mt-24 rounded-t-lg overflow-hidden z-50">
+			<ProductPage data={selected} />
+		</div>
+	</button>
+{/if}
 
 <main class="grow w-full sm:p-8 py-6 sm:container sm:grid sm:grid-cols-4 gap-4 flex flex-col">
 	<div class="flex flex-row w-full sm:hidden gap-2 px-2 justify-center">
