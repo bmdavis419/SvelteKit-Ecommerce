@@ -9,6 +9,7 @@
 	import { X } from 'lucide-svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../lib/components/ui/tabs';
 	import ProductPage from './[productId]/+page.svelte';
+	import { fade, fly } from 'svelte/transition';
 
 	export let data;
 
@@ -95,6 +96,8 @@
 {#if selected}
 	<button
 		class="w-screen h-screen flex justify-center absolute top-0 left-0 z-40 bg-black bg-opacity-30"
+		in:fly
+		out:fade
 		on:click={() => pushState('/products', { selected: undefined })}
 	>
 		<div class="w-3/5 mt-24 rounded-t-lg overflow-hidden z-50">

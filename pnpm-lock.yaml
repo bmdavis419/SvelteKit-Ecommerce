@@ -56,6 +56,9 @@ dependencies:
   vaul:
     specifier: ^0.8.8
     version: 0.8.8(react-dom@18.2.0)(react@18.2.0)
+  vaul-svelte:
+    specifier: ^0.1.0
+    version: 0.1.0(svelte@4.2.9)
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -768,6 +771,20 @@ packages:
 
   /@melt-ui/svelte@0.61.2(svelte@4.2.9):
     resolution: {integrity: sha512-BHkD9G31zQBToA4euDRBgTQRvWxT9scufOVCXgDO6HKTvyxFspbWT2bgiSFqAK4BbAGDn9Ao36Q8F9O71KN4OQ==}
+    peerDependencies:
+      svelte: '>=3 <5'
+    dependencies:
+      '@floating-ui/core': 1.5.3
+      '@floating-ui/dom': 1.5.4
+      '@internationalized/date': 3.5.1
+      dequal: 2.0.3
+      focus-trap: 7.5.4
+      nanoid: 4.0.2
+      svelte: 4.2.9
+    dev: false
+
+  /@melt-ui/svelte@0.67.0(svelte@4.2.9):
+    resolution: {integrity: sha512-fd9PsDE6sKbeyExagqH0nOpZEnDqyr2efbkjfmCRRYXVW5vlDEOPaSB+mg4Tjch121102sFH1Od+MlXwmeHy3A==}
     peerDependencies:
       svelte: '>=3 <5'
     dependencies:
@@ -1930,6 +1947,17 @@ packages:
     dependencies:
       file-uri-to-path: 1.0.0
     dev: true
+
+  /bits-ui@0.13.6(svelte@4.2.9):
+    resolution: {integrity: sha512-LmbWgtriqfotontFi1lC6tEB56HOLP4YpwVKX3qrHxEMfMAyc/NFQgtGOHizTGMmUUkdVtCE37PA1Wnk6gsUZg==}
+    peerDependencies:
+      svelte: ^4.0.0
+    dependencies:
+      '@internationalized/date': 3.5.1
+      '@melt-ui/svelte': 0.67.0(svelte@4.2.9)
+      nanoid: 5.0.4
+      svelte: 4.2.9
+    dev: false
 
   /bits-ui@0.9.9(svelte@4.2.9):
     resolution: {integrity: sha512-LkdkyTtpXdkjBzPZJVJgpcre4fut6DONoprMfadHFo82HNUhph+02CxDjYEcZcThb5z4YjSxMlCYvQPZm+YtfQ==}
@@ -4452,6 +4480,15 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  /vaul-svelte@0.1.0(svelte@4.2.9):
+    resolution: {integrity: sha512-8Ab5at9QsA/JeJ3M5ltrzE5+vFt3v4cjgZHYeSVbhHXZ7KV1JWNjkQZ1IJv52HirnzhZPzfKt+EjWtsWHeWBoQ==}
+    peerDependencies:
+      svelte: ^4.0.0
+    dependencies:
+      bits-ui: 0.13.6(svelte@4.2.9)
+      svelte: 4.2.9
+    dev: false
 
   /vaul@0.8.8(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Z9K2b90M/LtY/sRyM1yfA8Y4mHC/5WIqhO2u7Byr49r5LQXkLGdVXiehsnjtws9CL+DyknwTuRMJXlCOHTqg/g==}
