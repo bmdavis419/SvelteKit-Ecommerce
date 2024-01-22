@@ -6,6 +6,7 @@
 	import { fade } from 'svelte/transition';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { addToCart } from '$lib/client/cart';
+	
 
 	export let data;
 
@@ -26,7 +27,7 @@
 	}
 </script>
 
-<div class="grow flex flex-col sm:pt-10">
+<div class="grow flex flex-col sm:pt-10 bg-black">
 	<!-- DESKTOP -->
 	<div class="w-full h-full sm:flex hidden relative">
 		<div class="w-1/2">

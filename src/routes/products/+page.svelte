@@ -9,6 +9,16 @@
 	import { X } from 'lucide-svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../lib/components/ui/tabs';
 	import ProductPage from './[productId]/+page.svelte';
+	import {
+		Drawer,
+		DrawerClose,
+		DrawerContent,
+		DrawerDescription,
+		DrawerFooter,
+		DrawerHeader,
+		DrawerTitle,
+		DrawerTrigger,
+	} from "../../lib/components/ui/drawer" 
 
 	export let data;
 
@@ -147,6 +157,21 @@
 		<div
 			class="rounded-full w-1/2 h-[40px] bg-gray-800/80 flex flex-row justify-center items-center gap-3 text-md font-semibold uppercase"
 		>
+		<Drawer>
+			<DrawerTrigger>Open</DrawerTrigger>
+			<DrawerContent>
+			  <DrawerHeader>
+				<DrawerTitle>Are you absolutely sure?</DrawerTitle>
+				<DrawerDescription>This action cannot be undone.</DrawerDescription>
+			  </DrawerHeader>
+			  <DrawerFooter>
+				<Button>Submit</Button>
+				<DrawerClose>
+				  <Button variant="outline">Cancel</Button>
+				</DrawerClose>
+			  </DrawerFooter>
+			</DrawerContent>
+		  </Drawer>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="20"
