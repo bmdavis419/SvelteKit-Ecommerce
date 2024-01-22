@@ -10,7 +10,7 @@
 	<title>sediment</title>
 </head>
 
-<body class="flex justify-between w-full flex-col min-h-screen bg-black">
+<body class="flex justify-between w-full flex-col min-h-screen">
 	<NavBar user={data.user} />
 	<slot />
 	<Footer />

@@ -26,9 +26,9 @@
 	}
 </script>
 
-<div class="grow flex flex-col pt-10">
+<div class="grow flex flex-col sm:pt-10">
 	<!-- DESKTOP -->
-	<div class="w-full h-full flex relative">
+	<div class="w-full h-full sm:flex hidden relative">
 		<div class="w-1/2">
 			<CldImage src="txvp48xxnytjd024vnye" width={2000} height={2000} objectFit="cover" />
 		</div>
@@ -37,7 +37,7 @@
 		</div>
 
 		<Card.Root
-			class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] flex items-center justify-center flex-col"
+			class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:flex hidden items-center justify-center flex-col"
 		>
 			<Card.Header class="text-xl font-bold tracking-wide">
 				{data.product.name}
