@@ -136,7 +136,8 @@ export const order = mysqlTable('order', {
 	stripeOrderId: varchar('stripe_order_id', { length: 100 }).primaryKey(),
 	stripeCustomerId: varchar('stripe_customer_id', { length: 100 }),
 	totalPrice: int('total_price').notNull(),
-	timestamp: timestamp('timestamp').notNull()
+	timestamp: timestamp('timestamp').notNull(),
+	status: mysqlEnum('status', ['new', 'placed', 'packaged', 'sent']).notNull().default('new')
 });
 
 export const orderRelations = relations(order, ({ many }) => ({
@@ -147,9 +148,7 @@ export const orderProduct = mysqlTable('order_product', {
 	id: int('id').primaryKey().autoincrement(),
 	productSizeCode: varchar('product_size_code', { length: 100 }).notNull(),
 	quantity: int('quantity').notNull(),
-	status: mysqlEnum('status', ['placed', 'fulfilled']).notNull(),
-	trackingNumber: varchar('tracking_number', { length: 300 }),
-	orderId: varchar('order_id', { length: 100 })
+	orderId: varchar('order_id', { length: 100 }).notNull()
 });
 
 export const orderProductRelations = relations(orderProduct, ({ one }) => ({

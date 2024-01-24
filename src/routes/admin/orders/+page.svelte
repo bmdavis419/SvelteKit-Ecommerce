@@ -1,106 +1,143 @@
 <script lang="ts">
-	import { createTable, Render, Subscribe } from 'svelte-headless-table';
-	import { readable } from 'svelte/store';
+	import { MoreHorizontal } from 'lucide-svelte';
+	import { deserialize } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
+	import { Button } from '$lib/components/ui/button';
 	import * as Table from '$lib/components/ui/table';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import * as Drawer from '$lib/components/ui/drawer';
 
-	type Payment = {
-		id: string;
-		amount: number;
-		status: 'pending' | 'processing' | 'success' | 'failed';
-		email: string;
-	};
+	export let data;
 
-	const data: Payment[] = [
-		{
-			id: 'm5gr84i9',
-			amount: 316,
-			status: 'success',
-			email: 'ken99@yahoo.com'
-		},
-		{
-			id: '3u1reuv4',
-			amount: 242,
-			status: 'success',
-			email: 'Abe45@gmail.com'
-		},
-		{
-			id: 'derv1ws0',
-			amount: 837,
-			status: 'processing',
-			email: 'Monserrat44@gmail.com'
-		},
-		{
-			id: '5kma53ae',
-			amount: 874,
-			status: 'success',
-			email: 'Silas22@gmail.com'
-		},
-		{
-			id: 'bhqecj4p',
-			amount: 721,
-			status: 'failed',
-			email: 'carmella@hotmail.com'
+	async function handleSetStatus(stripeOrderId: string, status: string) {
+		const formData = new FormData();
+
+		formData.append('stripeOrderId', stripeOrderId);
+		formData.append('status', status);
+
+		const response = await fetch(`/admin/orders?/setStatus`, {
+			method: 'POST',
+			body: formData
+		});
+
+		const result = deserialize(await response.text());
+
+		if (result.type === 'success') {
+			// rerun all `load` functions, following the successful update
+			await invalidateAll();
 		}
-	];
-	const table = createTable(readable(data));
+	}
 
-	const columns = table.createColumns([
-		table.column({
-			accessor: 'id',
-			header: 'ID'
-		}),
-		table.column({
-			accessor: 'status',
-			header: 'Status'
-		}),
-		table.column({
-			accessor: 'email',
-			header: 'Email'
-		}),
-		table.column({
-			accessor: 'amount',
-			header: 'Amount'
-		}),
-		table.column({
-			accessor: ({ id }) => id,
-			header: ''
-		})
-	]);
+	function truncateString(str: string, maxLength: number) {
+		if (str.length > maxLength) {
+			return str.slice(0, maxLength) + '...';
+		}
+		return str;
+	}
 
-	const { headerRows, pageRows, tableAttrs, tableBodyAttrs } = table.createViewModel(columns);
+	let openCustomerViewIdx = -1;
+	$: customerViewOpen = openCustomerViewIdx >= 0;
 </script>
 
-<div class="rounded-md border h-full">
-	<Table.Root {...$tableAttrs}>
+<div class="rounded-md grow p-4">
+	<Table.Root class="border-0">
 		<Table.Header>
-			{#each $headerRows as headerRow}
-				<Subscribe rowAttrs={headerRow.attrs()}>
-					<Table.Row>
-						{#each headerRow.cells as cell (cell.id)}
-							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()}>
-								<Table.Head {...attrs}>
-									<Render of={cell.render()} />
-								</Table.Head>
-							</Subscribe>
-						{/each}
-					</Table.Row>
-				</Subscribe>
-			{/each}
+			<Table.Row>
+				<Table.Head class="w-[100px]">id</Table.Head>
+				<Table.Head>status</Table.Head>
+				<Table.Head>email</Table.Head>
+				<Table.Head class="text-right">amount</Table.Head>
+			</Table.Row>
 		</Table.Header>
-		<Table.Body {...$tableBodyAttrs}>
-			{#each $pageRows as row (row.id)}
-				<Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-					<Table.Row {...rowAttrs}>
-						{#each row.cells as cell (cell.id)}
-							<Subscribe attrs={cell.attrs()} let:attrs>
-								<Table.Cell {...attrs}>
-									<Render of={cell.render()} />
-								</Table.Cell>
-							</Subscribe>
-						{/each}
-					</Table.Row>
-				</Subscribe>
+		<Table.Body>
+			{#each data.orders as order, i}
+				<Table.Row>
+					<Table.Cell class="font-medium">{truncateString(order.stripeOrderId, 10)}</Table.Cell>
+					<Table.Cell>
+						<DropdownMenu.Root>
+							<DropdownMenu.Trigger class="hover:text-underline"
+								>{order.status}</DropdownMenu.Trigger
+							>
+							<DropdownMenu.Content>
+								<DropdownMenu.Group>
+									<DropdownMenu.Label>set status</DropdownMenu.Label>
+									<DropdownMenu.Separator />
+									<DropdownMenu.Item on:click={() => handleSetStatus(order.stripeOrderId, 'new')}
+										>new</DropdownMenu.Item
+									>
+									<DropdownMenu.Item on:click={() => handleSetStatus(order.stripeOrderId, 'placed')}
+										>placed</DropdownMenu.Item
+									>
+									<DropdownMenu.Item
+										on:click={() => handleSetStatus(order.stripeOrderId, 'packaged')}
+										>packaged</DropdownMenu.Item
+									>
+									<DropdownMenu.Item on:click={() => handleSetStatus(order.stripeOrderId, 'sent')}
+										>sent</DropdownMenu.Item
+									>
+								</DropdownMenu.Group>
+							</DropdownMenu.Content>
+						</DropdownMenu.Root>
+					</Table.Cell>
+					<Table.Cell>{order.email}</Table.Cell>
+					<Table.Cell class="text-right">${(order.totalPrice / 100).toFixed(2)}</Table.Cell>
+
+					<Table.Cell>
+						<DropdownMenu.Root>
+							<DropdownMenu.Trigger asChild let:builder>
+								<Button
+									variant="ghost"
+									builders={[builder]}
+									size="icon"
+									class="relative w-8 h-8 p-0"
+								>
+									<span class="sr-only">Open menu</span>
+									<MoreHorizontal class="w-4 h-4" />
+								</Button>
+							</DropdownMenu.Trigger>
+							<DropdownMenu.Content>
+								<DropdownMenu.Group>
+									<DropdownMenu.Label>Actions</DropdownMenu.Label>
+									<DropdownMenu.Item
+										on:click={() => navigator.clipboard.writeText(order.stripeOrderId)}
+									>
+										Copy Stripe ID
+									</DropdownMenu.Item>
+								</DropdownMenu.Group>
+								<DropdownMenu.Separator />
+								<!-- VIEW CUSTOMER -->
+								<DropdownMenu.Item on:click={() => (openCustomerViewIdx = i)}>
+									View Customer
+								</DropdownMenu.Item>
+								<!-- VIEW PAYMENT DETAILS -->
+								<DropdownMenu.Item>View payment details</DropdownMenu.Item>
+								<!-- VIEW PRODUCTS -->
+								<DropdownMenu.Item>View products</DropdownMenu.Item>
+							</DropdownMenu.Content>
+						</DropdownMenu.Root>
+					</Table.Cell>
+				</Table.Row>
 			{/each}
 		</Table.Body>
 	</Table.Root>
 </div>
+
+<Drawer.Root bind:open={customerViewOpen} onClose={() => (openCustomerViewIdx = -1)}>
+	<Drawer.Content>
+		<Drawer.Header>
+			<Drawer.Title>Customer Info</Drawer.Title>
+			<Drawer.Description>
+				<h2><b>Name:</b> {data.orders[openCustomerViewIdx].customerInfo.name}</h2>
+				<h2><b>Email:</b> {data.orders[openCustomerViewIdx].customerInfo.email}</h2>
+				<h2><b>Address:</b> {data.orders[openCustomerViewIdx].customerInfo.address?.line1}</h2>
+				<h2><b>City:</b> {data.orders[openCustomerViewIdx].customerInfo.address?.city}</h2>
+				<h2><b>State:</b> {data.orders[openCustomerViewIdx].customerInfo.address?.state}</h2>
+				<h2><b>Zip:</b> {data.orders[openCustomerViewIdx].customerInfo.address?.postal_code}</h2>
+				<h2><b>Country:</b> {data.orders[openCustomerViewIdx].customerInfo.address?.country}</h2>
+			</Drawer.Description>
+		</Drawer.Header>
+		<Drawer.Footer>
+			<Drawer.Close class="w-[300px]">Cancel</Drawer.Close>
+		</Drawer.Footer>
+	</Drawer.Content>
+</Drawer.Root>
