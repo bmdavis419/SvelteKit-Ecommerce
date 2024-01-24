@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import Logo from '$lib/client/images/logo.png';
-	import MobileLogo from '$lib/client/images/mobile_logo.png';
+	import Logo from '$lib/client/images/logo_light.png';
+	import MobileLogo from '$lib/client/images/mobile_logo_light.png';
 	import { page } from '$app/stores';
 	export let user: {
 		firstName: string;
@@ -12,17 +12,17 @@
 </script>
 
 <nav
-	class={`flex flex-row items-center justify-between sm:px-12 p-4 sm:py-4  w-full  z-20 ${
-		$page.url.pathname === '/' && 'fixed dark'
-	} bg-black/80`}
+	class={`flex flex-row items-center justify-between sm:px-12 p-4 sm:py-1  w-full text-black z-20 ${
+		$page.url.pathname === '/' && 'sticky top-0 dark'
+	} bg-white`}
 >
-	<a class="text-4xl font-light" href="/">
+	<a class="text-4xl font-light text-black" href="/">
 		<img src={Logo} alt="Sediment" class=" h-[70px] hidden sm:flex" />
 		<img src={MobileLogo} alt="Sediment" class="h-[30px] sm:hidden flex" />
 	</a>
 
 	<div class="flex-row items-center hidden sm:flex">
-		<Button href="/products" class="" variant="link">products</Button>
+		<Button href="/products" class="text-black" variant="link">products</Button>
 		<Button href="/about" variant="link">about</Button>
 		<Button variant="link" href="https://github.com/bmdavis419/SvelteKit-Ecommerce" target="_blank"
 			>repo</Button
