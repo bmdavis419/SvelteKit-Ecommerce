@@ -50,7 +50,9 @@ export const emailList = mysqlTable('email_list', {
 export const product = mysqlTable('product', {
 	id: varchar('id', { length: 100 }).primaryKey(),
 	name: varchar('name', { length: 100 }).notNull(),
-	desc: text('desc').notNull()
+	desc: text('desc').notNull(),
+	gradientColorStart: varchar('gradient_color_start', { length: 10 }).notNull().default('black'),
+	gradientColorStop: varchar('gradient_color_end', { length: 10 }).notNull().default('blue')
 });
 
 export const productRelations = relations(product, ({ many }) => ({
@@ -95,6 +97,8 @@ export const productTagRelations = relations(productTag, ({ many }) => ({
 
 export const productSize = mysqlTable('product_size', {
 	code: varchar('code', { length: 100 }).primaryKey(),
+	name: varchar('name', { length: 255 }).notNull().default('my product'),
+	isAvailable: boolean('is_available').notNull().default(true),
 	width: int('width').notNull(),
 	height: int('height').notNull(),
 	price: int('price').notNull(),
@@ -115,6 +119,8 @@ export const productImage = mysqlTable('product_image', {
 	productId: varchar('product_id', { length: 100 }).notNull(),
 	width: int('width').notNull(),
 	height: int('height').notNull(),
+	isVertical: boolean('is_vertical').notNull().default(false),
+	order: int('order').notNull().default(0),
 	isPrimary: boolean('is_primary').default(false).notNull()
 });
 
