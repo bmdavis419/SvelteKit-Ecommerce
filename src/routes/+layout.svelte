@@ -19,11 +19,7 @@
 </head>
 
 <body class="flex justify-between w-full flex-col min-h-screen">
-	<SpecialOffer offerData={{
-		text: "Inaugural Valentine's Day drop! Only 9 pieces left!",
-		isLink: true,
-		link: '/products?tag=Natural'
-	}} />
+	<SpecialOffer />
 	<NavBar user={data.user} />
 <span on:mouseenter={handleRemoveMenu} class="min-h-[100vh] bg-neutral-100">
 		<slot />

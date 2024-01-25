@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { MoreHorizontal } from 'lucide-svelte';
 	import { deserialize } from '$app/forms';
-	import { invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
 	import * as Table from '$lib/components/ui/table';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
@@ -107,12 +107,15 @@
 								<DropdownMenu.Separator />
 								<!-- VIEW CUSTOMER -->
 								<DropdownMenu.Item on:click={() => (openCustomerViewIdx = i)}>
-									View Customer
+									view customer
 								</DropdownMenu.Item>
 								<!-- VIEW PAYMENT DETAILS -->
-								<DropdownMenu.Item>View payment details</DropdownMenu.Item>
+								<DropdownMenu.Item>view payment details</DropdownMenu.Item>
 								<!-- VIEW PRODUCTS -->
-								<DropdownMenu.Item>View products</DropdownMenu.Item>
+								<DropdownMenu.Item>view products</DropdownMenu.Item>
+								<DropdownMenu.Item on:click={() => goto(`/admin/orders/${order.stripeOrderId}`)}
+									>order details</DropdownMenu.Item
+								>
 							</DropdownMenu.Content>
 						</DropdownMenu.Root>
 					</Table.Cell>
