@@ -23,7 +23,7 @@
 	}
 </script>
 
-<div class="w-full flex flex-row items-center p-20 gap-x-16">
+<div class="w-full h-[100vh] flex flex-row p-20 gap-x-16 bg-neutral-100">
 	<Table.Root class="grow">
 		<Table.Caption>your cart</Table.Caption>
 		<Table.Header>

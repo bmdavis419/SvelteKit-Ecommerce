@@ -74,27 +74,35 @@
 			productInfo: [
 				{
 					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
+					secondaryCloudinary: 'koma4m6czs9xduorosab',
 					name: 'Molten Moon',
 					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6' ,'11x11', '10.8x14.4'],
-					soldOutSizes: []
+					soldOutSizes: [],
+					link: '/products/my_first_product'
 				},
 				{
 					cloudinaryId: 'txvp48xxnytjd024vnye',
+					secondaryCloudinary: 'u6qdncbwe8xmavmjxczl',
 					name: 'Europan Frontier',
 					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6' ,],
-					soldOutSizes: ['11x11', '10.8x14.4']
+					soldOutSizes: ['11x11', '10.8x14.4'],
+					link: '/products/my_second_product'
 				},
 				{
 					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
+					secondaryCloudinary: 'txvp48xxnytjd024vnye',
 					name: 'Molten Moon',
 					availableSizes: ['5x5', '4.8x6.4' , '10.8x14.4'],
-					soldOutSizes: ['7.2x9.6' ,'11x11']
+					soldOutSizes: ['7.2x9.6' ,'11x11'],
+					link: '/products/my_first_product'
 				},
 				{
 					cloudinaryId: 'txvp48xxnytjd024vnye',
+					secondaryCloudinary: 'gfgvqtml3oujz2biaf9a',
 					name: 'Europan Frontier',
 					availableSizes: ['7.2x9.6' ,'11x11', '10.8x14.4'],
-					soldOutSizes: ['5x5', '4.8x6.4']
+					soldOutSizes: ['5x5', '4.8x6.4'],
+					link: '/products/my_second_product'
 				},
 			],
 			dark: false,
@@ -107,28 +115,36 @@
 			tagLine: 'Honor our history',
 			productInfo: [
 				{
-					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
+					cloudinaryId: 'koma4m6czs9xduorosab',
+					secondaryCloudinary: 'txvp48xxnytjd024vnye',
 					name: 'Molten Moon',
 					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6' ,'11x11', '10.8x14.4'],
-					soldOutSizes: []
+					soldOutSizes: [],
+					link: '/products/my_first_product'
 				},
 				{
 					cloudinaryId: 'txvp48xxnytjd024vnye',
+					secondaryCloudinary: 'gfgvqtml3oujz2biaf9a',
 					name: 'Europan Frontier',
 					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6' ,],
-					soldOutSizes: ['11x11', '10.8x14.4']
+					soldOutSizes: ['11x11', '10.8x14.4'],
+					link: '/products/my_second_product'
 				},
 				{
 					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
+					secondaryCloudinary: 'txvp48xxnytjd024vnye',
 					name: 'Molten Moon',
 					availableSizes: ['5x5', '4.8x6.4' , '10.8x14.4'],
-					soldOutSizes: ['7.2x9.6' ,'11x11']
+					soldOutSizes: ['7.2x9.6' ,'11x11'],
+					link: '/products/my_first_product'
 				},
 				{
 					cloudinaryId: 'txvp48xxnytjd024vnye',
+					secondaryCloudinary: 'gfgvqtml3oujz2biaf9a',
 					name: 'Europan Frontier',
 					availableSizes: ['7.2x9.6' ,'11x11', '10.8x14.4'],
-					soldOutSizes: ['5x5', '4.8x6.4']
+					soldOutSizes: ['5x5', '4.8x6.4'],
+					link: '/products/my_second_product'
 				},
 			],
 			dark: true,

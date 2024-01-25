@@ -14,6 +14,8 @@
 
 	let addedProduct = false;
 
+	
+
 	// for top section spinny thing
 	let curIdx = 0;
 	let scrollSection: any;
@@ -27,18 +29,38 @@
 	}
 </script>
 
-<div class="grow flex flex-col sm:pt-10 bg-black">
+<div class="grow flex flex-col sm:pt-10 w-full">
 	<!-- DESKTOP -->
-	<div class="w-full h-full sm:flex hidden relative">
-		<div class="w-1/2">
-			<CldImage src="txvp48xxnytjd024vnye" width={2000} height={2000} objectFit="cover" />
+	<div class="h-full mx-10 hidden sm:grid grid-cols-4">
+		<div class="col-span-3 p-4 relative">
+			{#each data.product.images as im, i}
+				<CldImage src={im.cloudinaryId} width={2000} height={1300} objectFit="cover" class={`rounded-lg ${curIdx == i ? 'flex' : 'hidden'}`} />
+			{/each}
+			<div class="absolute bottom-8 left-1/2 translate-x-[-50%] flex gap-x-2">
+				{#each data.product.images as _, i}
+					<button
+						on:click={() => handleSetTopScroll(i)}
+						class={`w-[10px] h-[10px] ${i === curIdx && 'bg-white'} rounded-full border border-white`}
+					/>
+				{/each}
+			</div>
+			<div class="absolute right-10 top-1/2 translate-y-[-50%] bg-gray-600/50 rounded-full flex flex-row justify-center items-center">
+				<svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M8.29492 16.59L12.8749 12L8.29492 7.41L9.70492 6L15.7049 12L9.70492 18L8.29492 16.59Z" fill="black"/>
+					</svg>
+					
+			</div>
+			<div class="absolute left-10 top-1/2 translate-y-[-50%] bg-gray-600/50 rounded-full flex flex-row justify-center items-center">
+				<svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M15.7049 16.59L11.1249 12L15.7049 7.41L14.2949 6L8.29492 12L14.2949 18L15.7049 16.59Z" fill="black"/>
+					</svg>
+					
+			</div>
 		</div>
-		<div class="w-1/2">
-			<CldImage src="gfgvqtml3oujz2biaf9a" width={2000} height={2000} objectFit="cover" />
-		</div>
-
-		<Card.Root
-			class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:flex hidden items-center justify-center flex-col"
+		
+		<div class="p-4">
+			<Card.Root
+			class=" sm:flex hidden items-center justify-center flex-col"
 		>
 			<Card.Header class="text-xl font-bold tracking-wide">
 				{data.product.name}
@@ -97,11 +119,14 @@
 				</p>
 			</Card.Footer>
 		</Card.Root>
+		</div>
+
+		
 	</div>
 	<!-- MOBILE -->
 	<div class="w-full flex flex-col justify-center items-center gap-y-2 overflow-hidden lg:hidden">
 		<!-- images section mobile -->
-		<div class="w-screen overflow-hidden">
+		<div class="w-screen overflow-hidden relative">
 			<div
 				class="overflow-x-auto snap-x snap-mandatory scroll-smooth flex slides w-full"
 				on:scroll={(e) => handleScrollTop(e)}
@@ -113,16 +138,17 @@
 					</div>
 				{/each}
 			</div>
+			<div class="absolute bottom-3 left-1/2 translate-x-[-50%] flex gap-x-2">
+				{#each data.product.images as _, i}
+					<button
+						on:click={() => handleSetTopScroll(i)}
+						class={`w-[10px] h-[10px] ${i === curIdx && 'bg-white'} rounded-full border border-white`}
+					/>
+				{/each}
+			</div>
 		</div>
 
-		<div class="flex gap-x-2">
-			{#each data.product.images as _, i}
-				<button
-					on:click={() => handleSetTopScroll(i)}
-					class={`w-[10px] h-[10px] ${i === curIdx && 'bg-white'} rounded-full border border-white`}
-				/>
-			{/each}
-		</div>
+		
 
 		<Card.Root class=" border-0">
 			<Card.Header class="text-xl font-bold tracking-wide">
@@ -205,10 +231,6 @@
 {/if}
 
 <style>
-	.slides::-webkit-scrollbar {
-		width: 10px;
-		height: 10px;
-	}
 	.slides::-webkit-scrollbar-thumb {
 		background: black;
 		border-radius: 10px;
@@ -216,4 +238,14 @@
 	.slides::-webkit-scrollbar-track {
 		background: transparent;
 	}
+	/* Hide scrollbar for Chrome, Safari and Opera */
+.slides::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.slides {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 </style>
