@@ -1,4 +1,5 @@
 import { browser } from '$app/environment';
+import { writable } from 'svelte/store';
 
 export type TCartEntry = {
 	productId: string;
@@ -23,9 +24,11 @@ export const addToCart = (data: TCartEntry) => {
 		const items = JSON.parse(cur) as TCartEntry[];
 		items.push(data);
 		localStorage.setItem('cart', JSON.stringify(items));
+		cartLengthStore.set(items.length);
 	} else {
 		const items = [data];
 		localStorage.setItem('cart', JSON.stringify(items));
+		cartLengthStore.set(items.length);
 	}
 };
 
@@ -33,6 +36,7 @@ export const clearCart = () => {
 	if (!browser) return;
 
 	localStorage.setItem('cart', JSON.stringify([]));
+	cartLengthStore.set(0);
 };
 
 export const removeFromCart = (idx: number) => {
@@ -43,6 +47,7 @@ export const removeFromCart = (idx: number) => {
 		const items = JSON.parse(cur) as TCartEntry[];
 		items.splice(idx, 1);
 		localStorage.setItem('cart', JSON.stringify(items));
+		cartLengthStore.set(items.length);
 	}
 };
 
@@ -57,3 +62,5 @@ export const getCart = () => {
 
 	return [];
 };
+
+export const cartLengthStore = writable(getCart().length);

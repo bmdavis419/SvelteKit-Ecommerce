@@ -8,7 +8,7 @@ export const actions = {
 
 		const user = event.locals.user;
 
-		const customerId = user ? user.stripe_customer_id ?? undefined : undefined;
+		const customerId = user ? user.stripeCustomerId ?? undefined : undefined;
 
 		const session = await stripe.checkout.sessions.create({
 			shipping_address_collection: {
@@ -34,8 +34,8 @@ export const actions = {
 				userId: user ? user.id : ''
 			},
 			mode: 'payment',
-			success_url: `${event.url.origin}/success`,
-			cancel_url: `${event.url.origin}/cancel`,
+			success_url: `${event.url.origin}/status/checkout/success`,
+			cancel_url: `${event.url.origin}/status/checkout/fail`,
 			automatic_tax: { enabled: true },
 			billing_address_collection: 'required'
 		});

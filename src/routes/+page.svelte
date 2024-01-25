@@ -3,30 +3,35 @@
 	import { CldImage } from 'svelte-cloudinary';
 	import MobileLogo from '$lib/client/images/mobile_logo.png';
 	import ImageCollection from '$lib/components/ImageCollection.svelte';
-	import homepageImage1 from '$lib/assets/homepage_image1.png'
-	import homepageImage2 from '$lib/assets/homepage_image2.png'
-	import homepageImage3 from '$lib/assets/homepage_image3.png'
-	import homepageImage4 from '$lib/assets/homepage_image4.png'
-	import homepageImage1Mobile from '$lib/assets/homepage_image1_mobile.png'
-	import homepageImage2Mobile from '$lib/assets/homepage_image2_mobile.png'
-	import homepageImage3Mobile from '$lib/assets/homepage_image3_mobile.png'
-	import homepageImage4Mobile from '$lib/assets/homepage_image4_mobile.png'
+	import homepageImage1 from '$lib/assets/homepage_image1.png';
+	import homepageImage2 from '$lib/assets/homepage_image2.png';
+	import homepageImage3 from '$lib/assets/homepage_image3.png';
+	import homepageImage4 from '$lib/assets/homepage_image4.png';
+	import homepageImage1Mobile from '$lib/assets/homepage_image1_mobile.png';
+	import homepageImage2Mobile from '$lib/assets/homepage_image2_mobile.png';
+	import homepageImage3Mobile from '$lib/assets/homepage_image3_mobile.png';
+	import homepageImage4Mobile from '$lib/assets/homepage_image4_mobile.png';
 
 	let imgNum: number = 0;
-	let imgs = [homepageImage1, homepageImage2, homepageImage3, homepageImage4]
-	let mobileImgs = [homepageImage1Mobile, homepageImage2Mobile, homepageImage3Mobile, homepageImage4Mobile]
+	let imgs = [homepageImage1, homepageImage2, homepageImage3, homepageImage4];
+	let mobileImgs = [
+		homepageImage1Mobile,
+		homepageImage2Mobile,
+		homepageImage3Mobile,
+		homepageImage4Mobile
+	];
 
 	setInterval(() => {
 		imgNum++;
 
 		if (imgNum == imgs.length) imgNum = 0;
-	}, 5000)
+	}, 5000);
 </script>
 
 <main class="grow">
 	<div class=" w-full relative">
 		<div
-			class="z-10 absolute  top-[40%] left-0 text-white w-full flex justify-center items-center flex-col gap-y-2 "
+			class="z-10 absolute top-[40%] left-0 text-white w-full flex justify-center items-center flex-col gap-y-2"
 		>
 			<div class="flex flex-row gap-4 items-center">
 				<img src={MobileLogo} alt="Sediment" class="h-[40px] sm:hidden flex" />
@@ -34,7 +39,9 @@
 				<h2 class="sm:text-5xl text-3xl font-jura">Sediment Collection</h2>
 			</div>
 			<h4 class="font-light sm:text-3xl text-xl font-jura">Beauty. Crystallized.</h4>
-			<a class="uppercase bg-black mt-14 px-7 py-3 font-light" href="/products?tag=Natural"> shop now</a>
+			<a class="uppercase bg-black mt-14 px-7 py-3 font-light" href="/products?tag=Natural">
+				shop now</a
+			>
 		</div>
 		<!-- <div class="w-full h-full bg-black z-0 sm:opacity-40" /> -->
 		<!-- <CldImage
@@ -58,14 +65,24 @@
 			<div class="flex gap-x-2">
 				{#each imgs as _, i}
 					<button
-						on:click={() => imgNum = i}
-						class={`w-[10px] h-[10px] ${i === imgNum && 'bg-white'} rounded-full border border-white`}
+						on:click={() => (imgNum = i)}
+						class={`w-[10px] h-[10px] ${
+							i === imgNum && 'bg-white'
+						} rounded-full border border-white`}
 					/>
 				{/each}
 			</div>
 		</div>
-		<img class={`object-cover w-full h-[80vh] hidden sm:flex transition-all ease-in-out duration-300`} alt="The project logo" src={imgs[imgNum]}/>
-		<img class={`object-cover w-full h-[80vh] sm:hidden flex transition-all ease-in-out duration-300`} alt="The project logo" src={mobileImgs[imgNum]}/>
+		<img
+			class={`object-cover w-full h-[80vh] hidden sm:flex transition-all ease-in-out duration-300`}
+			alt="The project logo"
+			src={imgs[imgNum]}
+		/>
+		<img
+			class={`object-cover w-full h-[80vh] sm:hidden flex transition-all ease-in-out duration-300`}
+			alt="The project logo"
+			src={mobileImgs[imgNum]}
+		/>
 	</div>
 	<ImageCollection
 		collectionData={{
@@ -76,7 +93,7 @@
 					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
 					secondaryCloudinary: 'koma4m6czs9xduorosab',
 					name: 'Molten Moon',
-					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6' ,'11x11', '10.8x14.4'],
+					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6', '11x11', '10.8x14.4'],
 					soldOutSizes: [],
 					link: '/products/my_first_product'
 				},
@@ -84,7 +101,7 @@
 					cloudinaryId: 'txvp48xxnytjd024vnye',
 					secondaryCloudinary: 'u6qdncbwe8xmavmjxczl',
 					name: 'Europan Frontier',
-					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6' ,],
+					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6'],
 					soldOutSizes: ['11x11', '10.8x14.4'],
 					link: '/products/my_second_product'
 				},
@@ -92,18 +109,18 @@
 					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
 					secondaryCloudinary: 'txvp48xxnytjd024vnye',
 					name: 'Molten Moon',
-					availableSizes: ['5x5', '4.8x6.4' , '10.8x14.4'],
-					soldOutSizes: ['7.2x9.6' ,'11x11'],
+					availableSizes: ['5x5', '4.8x6.4', '10.8x14.4'],
+					soldOutSizes: ['7.2x9.6', '11x11'],
 					link: '/products/my_first_product'
 				},
 				{
 					cloudinaryId: 'txvp48xxnytjd024vnye',
 					secondaryCloudinary: 'gfgvqtml3oujz2biaf9a',
 					name: 'Europan Frontier',
-					availableSizes: ['7.2x9.6' ,'11x11', '10.8x14.4'],
+					availableSizes: ['7.2x9.6', '11x11', '10.8x14.4'],
 					soldOutSizes: ['5x5', '4.8x6.4'],
 					link: '/products/my_second_product'
-				},
+				}
 			],
 			dark: false,
 			collectionTag: 'Natural'
@@ -118,7 +135,7 @@
 					cloudinaryId: 'koma4m6czs9xduorosab',
 					secondaryCloudinary: 'txvp48xxnytjd024vnye',
 					name: 'Molten Moon',
-					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6' ,'11x11', '10.8x14.4'],
+					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6', '11x11', '10.8x14.4'],
 					soldOutSizes: [],
 					link: '/products/my_first_product'
 				},
@@ -126,7 +143,7 @@
 					cloudinaryId: 'txvp48xxnytjd024vnye',
 					secondaryCloudinary: 'gfgvqtml3oujz2biaf9a',
 					name: 'Europan Frontier',
-					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6' ,],
+					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6'],
 					soldOutSizes: ['11x11', '10.8x14.4'],
 					link: '/products/my_second_product'
 				},
@@ -134,25 +151,25 @@
 					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
 					secondaryCloudinary: 'txvp48xxnytjd024vnye',
 					name: 'Molten Moon',
-					availableSizes: ['5x5', '4.8x6.4' , '10.8x14.4'],
-					soldOutSizes: ['7.2x9.6' ,'11x11'],
+					availableSizes: ['5x5', '4.8x6.4', '10.8x14.4'],
+					soldOutSizes: ['7.2x9.6', '11x11'],
 					link: '/products/my_first_product'
 				},
 				{
 					cloudinaryId: 'txvp48xxnytjd024vnye',
 					secondaryCloudinary: 'gfgvqtml3oujz2biaf9a',
 					name: 'Europan Frontier',
-					availableSizes: ['7.2x9.6' ,'11x11', '10.8x14.4'],
+					availableSizes: ['7.2x9.6', '11x11', '10.8x14.4'],
 					soldOutSizes: ['5x5', '4.8x6.4'],
 					link: '/products/my_second_product'
-				},
+				}
 			],
 			dark: true,
 			collectionTag: 'Aerospace'
 		}}
 	/>
 	<!-- ig embedding cant tell if I like or not -->
-	<!-- <blockquote
+	<blockquote
 		class="instagram-media"
 		data-instgrm-permalink="https://www.instagram.com/sediment.art/?utm_source=ig_embed&amp;utm_campaign=loading"
 		data-instgrm-version="14"
@@ -265,6 +282,6 @@
 				>) • Instagram photos and videos
 			</p>
 		</div>
-	</blockquote> -->
+	</blockquote>
 	<script async src="//www.instagram.com/embed.js"></script>
 </main>

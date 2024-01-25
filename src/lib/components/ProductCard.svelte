@@ -116,10 +116,6 @@
 		<div>Sm Md Lg Xl</div>
 	</div>
 	<div class="sm:flex flex-col hidden gap-y-2 items-center justify-center sm:w-[175px] w-full">
-		<Button class="w-full">
-			<ShoppingCart class="w-4 h-4 mr-2" />
-			Add To Cart</Button
-		>
 		<Button
 			href={`/products/${itemData.productId}`}
 			variant="outline"

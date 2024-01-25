@@ -3,11 +3,15 @@
 	import { applyAction, deserialize } from '$app/forms';
 	import type { ActionResult } from '@sveltejs/kit';
 	import * as Table from '$lib/components/ui/table';
-	import { Button } from '$lib/components/ui/button';
 	import { Trash, XSquare, ShoppingBasket } from 'lucide-svelte';
 	import * as Card from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
 	import { CldImage } from 'svelte-cloudinary';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import * as Dialog from '$lib/components/ui/dialog';
+	import { goto } from '$app/navigation';
+
+	export let data;
 
 	$: cart = getCart();
 
@@ -48,7 +52,12 @@
 					<Table.Cell>{cartItem.quantity}</Table.Cell>
 					<Table.Cell>${(cartItem.size.price / 100).toFixed(2)}</Table.Cell>
 					<Table.Cell class="text-right"
-						><Button on:click={() => removeFromCart(i)}>
+						><Button
+							on:click={() => {
+								removeFromCart(i);
+								cart = getCart();
+							}}
+						>
 							<Trash class="w-4 h-4" />
 						</Button></Table.Cell
 					>
@@ -102,10 +111,41 @@
 					<XSquare class="w-4 h-4 mr-2" />
 					clear cart</Button
 				>
-				<Button type="submit" class="">
-					<ShoppingBasket class="w-4 h-4 mr-2" />
-					checkout</Button
-				>
+
+				{#if data.isSoldOut}
+					<Button type="submit" disabled={true}>sold out</Button>
+				{:else if data.user}
+					<Button type="submit">
+						<ShoppingBasket class="w-4 h-4 mr-2" />
+						checkout</Button
+					>
+				{:else}
+					<Dialog.Root>
+						<Dialog.Trigger class={buttonVariants({ variant: 'default' })}>
+							<ShoppingBasket class="w-4 h-4 mr-2" />
+							checkout</Dialog.Trigger
+						>
+						<Dialog.Content class="sm:max-w-[425px]">
+							<Dialog.Header>
+								<Dialog.Title>Account</Dialog.Title>
+								<Dialog.Description>
+									Would you like to create an account to save your information, manage your orders,
+									and get special offers?
+								</Dialog.Description>
+							</Dialog.Header>
+							<Dialog.Footer>
+								<Button type="button" on:click={() => goto('/auth/login')}>create account</Button>
+								<form
+									class="flex flex-row justify-center gap-x-5 w-full"
+									method="post"
+									on:submit|preventDefault={handleSubmit}
+								>
+									<Button type="submit">continue as guest</Button>
+								</form>
+							</Dialog.Footer>
+						</Dialog.Content>
+					</Dialog.Root>
+				{/if}
 			</form>
 		</Card.Footer>
 	</Card.Root>
