@@ -112,8 +112,10 @@
 					clear cart</Button
 				>
 
-				{#if data.user}
-					<Button type="submit" class="">
+				{#if data.isSoldOut}
+					<Button type="submit" disabled={true}>sold out</Button>
+				{:else if data.user}
+					<Button type="submit">
 						<ShoppingBasket class="w-4 h-4 mr-2" />
 						checkout</Button
 					>

@@ -5,13 +5,21 @@
 	import { goto } from '$app/navigation';
 
 	let showModal = false;
+
+	export let isSoldOut: boolean;
 </script>
 
 <button
 	type="button"
 	class="bg-gray-950 text-center text-white font-jura uppercase p-1 sm:text-lg text-sm sticky w-full top-[-100px]"
-	on:click={() => (showModal = true)}>Launch event, only 10 pieces available, order now!</button
+	on:click={() => (showModal = true)}
 >
+	{#if isSoldOut}
+		Sold Out, Sign up to receive updates on when we will be back in stock!
+	{:else}
+		Launch event, only 10 pieces available, order now!
+	{/if}
+</button>
 
 {#if showModal}
 	<div class="absolute w-screen h-screen z-40 bg-neutral-950 bg-opacity-90">
@@ -33,24 +41,42 @@
 					</button>
 				</div>
 
-				<div class="grow flex flex-col gap-4 justify-center px-6">
-					<h3 class="text-lg font-bold">Launch Event!</h3>
+				{#if isSoldOut}
+					<div class="grow flex flex-col gap-4 justify-center px-6">
+						<h3 class="text-lg font-bold">Sold Out!</h3>
 
-					<p>
-						Sediment Art is live, our first run of cohort 1 will only have 10 orders available, so
-						make sure to order soon!
-					</p>
-					<p>Every order will in cohort 1 will get a free exclusive print!</p>
-					<div>
-						<Button
-							on:click={() => {
-								showModal = false;
-								goto('/products');
-							}}
-							variant="outline">View pieces</Button
-						>
+						<p>Cohort 1 of sediment art has sold out, but there will be more!</p>
+						<p>Sign up to get updated on when we are back in stock!</p>
+						<div>
+							<Button
+								on:click={() => {
+									showModal = false;
+									goto('/auth/list');
+								}}
+								variant="outline">get notified</Button
+							>
+						</div>
 					</div>
-				</div>
+				{:else}
+					<div class="grow flex flex-col gap-4 justify-center px-6">
+						<h3 class="text-lg font-bold">Launch Event!</h3>
+
+						<p>
+							Sediment Art is live, our first run of cohort 1 will only have 10 orders available, so
+							make sure to order soon!
+						</p>
+						<p>Every order will in cohort 1 will get a free exclusive print!</p>
+						<div>
+							<Button
+								on:click={() => {
+									showModal = false;
+									goto('/products');
+								}}
+								variant="outline">view pieces</Button
+							>
+						</div>
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>

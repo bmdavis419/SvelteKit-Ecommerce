@@ -8,10 +8,10 @@
 	export let data;
 
 	const handleRemoveMenu = () => {
-		document.getElementById('drop-menu')?.classList.add('hidden')
-	}
+		document.getElementById('drop-menu')?.classList.add('hidden');
+	};
 
-	$: if ($navigating) handleRemoveMenu()
+	$: if ($navigating) handleRemoveMenu();
 </script>
 
 <head>
@@ -19,11 +19,12 @@
 </head>
 
 <body class="flex justify-between w-full flex-col min-h-screen">
-	<SpecialOffer />
+	<SpecialOffer isSoldOut={data.isSoldOut} />
 	<NavBar user={data.user} />
-<span on:mouseenter={handleRemoveMenu} class="min-h-[100vh] bg-neutral-100">
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<span on:mouseenter={handleRemoveMenu} class="min-h-[100vh] bg-neutral-100">
 		<slot />
 	</span>
-	
+
 	<Footer />
 </body>
