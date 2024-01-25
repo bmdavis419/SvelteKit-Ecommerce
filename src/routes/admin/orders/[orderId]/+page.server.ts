@@ -15,7 +15,7 @@ type OrderDetails = {
 	customerInfo: Stripe.Checkout.Session.CustomerDetails;
 	email: string;
 	products: {
-		id: number;
+		id: string;
 		productSizeCode: string;
 		quantity: number;
 	}[];

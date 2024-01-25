@@ -7,7 +7,8 @@ import {
 	boolean,
 	timestamp,
 	varchar,
-	mysqlEnum
+	mysqlEnum,
+	datetime
 } from 'drizzle-orm/mysql-core';
 
 export const user = mysqlTable('user', {
@@ -37,6 +38,14 @@ export const sessionRelations = relations(session, ({ one }) => ({
 		references: [user.id]
 	})
 }));
+
+export const emailList = mysqlTable('email_list', {
+	email: varchar('email', { length: 255 }).primaryKey(),
+	subscribedAt: datetime('subscribed_at').notNull(),
+	unsubscribedAt: datetime('unsubscribed_at'),
+	// used to unsub
+	key: varchar('key', { length: 20 }).notNull()
+});
 
 export const product = mysqlTable('product', {
 	id: varchar('id', { length: 100 }).primaryKey(),
@@ -145,7 +154,7 @@ export const orderRelations = relations(order, ({ many }) => ({
 }));
 
 export const orderProduct = mysqlTable('order_product', {
-	id: int('id').primaryKey().autoincrement(),
+	id: varchar('id', { length: 20 }).primaryKey(),
 	productSizeCode: varchar('product_size_code', { length: 100 }).notNull(),
 	quantity: int('quantity').notNull(),
 	orderId: varchar('order_id', { length: 100 }).notNull()

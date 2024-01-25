@@ -1,3 +1,4 @@
+import { generateId } from 'lucia';
 import { db } from '../db';
 import { order, orderProduct } from '../db/schema';
 
@@ -16,14 +17,14 @@ export const createNewOrder = async (data: {
 	customerId: string | null;
 	totalPrice: number;
 }) => {
-	const nOrder = await db.insert(order).values({
+	await db.insert(order).values({
 		stripeOrderId: data.orderId,
 		stripeCustomerId: data.customerId,
 		totalPrice: data.totalPrice,
 		timestamp: new Date()
 	});
 
-	return nOrder.lastInsertRowid;
+	return data.orderId;
 };
 
 export const createNewOrderProduct = async (data: {
@@ -32,7 +33,9 @@ export const createNewOrderProduct = async (data: {
 	quantity: number;
 	status: 'placed' | 'fulfilled';
 }) => {
-	const nProduct = await db.insert(orderProduct).values(data);
+	const id = generateId(20);
 
-	return nProduct.lastInsertRowid;
+	await db.insert(orderProduct).values({ ...data, id });
+
+	return id;
 };
