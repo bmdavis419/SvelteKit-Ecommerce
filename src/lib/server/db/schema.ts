@@ -51,8 +51,15 @@ export const product = mysqlTable('product', {
 	id: varchar('id', { length: 100 }).primaryKey(),
 	name: varchar('name', { length: 100 }).notNull(),
 	desc: text('desc').notNull(),
-	gradientColorStart: varchar('gradient_color_start', { length: 10 }).notNull().default('black'),
-	gradientColorStop: varchar('gradient_color_end', { length: 10 }).notNull().default('blue')
+	gradientColorStart: varchar('gradient_color_start', { length: 20 })
+		.notNull()
+		.default('from-red-600'),
+	gradientColorVia: varchar('gradient_color_via', { length: 20 })
+		.notNull()
+		.default('via-purple-500'),
+	gradientColorStop: varchar('gradient_color_end', { length: 20 })
+		.notNull()
+		.default('to-indigo-400')
 });
 
 export const productRelations = relations(product, ({ many }) => ({
