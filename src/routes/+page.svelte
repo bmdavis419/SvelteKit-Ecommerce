@@ -123,7 +123,7 @@
 				}
 			],
 			dark: false,
-			collectionTag: 'Natural'
+			collectionTag: 'Sediment Collection'
 		}}
 	/>
 	<!-- <ImageCollection

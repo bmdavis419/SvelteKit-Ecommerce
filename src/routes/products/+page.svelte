@@ -23,6 +23,7 @@
 
 	export let data;
 
+	console.log(data.products)
 	let searchResults: { tagName: string; tagDesc: string }[] = [];
 
 	let debounceTimer: NodeJS.Timeout | undefined;
@@ -100,6 +101,8 @@
 	}
 
 	$: selected = ($page.state as any).selected;
+
+	
 </script>
 
 <!-- MODAL -->
@@ -116,7 +119,7 @@
 	</button>
 {/if}
 
-<main class="w-full p-6 flex flex-col sm:gap-4">
+<main class="w-full sm:p-6 flex flex-col sm:gap-4">
 	<div class="flex flex-row w-full sm:hidden gap-2 px-2 justify-center">
 		<Tabs class="w-1/2">
 			<TabsList class="flex flex-row rounded-full py-3 bg-gray-800/80">
@@ -246,7 +249,11 @@
 			{/each}
 		</div>
 	</div> -->
-	<div class="flex flex-row items-left sm:col-span-4 sm:gap-4 flex-wrap sm:place-content-start place-content-evenly">
+	<div class="font-jura p-2">
+		<span class="text-3xl text-black">{data.collectionInfo.name}.</span>
+		<span class="text-2xl text-gray-800">{data.collectionInfo.tagline}</span>
+	</div>
+	<div class="flex flex-row items-left sm:col-span-4 flex-wrap sm:place-content-start place-content-evenly">
 		{#each data.products as product}
 			<ProductCard
 				itemData={{
@@ -255,13 +262,11 @@
 					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
 					tags: product.tags.map((tag) => tag.tagId),
 					selectTag: addParam,
-					displayMode: displayMode
+					displayMode: displayMode,
+					sizes: product.sizes,
+					desc: product.desc
 				}}
 			/>
-		{/each}
-	</div>
-	<div class="flex flex-row items-left sm:col-span-4 sm:gap-4 flex-wrap sm:place-content-end place-content-evenly">
-		{#each data.products as product}
 			<ProductCard
 				itemData={{
 					name: product.name,
@@ -269,9 +274,24 @@
 					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
 					tags: product.tags.map((tag) => tag.tagId),
 					selectTag: addParam,
-					displayMode: displayMode
+					displayMode: displayMode,
+					sizes: product.sizes,
+					desc: product.desc
+				}}
+			/>
+			<ProductCard
+				itemData={{
+					name: product.name,
+					productId: product.id,
+					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
+					tags: product.tags.map((tag) => tag.tagId),
+					selectTag: addParam,
+					displayMode: displayMode,
+					sizes: product.sizes,
+					desc: product.desc
 				}}
 			/>
 		{/each}
 	</div>
+	
 </main>
