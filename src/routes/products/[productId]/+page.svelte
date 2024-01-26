@@ -27,9 +27,36 @@
 </script>
 
 <div class="grow flex flex-col sm:pt-10 w-full">
+	<!-- MOBILE -->
+	<div class="w-full flex flex-col justify-center items-center gap-y-2 overflow-hidden sm:hidden">
+		<!-- images section mobile -->
+		<div class="w-screen overflow-hidden relative">
+			<div
+				class="overflow-x-auto snap-x snap-mandatory scroll-smooth flex slides w-full"
+				on:scroll={(e) => handleScrollTop(e)}
+				bind:this={scrollSection}
+			>
+				{#each data.product.images as image}
+					<div class="snap-start w-full transform origin-center shrink-0">
+						<CldImage src={image.cloudinaryId} width={1000} height={1000} objectFit="cover" />
+					</div>
+				{/each}
+			</div>
+			<div class="absolute bottom-3 left-1/2 translate-x-[-50%] flex gap-x-2">
+				{#each data.product.images as _, i}
+					<button
+						on:click={() => handleSetTopScroll(i)}
+						class={`w-[10px] h-[10px] ${
+							i === curIdx && 'bg-white'
+						} rounded-full border border-white`}
+					/>
+				{/each}
+			</div>
+		</div>
+	</div>
 	<!-- DESKTOP -->
-	<div class="h-full mx-10 hidden sm:grid grid-cols-4">
-		<div class="col-span-3 p-4 relative h-[85vh]">
+	<div class="h-full sm:mx-10 mx-4 sm:grid sm:grid-cols-4 flex flex-col">
+		<div class="col-span-3 p-4 relative h-[85vh] hidden sm:flex">
 			{#each data.product.images as im, i}
 				<CldImage
 					src={im.cloudinaryId}
@@ -91,211 +118,81 @@
 			</button>
 		</div>
 
-		<div class="p-4 flex flex-col gap-6 h-[85vh] overflow-scroll no-scroll">
+		<div class="sm:p-4 py-6 flex flex-col gap-6 sm:h-[85vh] sm:overflow-scroll no-scroll">
 			<div
-				class="text-4xl font-jura bg-gradient-to-r from-red-600 via-purple-500 to-indigo-400 text-transparent bg-clip-text"
+				class={`text-4xl font-jura bg-gradient-to-r ${data.product.gradientColorStart} ${data.product.gradientColorVia} ${data.product.gradientColorStop} text-transparent bg-clip-text`}
 			>
 				{data.product.name}
 			</div>
 			<div class="text-lg text-gray-500 font-light">{data.product.desc}</div>
 			<div>
 				<span
-					class=" text-3xl font-jura bg-gradient-to-r from-red-600 via-purple-500 to-indigo-400 text-transparent bg-clip-text"
+					class={`text-3xl font-jura bg-gradient-to-r ${data.product.gradientColorStart} ${data.product.gradientColorVia} ${data.product.gradientColorStop} text-transparent bg-clip-text`}
 					>Sizes.</span
 				>
-				<span class=" text-2xl text-gray-500 font-jura">Which one do you need?</span>
+				<span class=" text-2xl text-gray-500 font-jura">Which one fits you best?</span>
 			</div>
 
 			{#each data.product.sizes as size, i}
-				<button
+			
+				<div class={`${size.isAvailable ? '' : 'opacity-50 pointer-events-none'} w-full rounded-lg ${selectedSizeIdx == i ? 'bg-gradient-to-r ' + data.product.gradientColorStart + ' ' + data.product.gradientColorVia + ' ' + data.product.gradientColorStop : ''} p-[2px]`}>
+					<button
 					on:click={() => (selectedSizeIdx = i)}
-					class={`${
-						selectedSizeIdx == i ? 'border-blue-500 border-2' : 'border-neutral-600/50 border-[1px]'
-					} w-full cursor-pointer p-6 bg-white rounded-lg flex flex-row justify-between items-center hover:bg-neutral-50  border-solid`}
+					class={`${selectedSizeIdx != i && size.isAvailable ? 'border-neutral-600/50 border-[1px]' : ''} w-full cursor-pointer p-6 bg-white rounded-md flex flex-row justify-between items-center hover:bg-neutral-50  border-solid`}
 				>
-					<div class="flex flex-col">
-						<div class="text-lg font-semibold">Small Square</div>
+					<div class="flex flex-col items-start">
+						<div class="text-lg font-semibold">{size.name}</div>
 						<div class="text-sm font-light">{size.width} x {size.height}</div>
 					</div>
 					<div>${size.price / 100}</div>
 				</button>
-			{/each}
-			<Card.Root class=" sm:flex hidden items-center justify-center flex-col">
-				<Card.Header class="text-xl font-bold tracking-wide">
-					{data.product.name}
-				</Card.Header>
-
-				<Card.Content class="font-light">
-					<p>{data.product.desc}</p>
-				</Card.Content>
-
-				<Card.Footer class="flex flex-col gap-y-4">
-					<div class="w-full flex flex-row justify-start gap-x-2">
-						<DropdownMenu.Root>
-							<DropdownMenu.Trigger>
-								<Button variant="outline">
-									{data.product.sizes[selectedSizeIdx].width} x {data.product.sizes[selectedSizeIdx]
-										.height}
-								</Button>
-							</DropdownMenu.Trigger>
-							<DropdownMenu.Content>
-								<DropdownMenu.Group>
-									<DropdownMenu.Label>Select a Size</DropdownMenu.Label>
-									<DropdownMenu.Separator />
-									{#each data.product.sizes as size, i}
-										<DropdownMenu.Item on:click={() => (selectedSizeIdx = i)}
-											>{size.width} x {size.height}</DropdownMenu.Item
-										>
-									{/each}
-								</DropdownMenu.Group>
-							</DropdownMenu.Content>
-						</DropdownMenu.Root>
-						<Button
-							disabled={data.isSoldOut}
-							on:click={() => {
-								addToCart({
-									productId: data.product.id,
-									productName: data.product.name,
-									productImage: data.product.images[0].cloudinaryId,
-									size: {
-										width: data.product.sizes[selectedSizeIdx].width,
-										height: data.product.sizes[selectedSizeIdx].height,
-										code: data.product.sizes[selectedSizeIdx].code,
-										stripePriceId: data.product.sizes[selectedSizeIdx].stripePriceId,
-										price: data.product.sizes[selectedSizeIdx].price
-									},
-									quantity: 1
-								});
-								addedProduct = true;
-								setTimeout(() => {
-									addedProduct = false;
-								}, 4000);
-							}}
-						>
-							{#if data.isSoldOut}
-								Sold Out
-							{:else}
-								Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}
-							{/if}
-						</Button>
-					</div>
-					<p class="text-xs italic font-light text-neutral-700">
-						NOTE: not all images are available in all sizes, to ensure maximum quality we limit the
-						sizes for each image
-					</p>
-				</Card.Footer>
-			</Card.Root>
-		</div>
-	</div>
-	<!-- MOBILE -->
-	<div class="w-full flex flex-col justify-center items-center gap-y-2 overflow-hidden lg:hidden">
-		<!-- images section mobile -->
-		<div class="w-screen overflow-hidden relative">
-			<div
-				class="overflow-x-auto snap-x snap-mandatory scroll-smooth flex slides w-full"
-				on:scroll={(e) => handleScrollTop(e)}
-				bind:this={scrollSection}
-			>
-				{#each data.product.images as image}
-					<div class="snap-start w-full transform origin-center shrink-0">
-						<CldImage src={image.cloudinaryId} width={1000} height={1000} objectFit="cover" />
-					</div>
-				{/each}
-			</div>
-			<div class="absolute bottom-3 left-1/2 translate-x-[-50%] flex gap-x-2">
-				{#each data.product.images as _, i}
-					<button
-						on:click={() => handleSetTopScroll(i)}
-						class={`w-[10px] h-[10px] ${
-							i === curIdx && 'bg-white'
-						} rounded-full border border-white`}
-					/>
-				{/each}
-			</div>
-		</div>
-
-		<Card.Root class=" border-0">
-			<Card.Header class="text-xl font-bold tracking-wide">
-				{data.product.name}
-			</Card.Header>
-
-			<Card.Content class="font-light">
-				<p>{data.product.desc}</p>
-			</Card.Content>
-
-			<Card.Footer class="flex flex-col gap-y-4">
-				<div class="w-full flex flex-row justify-start gap-x-2">
-					<DropdownMenu.Root>
-						<DropdownMenu.Trigger>
-							<Button variant="outline">
-								{data.product.sizes[selectedSizeIdx].width} x {data.product.sizes[selectedSizeIdx]
-									.height}
-							</Button>
-						</DropdownMenu.Trigger>
-						<DropdownMenu.Content>
-							<DropdownMenu.Group>
-								<DropdownMenu.Label>Select a Size</DropdownMenu.Label>
-								<DropdownMenu.Separator />
-								{#each data.product.sizes as size, i}
-									<DropdownMenu.Item on:click={() => (selectedSizeIdx = i)}
-										>{size.width} x {size.height}</DropdownMenu.Item
-									>
-								{/each}
-							</DropdownMenu.Group>
-						</DropdownMenu.Content>
-					</DropdownMenu.Root>
-					<Button
-						disabled={data.isSoldOut}
-						on:click={() => {
-							addToCart({
-								productId: data.product.id,
-								productName: data.product.name,
-								productImage: data.product.images[0].cloudinaryId,
-								size: {
-									width: data.product.sizes[selectedSizeIdx].width,
-									height: data.product.sizes[selectedSizeIdx].height,
-									code: data.product.sizes[selectedSizeIdx].code,
-									stripePriceId: data.product.sizes[selectedSizeIdx].stripePriceId,
-									price: data.product.sizes[selectedSizeIdx].price
-								},
-								quantity: 1
-							});
-
-							addedProduct = true;
-							setTimeout(() => {
-								addedProduct = false;
-							}, 4000);
-						}}
-					>
-						{#if data.isSoldOut}
-							Sold Out
-						{:else}
-							Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}
-						{/if}
-					</Button>
 				</div>
-				<p class="text-xs italic font-light text-neutral-700">
-					NOTE: not all images are available in all sizes, to ensure maximum quality we limit the
-					sizes for each image
-				</p>
-			</Card.Footer>
-		</Card.Root>
+				
+			{/each}
+			<Button
+				class={`bg-white drop-shadow-md hover:bg-black text-lg p-7 font-light`}
+				disabled={data.isSoldOut}
+				on:click={() => {
+					addToCart({
+						productId: data.product.id,
+						productName: data.product.name,
+						productImage: data.product.images[0].cloudinaryId,
+						size: {
+							width: data.product.sizes[selectedSizeIdx].width,
+							height: data.product.sizes[selectedSizeIdx].height,
+							code: data.product.sizes[selectedSizeIdx].code,
+							stripePriceId: data.product.sizes[selectedSizeIdx].stripePriceId,
+							price: data.product.sizes[selectedSizeIdx].price
+						},
+						quantity: 1
+					});
+					addedProduct = true;
+					setTimeout(() => {
+						addedProduct = false;
+					}, 4000);
+				}}
+			>
+			<div class={`bg-gradient-to-r ${data.product.gradientColorStart} ${data.product.gradientColorVia} ${data.product.gradientColorStop} text-transparent bg-clip-text `}>
+				{#if data.isSoldOut}
+				Sold Out
+				{:else}
+					Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}
+				{/if}
+			</div>
+				
+			</Button>
+			<div class="text-lg text-gray-500 font-light">
+				Order now and get an exclusive print for free as part of our launch event!
+			</div>
+		</div>
 	</div>
-	<div class="p-4">
-		<p class="font-light text-sm leading-5">
-			“Five groupings of fabrial have been discovered so far. The methods of their creation are
-			carefully guarded by the artifabrian community, but they appear to be the work of dedicated
-			scientists, as opposed to the more mystical Surgebindings once performed by the Knights
-			Radiant. I am more and more convinced that the creation of these devices requires forced
-			enslavement of transformative cognitive entities, known as “spren” to the local communities.”
-			Excerpt From Rhythm of War Brandon Sanderson.
-		</p>
-	</div>
+	
+	
 </div>
 
 {#if addedProduct}
 	<div transition:fade class="absolute bottom-12 right-12">
-		<Alert.Root class="w-[500px]">
+		<Alert.Root class="w-[500px] bg-black text-white">
 			<Alert.Title>Added to Your Cart!</Alert.Title>
 			<Alert.Description>Please proceed to the cart to checkout.</Alert.Description>
 		</Alert.Root>

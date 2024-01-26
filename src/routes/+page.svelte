@@ -95,7 +95,7 @@
 					name: 'Molten Moon',
 					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6', '11x11', '10.8x14.4'],
 					soldOutSizes: [],
-					link: '/products/my_first_product'
+					link: '/products/my_second_product'
 				},
 				{
 					cloudinaryId: 'txvp48xxnytjd024vnye',
@@ -103,7 +103,7 @@
 					name: 'Europan Frontier',
 					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6'],
 					soldOutSizes: ['11x11', '10.8x14.4'],
-					link: '/products/my_second_product'
+					link: '/products/my_first_product'
 				},
 				{
 					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
@@ -111,7 +111,7 @@
 					name: 'Molten Moon',
 					availableSizes: ['5x5', '4.8x6.4', '10.8x14.4'],
 					soldOutSizes: ['7.2x9.6', '11x11'],
-					link: '/products/my_first_product'
+					link: '/products/my_second_product'
 				},
 				{
 					cloudinaryId: 'txvp48xxnytjd024vnye',
@@ -119,14 +119,14 @@
 					name: 'Europan Frontier',
 					availableSizes: ['7.2x9.6', '11x11', '10.8x14.4'],
 					soldOutSizes: ['5x5', '4.8x6.4'],
-					link: '/products/my_second_product'
+					link: '/products/my_first_product'
 				}
 			],
 			dark: false,
 			collectionTag: 'Natural'
 		}}
 	/>
-	<ImageCollection
+	<!-- <ImageCollection
 		collectionData={{
 			name: 'Planes',
 			tagLine: 'Honor our history',
@@ -137,7 +137,7 @@
 					name: 'Molten Moon',
 					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6', '11x11', '10.8x14.4'],
 					soldOutSizes: [],
-					link: '/products/my_first_product'
+					link: '/products/my_second_product'
 				},
 				{
 					cloudinaryId: 'txvp48xxnytjd024vnye',
@@ -145,7 +145,7 @@
 					name: 'Europan Frontier',
 					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6'],
 					soldOutSizes: ['11x11', '10.8x14.4'],
-					link: '/products/my_second_product'
+					link: '/products/my_first_product'
 				},
 				{
 					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
@@ -153,7 +153,7 @@
 					name: 'Molten Moon',
 					availableSizes: ['5x5', '4.8x6.4', '10.8x14.4'],
 					soldOutSizes: ['7.2x9.6', '11x11'],
-					link: '/products/my_first_product'
+					link: '/products/my_second_product'
 				},
 				{
 					cloudinaryId: 'txvp48xxnytjd024vnye',
@@ -161,13 +161,13 @@
 					name: 'Europan Frontier',
 					availableSizes: ['7.2x9.6', '11x11', '10.8x14.4'],
 					soldOutSizes: ['5x5', '4.8x6.4'],
-					link: '/products/my_second_product'
+					link: '/products/my_first_product'
 				}
 			],
 			dark: true,
 			collectionTag: 'Aerospace'
 		}}
-	/>
+	/> -->
 	<!-- ig embedding cant tell if I like or not -->
 	<blockquote
 		class="instagram-media"

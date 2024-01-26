@@ -36,7 +36,24 @@
 	}
 </script>
 
-<div
+<a class="rounded-lg relative hover:scale-[102%] transition-all duration-[400ms] cursor-pointer" href={'/products/' + itemData.productId}>
+	<div class="absolute w-full h-full top-0 left-0 bg-gradient-to-br from-0% to-40% from-black/80 rounded-lg "></div>
+	<CldImage
+		width={355 * 2}
+		height={200 * 2}
+		crop="fill"
+		src={itemData.cloudinaryId || 'https://via.placeholder.com/355x200'}
+		alt="Description of my image"
+		sizes="100vw"
+		class="sm:rounded-lg shadow-md hidden sm:flex w-full"
+	/>
+	<div class="absolute top-5 left-5 font-jura">
+		<div class=" text-gray-300 text-md">{itemData.tags[0]}</div>
+		<div class=" text-white text-3xl">{itemData.name}</div>
+	</div>
+</a>
+
+<!-- <div
 	class={`flex sm:flex-row flex-col sm:items-center sm:gap-x-8 sm:gap-y-0 gap-y-2 sm:p-4 ${
 		itemData.displayMode == 'sm' ? 'w-[47%]' : 'w-[94%]'
 	} sm:w-full`}
@@ -69,15 +86,7 @@
 			</svg>
 		</div>
 		<a href={`/products/${itemData.productId}`}>
-			<CldImage
-				width={355 * 2}
-				height={200 * 2}
-				crop="fill"
-				src={itemData.cloudinaryId || 'https://via.placeholder.com/355x200'}
-				alt="Description of my image"
-				sizes="100vw"
-				class="sm:rounded-lg shadow-md hidden sm:flex"
-			/>
+			
 			<CldImage
 				width={355 * 4}
 				height={200 * 8}
@@ -126,4 +135,4 @@
 			More Information</Button
 		>
 	</div>
-</div>
+</div> -->

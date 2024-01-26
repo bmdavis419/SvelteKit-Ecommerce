@@ -116,7 +116,7 @@
 	</button>
 {/if}
 
-<main class="grow w-full sm:p-8 py-6 sm:container sm:grid sm:grid-cols-4 gap-4 flex flex-col">
+<main class="w-full p-6 flex flex-col sm:gap-4">
 	<div class="flex flex-row w-full sm:hidden gap-2 px-2 justify-center">
 		<Tabs class="w-1/2">
 			<TabsList class="flex flex-row rounded-full py-3 bg-gray-800/80">
@@ -210,7 +210,7 @@
 		  </Drawer>
 		
 	</div>
-	<div class="h-full col-span-1 sm:flex hidden">
+	<!-- <div class="h-full col-span-1 sm:flex hidden">
 		<div class="gap-1.5 grid relative">
 			<Label for="name">Filter by Tag</Label>
 			<Input
@@ -245,8 +245,22 @@
 				</Button>
 			{/each}
 		</div>
+	</div> -->
+	<div class="flex flex-row items-left sm:col-span-4 sm:gap-4 flex-wrap sm:place-content-start place-content-evenly">
+		{#each data.products as product}
+			<ProductCard
+				itemData={{
+					name: product.name,
+					productId: product.id,
+					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
+					tags: product.tags.map((tag) => tag.tagId),
+					selectTag: addParam,
+					displayMode: displayMode
+				}}
+			/>
+		{/each}
 	</div>
-	<div class="flex sm:flex-col flex-row items-left sm:col-span-3 flex-wrap place-content-evenly">
+	<div class="flex flex-row items-left sm:col-span-4 sm:gap-4 flex-wrap sm:place-content-end place-content-evenly">
 		{#each data.products as product}
 			<ProductCard
 				itemData={{
