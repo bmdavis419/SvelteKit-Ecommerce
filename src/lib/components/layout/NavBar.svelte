@@ -51,11 +51,11 @@
 		<div class="flex flex-col p-6 overflow-y-scroll">
 			<div class="px-4 py-0 rounded-md text-gray-500 font-extralight text-sm">Pieces</div>
 			<a
-				href="/products/my_first_product"
+				href="/products/my_second_product"
 				class="px-4 py-3 rounded-md hover:text-gray-600 cursor-pointer font-jura">Molten Moon</a
 			>
 			<a
-				href="/products/my_second_product"
+				href="/products/my_first_product"
 				class="px-4 py-3 rounded-md hover:text-gray-600 cursor-pointer font-jura"
 				>Europan Frontier</a
 			>
@@ -63,9 +63,19 @@
 		<div class="flex flex-col p-6 overflow-y-scroll">
 			<div class="px-4 py-0 rounded-md text-gray-500 font-extralight text-sm">Collections</div>
 			<a
-				href="/products?tag=Natural"
+				href="/products"
+				class="px-4 py-3 rounded-md hover:text-gray-600 cursor-pointer font-jura"
+				>All Pieces</a
+			>
+			<a
+				href="/products?tag=Sediment Collection"
 				class="px-4 py-3 rounded-md hover:text-gray-600 cursor-pointer font-jura"
 				>Sediment Collection</a
+			>
+			<a
+				href="/products?tag=Honor Collection"
+				class="px-4 py-3 rounded-md hover:text-gray-600 cursor-pointer font-jura"
+				>Honor Collection</a
 			>
 		</div>
 	</div>
