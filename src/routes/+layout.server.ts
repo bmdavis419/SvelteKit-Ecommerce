@@ -11,6 +11,6 @@ export const load = async ({ locals }) => {
 
 	return {
 		user: locals.user,
-		isSoldOut: orders.length >= 10
+		isSoldOut: true
 	};
 };
