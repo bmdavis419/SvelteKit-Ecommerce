@@ -1,5 +1,8 @@
 import { fetchAllProducts } from '$lib/server/data/products';
+import { db } from '$lib/server/db/index.js';
+import { product, productSize } from '$lib/server/db/schema.js';
 import { parse } from 'csv-parse';
+import { generateId } from 'lucia';
 
 export const load = async () => {
 	const products = await fetchAllProducts(10, 0);
@@ -7,7 +10,7 @@ export const load = async () => {
 	return { products };
 };
 
-interface CSVRecord {
+type CSVRecord = {
 	'Price ID': string;
 	'Product ID': string;
 	'Product Name': string;
@@ -24,7 +27,7 @@ interface CSVRecord {
 	'Billing Scheme': string;
 	'Trial Period Days': number;
 	'Tax Behavior': string;
-}
+};
 
 export const actions = {
 	default: async (event) => {
@@ -34,10 +37,55 @@ export const actions = {
 
 		const csvData = await parseCSV(priceFile);
 
-		csvData.forEach((d) => {
-			console.log(d['Price ID'], ' ', d['Product ID'], ' ', d['Product Name']);
-			// TODO: add to DB
-		});
+		const createdProducts: {
+			name: string;
+			id: string;
+		}[] = [];
+
+		for (let i = 0; i < csvData.length; i++) {
+			const entry = csvData[i];
+
+			const entryProductName = entry['Product Name'].split(',')[0] ?? '';
+
+			const productIdx = createdProducts.findIndex((v) => v.name === entryProductName);
+			if (productIdx >= 0) {
+				await db.insert(productSize).values({
+					width: 5,
+					height: 5,
+					name: entry['Product Name'].split(',')[1].trim() ?? '',
+					price: entry.Amount * 100,
+					stripePriceId: entry['Price ID'],
+					stripeProductId: entry['Product ID'],
+					productId: createdProducts[productIdx].id,
+					code: generateId(50)
+				});
+			} else {
+				// create the product
+				const nId = generateId(40);
+
+				await db.insert(product).values({
+					id: nId,
+					name: entryProductName,
+					desc: ''
+				});
+
+				createdProducts.push({
+					name: entryProductName,
+					id: nId
+				});
+
+				await db.insert(productSize).values({
+					width: 5,
+					height: 5,
+					name: entry['Product Name'].split(',')[1].trim() ?? '',
+					price: entry.Amount * 100,
+					stripePriceId: entry['Price ID'],
+					stripeProductId: entry['Product ID'],
+					productId: nId,
+					code: generateId(50)
+				});
+			}
+		}
 
 		return { success: true };
 	}

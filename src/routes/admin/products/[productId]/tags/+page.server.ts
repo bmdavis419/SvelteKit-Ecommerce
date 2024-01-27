@@ -2,7 +2,6 @@ import { db } from '$lib/server/db';
 import { productTag, productToProductTag } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
 import { and, eq, like } from 'drizzle-orm';
-import { except } from 'drizzle-orm/sqlite-core';
 import { zfd } from 'zod-form-data';
 
 export const load = async ({ params }) => {
@@ -150,21 +149,25 @@ export const actions = {
 		}
 
 		// find all tags which are not currently applied to the product, but also fit the query
-		const searchedTags = db
+		const searchedTags = await db
 			.select({
 				tagName: productTag.name
 			})
 			.from(productTag)
 			.where(like(productTag.name, `%${res.data.query}%`));
-		const currentlySelected = db
+
+		const currentlySelected = await db
 			.select({
 				tagName: productToProductTag.tagId
 			})
 			.from(productToProductTag)
 			.where(eq(productToProductTag.productId, params.productId));
 
-		const tags = await except(searchedTags, currentlySelected).limit(6);
+		console.log(searchedTags);
+		console.log(currentlySelected);
 
-		return { tags };
+		// const tags = await except(searchedTags, currentlySelected).limit(6);
+
+		return { tags: searchedTags };
 	}
 };

@@ -15,6 +15,37 @@ export const load = async ({ params }) => {
 };
 
 export const actions = {
+	toggleVertical: async ({ request }) => {
+		const data = await request.formData();
+
+		const schema = zfd.formData({
+			cloudinaryId: zfd.text()
+		});
+
+		const res = schema.safeParse(data);
+
+		if (!res.success) {
+			error(400, res.error.name);
+		}
+
+		const cur = await db
+			.select({
+				isVertical: productImage.isVertical
+			})
+			.from(productImage)
+			.where(eq(productImage.cloudinaryId, res.data.cloudinaryId));
+
+		if (cur.length > 0) {
+			await db
+				.update(productImage)
+				.set({
+					isVertical: !cur[0].isVertical
+				})
+				.where(eq(productImage.cloudinaryId, res.data.cloudinaryId));
+		}
+
+		return { success: true };
+	},
 	markPrimary: async ({ request, params }) => {
 		const data = await request.formData();
 

@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db/index';
-import {  order, product, productTag, productToProductTag } from '$lib/server/db/schema';
+import { order, product, productTag, productToProductTag } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
 export const load = async ({ locals }) => {
@@ -11,10 +11,10 @@ export const load = async ({ locals }) => {
 		.from(order);
 
 	const collections = await db
-		.select({collection: productTag.name, name: product.name, id: product.id})
+		.select({ collection: productTag.name, name: product.name, id: product.id })
 		.from(productTag)
 		.innerJoin(productToProductTag, eq(productTag.name, productToProductTag.tagId))
-		.innerJoin(product, eq(product.id, productToProductTag.productId))
+		.innerJoin(product, eq(product.id, productToProductTag.productId));
 
 	const reducedCollections: {
 		collection: string;
@@ -22,30 +22,37 @@ export const load = async ({ locals }) => {
 			name: string;
 			id: string;
 		}[];
-	}[] = []
+	}[] = [];
 
-	collections.forEach(el => {
-		let found = false
-		reducedCollections.forEach(col => {
+	collections.forEach((el) => {
+		let found = false;
+		reducedCollections.forEach((col) => {
 			if (col.collection == el.collection) {
-				col.products.push({name: el.name, id: el.id})
-				found = true
+				col.products.push({ name: el.name, id: el.id });
+				found = true;
 			}
-		})
+		});
 		if (!found) {
 			reducedCollections.push({
 				collection: el.collection,
-				products: [{name: el.name, id: el.id}]
-			})
+				products: [{ name: el.name, id: el.id }]
+			});
 		}
-		found = false
-	})
+		found = false;
+	});
 
+	const pieces = await db
+		.select({
+			id: product.id,
+			name: product.name
+		})
+		.from(product);
 
 	return {
 		user: locals.user,
 		collections: reducedCollections,
 		isSoldOut: orders.length >= 10,
-		numberLeft: 9 - orders.length
+		numberLeft: 9 - orders.length,
+		pieces
 	};
 };

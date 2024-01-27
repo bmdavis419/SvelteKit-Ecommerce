@@ -18,32 +18,28 @@
 	};
 
 	const handleMobileMenu = () => {
-		const menu = document.getElementById('mobile-nav')
+		const menu = document.getElementById('mobile-nav');
 		menu?.classList.remove('opacity-0');
 		menu?.classList.remove('pointer-events-none');
 		menu?.classList.add('opacity-100');
-		
-	}
+	};
 
+	export let pieces: {
+		id: string;
+		name: string;
+	}[];
 </script>
 
 <nav
 	class={`sm:flex sm:flex-row items-center justify-between grid grid-cols-3 sm:px-12 p-4 sm:py-1 w-full text-black z-20 sticky top-0 bg-white`}
 >
 	<button class="sm:hidden flex" on:click={() => handleMobileMenu()}>
-		<svg
-			
-			width="22"
-			height="11"
-			viewBox="0 0 22 11"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="22" height="11" viewBox="0 0 22 11" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path d="M1 1H21" stroke="#444444" stroke-width="1" stroke-linecap="round" />
 			<path d="M1 10H21" stroke="#444444" stroke-width="1" stroke-linecap="round" />
 		</svg>
 	</button>
-	
+
 	<div
 		class="h-[400px] bg-white hidden absolute drop-shadow-md border-t-[1px] border-solid border-neutral-300 w-full -mx-12 top-[78px] text-center z-50 grid grid-cols-3"
 		id="drop-menu"
@@ -60,21 +56,16 @@
 		</div>
 		<div class="flex flex-col p-6 overflow-y-scroll">
 			<div class="px-4 py-0 rounded-md text-gray-500 font-extralight text-sm">Pieces</div>
-			<a
-				href="/products/my_second_product"
-				class="px-4 py-3 rounded-md hover:text-gray-600 cursor-pointer font-jura">Molten Moon</a
-			>
-			<a
-				href="/products/my_first_product"
-				class="px-4 py-3 rounded-md hover:text-gray-600 cursor-pointer font-jura"
-				>Europan Frontier</a
-			>
+			{#each pieces as piece}
+				<a
+					href={`/products/${piece.id}`}
+					class="px-4 py-3 rounded-md hover:text-gray-600 cursor-pointer font-jura">{piece.name}</a
+				>
+			{/each}
 		</div>
 		<div class="flex flex-col p-6 overflow-y-scroll">
 			<div class="px-4 py-0 rounded-md text-gray-500 font-extralight text-sm">Collections</div>
-			<a
-				href="/products"
-				class="px-4 py-3 rounded-md hover:text-gray-600 cursor-pointer font-jura"
+			<a href="/products" class="px-4 py-3 rounded-md hover:text-gray-600 cursor-pointer font-jura"
 				>All Pieces</a
 			>
 			<a

@@ -9,13 +9,13 @@ export const load = async ({ url }) => {
 	const allTags = params.getAll('tag');
 
 	const collectionName = allTags.length == 0 ? 'All Products' : allTags[0];
-	let collectionTagline = 'Everything we have to offer.'
+	let collectionTagline = 'Everything we have to offer.';
 	switch (collectionName) {
 		case 'Sediment Collection':
-			collectionTagline = 'Elegance. Frozen in glass.'
-			break
+			collectionTagline = 'Elegance. Frozen in glass.';
+			break;
 		case 'Honor Collection':
-			collectionTagline = 'Crystallize your history.'
+			collectionTagline = 'Crystallize your history.';
 	}
 
 	const sq = db
@@ -34,17 +34,22 @@ export const load = async ({ url }) => {
 				orderBy: desc(productImage.isPrimary),
 				limit: 1
 			},
-			sizes:true
+			sizes: true
 		},
 		// TODO: Change to params
 		limit: 6,
 		offset: 0
 	});
 
-	return { products: newProductsQuery, collectionInfo: {
-		name: collectionName,
-		tagline: collectionTagline
-	} };
+	console.log(newProductsQuery);
+
+	return {
+		products: newProductsQuery,
+		collectionInfo: {
+			name: collectionName,
+			tagline: collectionTagline
+		}
+	};
 };
 
 export const actions = {

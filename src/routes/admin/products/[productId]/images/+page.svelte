@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { CldImage, CldUploadButton } from 'svelte-cloudinary';
-	import { FolderKanban, Trash, Crown } from 'lucide-svelte';
+	import { FolderKanban, Trash, Crown, ToggleRight } from 'lucide-svelte';
 	import { invalidateAll } from '$app/navigation';
 	import { deserialize } from '$app/forms';
 	import { enhance } from '$app/forms';
@@ -42,15 +42,15 @@
 	<div class="flex flex-row flex-wrap grow gap-4">
 		{#each data.images as image}
 			<div
-				class={`w-[300px] h-[200px] rounded-md overflow-hidden relative border-white ${
-					image.isPrimary && 'border-4'
-				}`}
+				class={`w-[300px] ${
+					image.isVertical ? 'h-[500px]' : 'h-[200px]'
+				} rounded-md overflow-hidden relative border-white ${image.isPrimary && 'border-4'}`}
 			>
 				<CldImage
 					alt={image.cloudinaryId}
 					src={image.cloudinaryId}
 					width={600}
-					height={400}
+					height={image.isVertical ? 1000 : 400}
 					objectFit="cover"
 				/>
 				<DropdownMenu.Root>
@@ -65,7 +65,7 @@
 							<DropdownMenu.Label>Manage Image</DropdownMenu.Label>
 							<DropdownMenu.Separator />
 							<DropdownMenu.Item asChild>
-								<form method="POST" use:enhance action="?/markPrimary" class="py-1">
+								<form method="POST" action="?/markPrimary" class="py-1">
 									<input type="hidden" name="cloudinaryId" value={image.cloudinaryId} />
 									<Button
 										size="sm"
@@ -75,6 +75,15 @@
 									>
 										<Crown class="w-4 h-4 mr-2" />
 										Set Primary
+									</Button>
+								</form>
+							</DropdownMenu.Item>
+							<DropdownMenu.Item asChild>
+								<form method="POST" action="?/toggleVertical" class="py-1">
+									<input type="hidden" name="cloudinaryId" value={image.cloudinaryId} />
+									<Button size="sm" type="submit" class="flex w-full justify-start">
+										<ToggleRight class="w-4 h-4 mr-2" />
+										Toggle Vertical
 									</Button>
 								</form>
 							</DropdownMenu.Item>

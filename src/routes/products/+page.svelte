@@ -157,46 +157,8 @@
 			<TabsContent value="account" />
 			<TabsContent value="password" />
 		</Tabs>
-		
-		
-		
 	</div>
-	<!-- <div class="h-full col-span-1 sm:flex hidden">
-		<div class="gap-1.5 grid relative">
-			<Label for="name">Filter by Tag</Label>
-			<Input
-				name="name"
-				required
-				id="name"
-				type="text"
-				placeholder="Aerospace"
-				class="border-t-0 border-r-0 border-l-0 border-b rounded-none"
-				bind:value={searchQuery}
-			/>
-			<div
-				class={`w-full absolute top-20 flex flex-col bg-neutral-200 rounded-md p-3 ${
-					searchResults.length === 0 && 'hidden'
-				}`}
-			>
-				{#each searchResults as result}
-					<Button variant="ghost" class="w-full" on:click={() => addParam(result.tagName)}
-						>{result.tagName}</Button
-					>
-				{/each}
-			</div>
-		</div>
-		<div class="pt-8 flex flex-wrap gap-2">
-			{#each $page.url.searchParams.getAll('tag') as tag}
-				<Button
-					class="text-lg font-light hover:cursor-pointer rounded-full"
-					on:click={() => removeParam(tag)}
-				>
-					<X class="w-4 h-4 mr-2" />
-					{tag}
-				</Button>
-			{/each}
-		</div>
-	</div> -->
+
 	<div class="font-jura p-2">
 		<span class="sm:text-3xl text-2xl text-black">{data.collectionInfo.name}.</span>
 		<span class="sm:text-2xl text-xl text-gray-800">{data.collectionInfo.tagline}</span>

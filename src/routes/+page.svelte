@@ -21,6 +21,8 @@
 		homepageImage4Mobile
 	];
 
+	export let data;
+
 	setInterval(() => {
 		imgNum++;
 
@@ -39,28 +41,14 @@
 				<h2 class="sm:text-5xl text-3xl font-jura">Sediment Collection</h2>
 			</div>
 			<h4 class="font-light sm:text-3xl text-xl font-jura">Beauty. Crystallized.</h4>
-			<a class="uppercase bg-black mt-14 px-7 py-3 font-light" href="/products?tag=Sediment Collection">
+			<a
+				class="uppercase bg-black mt-14 px-7 py-3 font-light"
+				href="/products?tag=Sediment Collection"
+			>
 				shop now</a
 			>
 		</div>
-		<!-- <div class="w-full h-full bg-black z-0 sm:opacity-40" /> -->
-		<!-- <CldImage
-			class="hidden sm:flex"
-			src="g0ofgea8kro1fkhy23my"
-			width={1500 * 2}
-			height={1500 * 2}
-			objectFit="cover"
-			gravity="east"
-		/> -->
-		<!-- <CldImage
-			class="sm:hidden flex z-10"
-			src="g2tjxnmuqtgbkxhezgfm"
-			width={430}
-			height={660}
-			gravity="east"
-			objectFit="fill"
-			sizes="100vw"
-		/> -->
+
 		<div class="absolute bottom-0 left-1/2 translate-x-[-50%] p-4">
 			<div class="flex gap-x-2">
 				{#each imgs as _, i}
@@ -84,48 +72,9 @@
 			src={mobileImgs[imgNum]}
 		/>
 	</div>
-	<ImageCollection
-		collectionData={{
-			name: 'Rocks',
-			tagLine: 'With a personality',
-			productInfo: [
-				{
-					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
-					secondaryCloudinary: 'koma4m6czs9xduorosab',
-					name: 'Molten Moon',
-					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6', '11x11', '10.8x14.4'],
-					soldOutSizes: [],
-					link: '/products/my_second_product'
-				},
-				{
-					cloudinaryId: 'txvp48xxnytjd024vnye',
-					secondaryCloudinary: 'u6qdncbwe8xmavmjxczl',
-					name: 'Europan Frontier',
-					availableSizes: ['5x5', '4.8x6.4', '7.2x9.6'],
-					soldOutSizes: ['11x11', '10.8x14.4'],
-					link: '/products/my_first_product'
-				},
-				{
-					cloudinaryId: 'gfgvqtml3oujz2biaf9a',
-					secondaryCloudinary: 'txvp48xxnytjd024vnye',
-					name: 'Molten Moon',
-					availableSizes: ['5x5', '4.8x6.4', '10.8x14.4'],
-					soldOutSizes: ['7.2x9.6', '11x11'],
-					link: '/products/my_second_product'
-				},
-				{
-					cloudinaryId: 'txvp48xxnytjd024vnye',
-					secondaryCloudinary: 'gfgvqtml3oujz2biaf9a',
-					name: 'Europan Frontier',
-					availableSizes: ['7.2x9.6', '11x11', '10.8x14.4'],
-					soldOutSizes: ['5x5', '4.8x6.4'],
-					link: '/products/my_first_product'
-				}
-			],
-			dark: false,
-			collectionTag: 'Sediment Collection'
-		}}
-	/>
+	{#each data.collections as collection}
+		<ImageCollection collectionData={collection} />
+	{/each}
 	<!-- <ImageCollection
 		collectionData={{
 			name: 'Planes',

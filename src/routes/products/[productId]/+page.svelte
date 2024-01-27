@@ -10,7 +10,11 @@
 	export let data;
 
 	let selectedSizeIdx = 0;
-	while (selectedSizeIdx < data.product.sizes.length && !data.product.sizes[selectedSizeIdx].isAvailable) selectedSizeIdx++
+	while (
+		selectedSizeIdx < data.product.sizes.length &&
+		!data.product.sizes[selectedSizeIdx].isAvailable
+	)
+		selectedSizeIdx++;
 
 	let addedProduct = false;
 
@@ -62,7 +66,7 @@
 				<CldImage
 					src={im.cloudinaryId}
 					width={2000}
-					height={1300}
+					height={1500}
 					objectFit="cover"
 					class={`rounded-lg h-full ${curIdx == i ? 'flex' : 'hidden'}`}
 				/>
@@ -135,20 +139,31 @@
 			</div>
 
 			{#each data.product.sizes as size, i}
-			
-				<div class={`${size.isAvailable ? '' : 'opacity-50 pointer-events-none'} w-full rounded-lg ${selectedSizeIdx == i ? 'bg-gradient-to-r ' + data.product.gradientColorStart + ' ' + data.product.gradientColorVia + ' ' + data.product.gradientColorStop : ''} p-[2px]`}>
-					<button
-					on:click={() => (selectedSizeIdx = i)}
-					class={`${selectedSizeIdx != i && size.isAvailable ? 'border-neutral-600/50 border-[1px]' : ''} w-full cursor-pointer p-6 bg-white rounded-md flex flex-row justify-between items-center hover:bg-neutral-50  border-solid`}
+				<div
+					class={`${size.isAvailable ? '' : 'opacity-50 pointer-events-none'} w-full rounded-lg ${
+						selectedSizeIdx == i
+							? 'bg-gradient-to-r ' +
+							  data.product.gradientColorStart +
+							  ' ' +
+							  data.product.gradientColorVia +
+							  ' ' +
+							  data.product.gradientColorStop
+							: ''
+					} p-[2px]`}
 				>
-					<div class="flex flex-col items-start">
-						<div class="text-lg font-semibold">{size.name}</div>
-						<div class="text-sm font-light">{size.width} x {size.height}</div>
-					</div>
-					<div>${size.price / 100}</div>
-				</button>
+					<button
+						on:click={() => (selectedSizeIdx = i)}
+						class={`${
+							selectedSizeIdx != i && size.isAvailable ? 'border-neutral-600/50 border-[1px]' : ''
+						} w-full cursor-pointer p-6 bg-white rounded-md flex flex-row justify-between items-center hover:bg-neutral-50  border-solid`}
+					>
+						<div class="flex flex-col items-start">
+							<div class="text-lg font-semibold">{size.name}</div>
+							<div class="text-sm font-light">{size.width} x {size.height}</div>
+						</div>
+						<div>${size.price / 100}</div>
+					</button>
 				</div>
-				
 			{/each}
 			<Button
 				class={`bg-white drop-shadow-md hover:bg-black text-lg p-7 font-light`}
@@ -173,22 +188,21 @@
 					}, 4000);
 				}}
 			>
-			<div class={`bg-gradient-to-r ${data.product.gradientColorStart} ${data.product.gradientColorVia} ${data.product.gradientColorStop} text-transparent bg-clip-text `}>
-				{#if data.isSoldOut}
-				Sold Out
-				{:else}
-					Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}
-				{/if}
-			</div>
-				
+				<div
+					class={`bg-gradient-to-r ${data.product.gradientColorStart} ${data.product.gradientColorVia} ${data.product.gradientColorStop} text-transparent bg-clip-text `}
+				>
+					{#if data.isSoldOut}
+						Sold Out
+					{:else}
+						Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}
+					{/if}
+				</div>
 			</Button>
 			<div class="text-lg text-gray-500 font-light">
 				Order now and get an exclusive print for free as part of our launch event!
 			</div>
 		</div>
 	</div>
-	
-	
 </div>
 
 {#if addedProduct}
