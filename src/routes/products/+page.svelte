@@ -163,20 +163,24 @@
 		<span class="sm:text-3xl text-2xl text-black">{data.collectionInfo.name}.</span>
 		<span class="sm:text-2xl text-xl text-gray-800">{data.collectionInfo.tagline}</span>
 	</div>
-	<div class="flex flex-row items-left sm:col-span-4 flex-wrap sm:place-content-start px-1">
-		{#each data.products as product}
-			<ProductCard
-				itemData={{
-					name: product.name,
-					productId: product.id,
-					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tagId),
-					selectTag: addParam,
-					displayMode: displayMode,
-					sizes: product.sizes,
-					desc: product.desc
-				}}
-			/>
-		{/each}
-	</div>
+	{#if data.products.length > 0}
+		<div class="flex flex-row items-left sm:col-span-4 flex-wrap sm:place-content-start px-1">
+			{#each data.products as product}
+				<ProductCard
+					itemData={{
+						name: product.name,
+						productId: product.id,
+						cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
+						tags: product.tags.map((tag) => tag.tagId),
+						selectTag: addParam,
+						displayMode: displayMode,
+						sizes: product.sizes,
+						desc: product.desc
+					}}
+				/>
+			{/each}
+		</div>
+	{:else}
+		<div><h2>coming soon...</h2></div>
+	{/if}
 </main>

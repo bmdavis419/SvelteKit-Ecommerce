@@ -46,9 +46,9 @@
 	>
 		<div class="col-span-1 w-full overflow-hidden">
 			<CldImage
-				width={350 * 2}
-				height={500 * 2}
-				src={'txvp48xxnytjd024vnye' || 'https://via.placeholder.com/355x200'}
+				width={500 * 2}
+				height={400 * 2}
+				src={'products/a3mazygrqkbbcoqnjszp' || 'https://via.placeholder.com/355x200'}
 				alt="Description of my image"
 				class="shadow-md"
 				sizes="100vw"
