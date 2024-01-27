@@ -17,23 +17,33 @@
 		document.getElementById('drop-menu')?.classList.remove('hidden');
 	};
 
-	const collections = [{}];
+	const handleMobileMenu = () => {
+		const menu = document.getElementById('mobile-nav')
+		menu?.classList.remove('opacity-0');
+		menu?.classList.remove('pointer-events-none');
+		menu?.classList.add('opacity-100');
+		
+	}
+
 </script>
 
 <nav
 	class={`sm:flex sm:flex-row items-center justify-between grid grid-cols-3 sm:px-12 p-4 sm:py-1 w-full text-black z-20 sticky top-0 bg-white`}
 >
-	<svg
-		class="sm:hidden flex"
-		width="22"
-		height="11"
-		viewBox="0 0 22 11"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-	>
-		<path d="M1 1H21" stroke="#444444" stroke-width="1" stroke-linecap="round" />
-		<path d="M1 10H21" stroke="#444444" stroke-width="1" stroke-linecap="round" />
-	</svg>
+	<button class="sm:hidden flex" on:click={() => handleMobileMenu()}>
+		<svg
+			
+			width="22"
+			height="11"
+			viewBox="0 0 22 11"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path d="M1 1H21" stroke="#444444" stroke-width="1" stroke-linecap="round" />
+			<path d="M1 10H21" stroke="#444444" stroke-width="1" stroke-linecap="round" />
+		</svg>
+	</button>
+	
 	<div
 		class="h-[400px] bg-white hidden absolute drop-shadow-md border-t-[1px] border-solid border-neutral-300 w-full -mx-12 top-[78px] text-center z-50 grid grid-cols-3"
 		id="drop-menu"

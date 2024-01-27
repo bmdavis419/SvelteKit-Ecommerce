@@ -39,7 +39,7 @@
 				<h2 class="sm:text-5xl text-3xl font-jura">Sediment Collection</h2>
 			</div>
 			<h4 class="font-light sm:text-3xl text-xl font-jura">Beauty. Crystallized.</h4>
-			<a class="uppercase bg-black mt-14 px-7 py-3 font-light" href="/products?tag=Natural">
+			<a class="uppercase bg-black mt-14 px-7 py-3 font-light" href="/products?tag=Sediment Collection">
 				shop now</a
 			>
 		</div>

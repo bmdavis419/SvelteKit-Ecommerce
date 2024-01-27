@@ -10,6 +10,7 @@
 	export let data;
 
 	let selectedSizeIdx = 0;
+	while (selectedSizeIdx < data.product.sizes.length && !data.product.sizes[selectedSizeIdx].isAvailable) selectedSizeIdx++
 
 	let addedProduct = false;
 
