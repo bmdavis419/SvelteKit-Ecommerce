@@ -33,7 +33,7 @@
 </svelte:head>
 
 <CldOgImage
-	src="xpihugvw2rd4bg94vl4q"
+	src="zuciphtmipytgdxgdkdu"
 	alt="Sediment Art, Beauty Crystalized"
 	twitterTitle="Sediment Art, Beauty Crystalized"
 />
