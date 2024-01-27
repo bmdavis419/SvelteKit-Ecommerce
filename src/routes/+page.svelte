@@ -73,10 +73,20 @@
 			src={mobileImgs[imgNum]}
 		/> -->
 	</div>
-	<div class="w-full">
-		<h2 class="font-jura sm:text-4xl text-3xl text-center py-8">Natural Beauty in Glass</h2>
-		<p class="font-jura text-xl text-center pb-12">
-			Artisan images of nature's art, preserved in glass.
+	<div class="w-full md:w-3/4 m-auto">
+		<h2 class="font-jura sm:text-4xl text-3xl text-center pt-8 pb-4">Natural Beauty in Glass</h2>
+		<p class=" text-lg text-center px-4 md:px-16 font-light">
+			What is this stunning artwork? They are photographs of rocks that are <span class="italic"
+				>millions</span
+			>
+			of years old, found in the United States,
+			<span class="italic">sliced and polished by hand.</span> Each rock has a unique story to tell.
+			James Cunningham Photography has turned them into works of art for your home.
+		</p>
+		<h2 class="font-jura sm:text-4xl text-3xl text-center pt-8 pb-4">Our Process</h2>
+		<p class=" text-lg text-center px-4 md:px-16 font-light pb-8">
+			Each piece is made to order, so once you order we will create your piece, get it packaged,
+			then have it sent out.
 		</p>
 	</div>
 	{#each data.collections as collection}

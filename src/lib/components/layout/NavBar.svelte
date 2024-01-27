@@ -3,9 +3,7 @@
 	import Logo from '$lib/client/images/logo_light.png';
 	import MobileLogo from '$lib/client/images/mobile_logo_light.png';
 	import { CldImage } from 'svelte-cloudinary';
-	import { page } from '$app/stores';
-	import { getCart, cartLengthStore } from '$lib/client/cart';
-	import { writable } from 'svelte/store';
+	import { cartLengthStore } from '$lib/client/cart';
 	export let user: {
 		firstName: string;
 		lastName: string;
@@ -41,7 +39,7 @@
 	</button>
 
 	<div
-		class="h-[400px] bg-white hidden absolute drop-shadow-md border-t-[1px] border-solid border-neutral-300 w-full -mx-12 top-[78px] text-center z-50 grid grid-cols-3"
+		class="h-[400px] bg-white absolute drop-shadow-md border-t-[1px] border-solid border-neutral-300 w-full -mx-12 top-[78px] text-center z-50 grid grid-cols-3"
 		id="drop-menu"
 	>
 		<div class="col-span-1 w-full overflow-hidden">
