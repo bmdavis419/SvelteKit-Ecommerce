@@ -213,6 +213,11 @@
 					d="M16 10a4 4 0 0 1-8 0"
 				/></svg
 			>
+			<div
+				class="bg-black text-white font-light text-xs rounded-full absolute -bottom-1 -right-1 w-4 h-4 flex items-center justify-center"
+			>
+				{$cartLengthStore}
+			</div>
 		</a>
 		{#if user?.isAdmin}
 			<Button variant="link" href="/admin/products">admin</Button>

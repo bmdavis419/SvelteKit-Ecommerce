@@ -63,8 +63,8 @@
 			{#each data.product.images as im, i}
 				<CldImage
 					src={im.cloudinaryId}
-					width={2000}
-					height={1500}
+					width={1500}
+					height={1200}
 					objectFit="cover"
 					class={`rounded-lg h-full ${curIdx == i ? 'flex' : 'hidden'}`}
 				/>
