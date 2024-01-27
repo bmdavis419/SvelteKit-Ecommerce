@@ -44,6 +44,7 @@
 		"@lucia-auth/adapter-drizzle": "1.0.0-beta.5",
 		"@planetscale/database": "^1.14.0",
 		"@radix-ui/react-dialog": "^1.0.5",
+		"@vercel/analytics": "^1.1.2",
 		"arctic": "^0.10.5",
 		"bits-ui": "^0.9.9",
 		"clsx": "^2.1.0",
