@@ -36,7 +36,7 @@
 	</a>
 
 	<div class="flex flex-row w-full sm:overflow-x-hidden flex-wrap gap-2 sm:justify-center">
-		{#each collectionData.productInfo as product}
+		{#each collectionData.productInfo.sort((a, b) => a.name.localeCompare(b.name)) as product}
 			<a
 				href={product.link}
 				class="flex flex-col lg:w-[22%] md:w-[30%] sm:w-[40%] w-full sm:p-3 rounded-md cursor-pointer"
