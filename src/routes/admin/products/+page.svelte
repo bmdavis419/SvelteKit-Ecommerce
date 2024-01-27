@@ -5,6 +5,8 @@
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { Trash, Edit, PlusSquare } from 'lucide-svelte';
 	import { fade } from 'svelte/transition';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
 
 	export let data;
 
@@ -76,6 +78,14 @@
 			New Product</Button
 		>
 	</div>
+	<form method="post" enctype="multipart/form-data">
+		<div class="grid w-full max-w-sm items-center gap-1.5">
+			<Label for="prices">Upload Prices CSV</Label>
+			<Input id="prices" type="file" name="prices" accept=".csv" required />
+		</div>
+
+		<Button type="submit">Submit</Button>
+	</form>
 </div>
 
 {#if showAlertSuccessDelete}

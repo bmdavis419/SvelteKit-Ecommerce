@@ -11,11 +11,7 @@
 	</Card.Header>
 	<Card.Content>
 		<div class="flex flex-col justify-center items-center w-full gap-4">
-			<Button href="/auth/login/github" class="w-full">
-				<Apple class="mr-2 h-4 w-4" />
-				Sign In With Apple
-			</Button>
-			<Button href="/auth/login/github" class="w-full">
+			<Button href="/auth/login/google" class="w-full">
 				<Chrome class="mr-2 h-4 w-4" />
 				Sign In With Google
 			</Button>

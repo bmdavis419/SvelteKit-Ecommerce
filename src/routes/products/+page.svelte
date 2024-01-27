@@ -17,8 +17,8 @@
 		DrawerFooter,
 		DrawerHeader,
 		DrawerTitle,
-		DrawerTrigger,
-	} from "../../lib/components/ui/drawer" 
+		DrawerTrigger
+	} from '../../lib/components/ui/drawer';
 	import { fade, fly } from 'svelte/transition';
 
 	export let data;
@@ -100,8 +100,6 @@
 	}
 
 	$: selected = ($page.state as any).selected;
-
-	
 </script>
 
 <!-- MODAL -->
@@ -217,31 +215,6 @@
 					desc: product.desc
 				}}
 			/>
-			<ProductCard
-				itemData={{
-					name: product.name,
-					productId: product.id,
-					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tagId),
-					selectTag: addParam,
-					displayMode: displayMode,
-					sizes: product.sizes,
-					desc: product.desc
-				}}
-			/>
-			<ProductCard
-				itemData={{
-					name: product.name,
-					productId: product.id,
-					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tagId),
-					selectTag: addParam,
-					displayMode: displayMode,
-					sizes: product.sizes,
-					desc: product.desc
-				}}
-			/>
 		{/each}
 	</div>
-	
 </main>

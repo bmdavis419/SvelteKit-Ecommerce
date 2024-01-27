@@ -1,14 +1,14 @@
 import { db } from '$lib/server/db/index';
-import {  product, productTag, productToProductTag } from '$lib/server/db/schema';
+import {  order, product, productTag, productToProductTag } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
 export const load = async ({ locals }) => {
 	// figure out how many orders have been added, and send down a valid boolean
-	// const orders = await db
-	// 	.select({
-	// 		id: order.stripeOrderId
-	// 	})
-	// 	.from(order);
+	const orders = await db
+		.select({
+			id: order.stripeOrderId
+		})
+		.from(order);
 
 	const collections = await db
 		.select({collection: productTag.name, name: product.name, id: product.id})
@@ -44,7 +44,8 @@ export const load = async ({ locals }) => {
 
 	return {
 		user: locals.user,
-		isSoldOut: true,
-		collections: reducedCollections
+		collections: reducedCollections,
+		isSoldOut: orders.length >= 10,
+		numberLeft: 9 - orders.length
 	};
 };

@@ -3,7 +3,8 @@ import { OAuth2RequestError } from 'arctic';
 import type { RequestEvent } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 import { user } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
+import { generateId } from 'lucia';
 
 export async function GET(event: RequestEvent): Promise<Response> {
 	const code = event.url.searchParams.get('code');
@@ -25,12 +26,8 @@ export async function GET(event: RequestEvent): Promise<Response> {
 		});
 		const githubUser: GitHubUser = await githubUserResponse.json();
 
-		const userId = 'github|' + githubUser.id;
-
-		// const existingUser = await b.table("user").where("github_id", "=", githubUser.id).get();
-		// const existingUser = await db.select().from(user).where(eq(user.id, userId))
 		const existingUser = await db.query.user.findFirst({
-			where: eq(user.id, userId)
+			where: and(eq(user.provider, 'github'), eq(user.providerId, githubUser.id))
 		});
 
 		if (existingUser) {
@@ -54,8 +51,11 @@ export async function GET(event: RequestEvent): Promise<Response> {
 			// TODO: clean this up...
 			if (primary) {
 				const nameParts = githubUser.name.split(' ');
+				const userId = generateId(40);
 				await db.insert(user).values({
 					id: userId,
+					provider: 'github',
+					providerId: githubUser.id,
 					email: primary.email,
 					firstName: nameParts[0] ?? '',
 					lastName: nameParts[1] ?? '',
