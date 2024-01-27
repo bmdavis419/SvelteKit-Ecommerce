@@ -41,8 +41,6 @@ export const load = async ({ url }) => {
 		offset: 0
 	});
 
-	console.log(newProductsQuery);
-
 	return {
 		products: newProductsQuery,
 		collectionInfo: {

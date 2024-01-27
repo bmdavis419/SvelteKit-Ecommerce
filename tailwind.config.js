@@ -56,7 +56,7 @@ const config = {
 			},
 			fontFamily: {
 				sans: [...fontFamily.sans],
-				jura: ['Jura']
+				jura: ['jura']
 			}
 		}
 	}

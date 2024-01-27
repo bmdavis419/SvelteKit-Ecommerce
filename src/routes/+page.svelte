@@ -1,32 +1,10 @@
 <script lang="ts">
 	import MobileLogo from '$lib/client/images/mobile_logo.png';
 	import ImageCollection from '$lib/components/ImageCollection.svelte';
-	import homepageImage1 from '$lib/assets/homepage_image1.png';
-	import homepageImage2 from '$lib/assets/homepage_image2.png';
-	import homepageImage3 from '$lib/assets/homepage_image3.png';
-	import homepageImage4 from '$lib/assets/homepage_image4.png';
-	import homepageImage1Mobile from '$lib/assets/homepage_image1_mobile.png';
-	import homepageImage2Mobile from '$lib/assets/homepage_image2_mobile.png';
-	import homepageImage3Mobile from '$lib/assets/homepage_image3_mobile.png';
-	import homepageImage4Mobile from '$lib/assets/homepage_image4_mobile.png';
+
 	import { CldImage } from 'svelte-cloudinary';
 
-	let imgNum: number = 0;
-	let imgs = [homepageImage1, homepageImage2, homepageImage3, homepageImage4];
-	let mobileImgs = [
-		homepageImage1Mobile,
-		homepageImage2Mobile,
-		homepageImage3Mobile,
-		homepageImage4Mobile
-	];
-
 	export let data;
-
-	setInterval(() => {
-		imgNum++;
-
-		if (imgNum == imgs.length) imgNum = 0;
-	}, 5000);
 </script>
 
 <main class="grow">
@@ -60,15 +38,14 @@
 				{/each}
 			</div>
 		</div> -->
-		<div
-			class="object-cover w-full h-[80vh] flex transition-all ease-in-out duration-300 bg-blue-400"
-		>
+		<div class="object-cover w-full h-[80vh] flex transition-all ease-in-out duration-300 bg-black">
 			<CldImage
 				src={'products/kmqvpskg70djyzlv6l0x'}
 				width={1920}
 				height={900}
 				objectFit="cover"
 				alt="home banner"
+				opacity={90}
 			/>
 		</div>
 		<!-- <img
