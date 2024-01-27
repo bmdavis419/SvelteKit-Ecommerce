@@ -17,13 +17,13 @@
 		DrawerFooter,
 		DrawerHeader,
 		DrawerTitle,
-		DrawerTrigger,
-	} from "../../lib/components/ui/drawer" 
+		DrawerTrigger
+	} from '../../lib/components/ui/drawer';
 	import { fade, fly } from 'svelte/transition';
 
 	export let data;
 
-	console.log(data.products)
+	console.log(data.products);
 	let searchResults: { tagName: string; tagDesc: string }[] = [];
 
 	let debounceTimer: NodeJS.Timeout | undefined;
@@ -101,8 +101,6 @@
 	}
 
 	$: selected = ($page.state as any).selected;
-
-	
 </script>
 
 <!-- MODAL -->
@@ -160,13 +158,12 @@
 			<TabsContent value="account" />
 			<TabsContent value="password" />
 		</Tabs>
-		
+
 		<Drawer>
 			<DrawerTrigger class="w-1/2 p-0 h-[40px]">
 				<div
 					class="rounded-full w-full h-[40px] bg-gray-800/80 flex flex-row justify-center items-center gap-3 text-md font-semibold uppercase"
 				>
-				
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="20"
@@ -199,19 +196,18 @@
 				</div>
 			</DrawerTrigger>
 			<DrawerContent>
-			  <DrawerHeader>
-				<DrawerTitle>Are you absolutely sure?</DrawerTitle>
-				<DrawerDescription>This action cannot be undone.</DrawerDescription>
-			  </DrawerHeader>
-			  <DrawerFooter>
-				<Button>Submit</Button>
-				<DrawerClose>
-				  <Button variant="outline">Cancel</Button>
-				</DrawerClose>
-			  </DrawerFooter>
+				<DrawerHeader>
+					<DrawerTitle>Are you absolutely sure?</DrawerTitle>
+					<DrawerDescription>This action cannot be undone.</DrawerDescription>
+				</DrawerHeader>
+				<DrawerFooter>
+					<Button>Submit</Button>
+					<DrawerClose>
+						<Button variant="outline">Cancel</Button>
+					</DrawerClose>
+				</DrawerFooter>
 			</DrawerContent>
-		  </Drawer>
-		
+		</Drawer>
 	</div>
 	<!-- <div class="h-full col-span-1 sm:flex hidden">
 		<div class="gap-1.5 grid relative">
@@ -253,32 +249,10 @@
 		<span class="text-3xl text-black">{data.collectionInfo.name}.</span>
 		<span class="text-2xl text-gray-800">{data.collectionInfo.tagline}</span>
 	</div>
-	<div class="flex flex-row items-left sm:col-span-4 flex-wrap sm:place-content-start place-content-evenly">
+	<div
+		class="flex flex-row items-left sm:col-span-4 flex-wrap sm:place-content-start place-content-evenly"
+	>
 		{#each data.products as product}
-			<ProductCard
-				itemData={{
-					name: product.name,
-					productId: product.id,
-					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tagId),
-					selectTag: addParam,
-					displayMode: displayMode,
-					sizes: product.sizes,
-					desc: product.desc
-				}}
-			/>
-			<ProductCard
-				itemData={{
-					name: product.name,
-					productId: product.id,
-					cloudinaryId: product.images.length > 0 ? product.images[0].cloudinaryId : null,
-					tags: product.tags.map((tag) => tag.tagId),
-					selectTag: addParam,
-					displayMode: displayMode,
-					sizes: product.sizes,
-					desc: product.desc
-				}}
-			/>
 			<ProductCard
 				itemData={{
 					name: product.name,
@@ -293,5 +267,4 @@
 			/>
 		{/each}
 	</div>
-	
 </main>

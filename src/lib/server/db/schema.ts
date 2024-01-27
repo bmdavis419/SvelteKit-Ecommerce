@@ -11,16 +11,24 @@ import {
 	datetime
 } from 'drizzle-orm/mysql-core';
 
-export const user = mysqlTable('user', {
-	// the id is in the following format: {PROVIDER}|{USER_ID}
-	// PROVIDER can be one of the following: "github", "google", "apple"
-	id: varchar('id', { length: 100 }).primaryKey(),
-	firstName: varchar('first_name', { length: 100 }).notNull(),
-	lastName: varchar('last_name', { length: 100 }).notNull(),
-	isAdmin: boolean('is_admin').notNull(),
-	email: varchar('email', { length: 100 }).notNull().unique(),
-	stripeCustomerId: varchar('stripe_customer_id', { length: 100 }).unique()
-});
+export const user = mysqlTable(
+	'user',
+	{
+		id: varchar('id', { length: 100 }).unique().notNull(),
+		provider: mysqlEnum('provider', ['google', 'github']).notNull(),
+		providerId: varchar('provider_id', { length: 255 }).notNull(),
+		firstName: varchar('first_name', { length: 100 }).notNull(),
+		lastName: varchar('last_name', { length: 100 }).notNull(),
+		isAdmin: boolean('is_admin').notNull(),
+		email: varchar('email', { length: 100 }).notNull().unique(),
+		stripeCustomerId: varchar('stripe_customer_id', { length: 100 }).unique()
+	},
+	(table) => {
+		return {
+			pk: primaryKey({ columns: [table.provider, table.providerId] })
+		};
+	}
+);
 
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session)
