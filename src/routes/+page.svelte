@@ -38,7 +38,9 @@
 				{/each}
 			</div>
 		</div> -->
-		<div class="object-cover w-full h-[80vh] flex transition-all ease-in-out duration-300 bg-black">
+		<div
+			class="object-cover w-full h-[80vh] hidden sm:flex transition-all ease-in-out duration-300 bg-black"
+		>
 			<CldImage
 				src={'products/kmqvpskg70djyzlv6l0x'}
 				width={1920}
@@ -46,6 +48,18 @@
 				objectFit="cover"
 				alt="home banner"
 				opacity={90}
+			/>
+		</div>
+		<div
+			class={`object-cover w-full h-[80vh] sm:hidden flex transition-all ease-in-out duration-300 bg-black`}
+		>
+			<CldImage
+				src={'products/qz1ekcqehcdqze9ahg5w'}
+				width={700}
+				height={1000}
+				objectFit="cover"
+				alt="home banner"
+				opacity={80}
 			/>
 		</div>
 		<!-- <img
