@@ -27,13 +27,18 @@
 	<div class="absolute w-screen h-screen z-40 bg-neutral-950 bg-opacity-90">
 		<button on:click={() => (showModal = false)} class="w-full h-full absolute" />
 		<div
-			class="flex shadow-md rounded-lg overflow-hidden w-3/5 bg-white z-50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-auto"
+			class="flex shadow-md rounded-lg overflow-hidden md:w-3/5 bg-white z-50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-auto w-full flex-col md:flex-row"
 		>
-			<div class="w-1/2">
-				<CldImage src="u79mr3xuxnalywollget" width={1200} height={1200} objectFit="cover" />
+			<div class="md:w-1/2">
+				<CldImage
+					src="products/wjpjrsoj5al37cg4fgku"
+					width={1000}
+					height={1000}
+					objectFit="cover"
+				/>
 			</div>
 
-			<div class="w-1/2 p-4 flex flex-col">
+			<div class="md:w-1/2 p-4 flex flex-col">
 				<div class="w-full flex justify-end">
 					<button
 						class="hover:bg-neutral-200 rounded-full p-1"

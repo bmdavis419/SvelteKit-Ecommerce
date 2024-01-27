@@ -46,6 +46,7 @@
 				<Table.Head class="w-[100px]">id</Table.Head>
 				<Table.Head>status</Table.Head>
 				<Table.Head>email</Table.Head>
+				<Table.Head>date</Table.Head>
 				<Table.Head class="text-right">amount</Table.Head>
 			</Table.Row>
 		</Table.Header>
@@ -80,6 +81,7 @@
 						</DropdownMenu.Root>
 					</Table.Cell>
 					<Table.Cell>{order.email}</Table.Cell>
+					<Table.Cell>{order.timestamp.toLocaleDateString()}</Table.Cell>
 					<Table.Cell class="text-right">${(order.totalPrice / 100).toFixed(2)}</Table.Cell>
 
 					<Table.Cell>

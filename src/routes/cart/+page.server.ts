@@ -24,6 +24,11 @@ export const actions = {
 			],
 			customer: customerId,
 			customer_creation: user && !customerId ? 'always' : undefined,
+			customer_update: customerId
+				? {
+						shipping: 'auto'
+				  }
+				: undefined,
 			metadata: {
 				codes: JSON.stringify(
 					body.map((item) => ({

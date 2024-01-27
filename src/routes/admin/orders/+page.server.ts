@@ -36,6 +36,7 @@ export const load = async () => {
 	for (let i = 0; i < orders.length; i++) {
 		const order = orders[i];
 
+		// TODO: deal with changing address case
 		const session = await stripe.checkout.sessions.retrieve(order.stripeOrderId);
 
 		if (session.customer_details) {
