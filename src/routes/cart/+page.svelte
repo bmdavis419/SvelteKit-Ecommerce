@@ -135,16 +135,19 @@
 									and get special offers?
 								</Dialog.Description>
 							</Dialog.Header>
-							<Dialog.Footer>
-								<Button type="button" on:click={() => goto('/auth/login')}>create account</Button>
-								<form
-									class="flex flex-row justify-center gap-x-5 w-full"
-									method="post"
-									on:submit|preventDefault={handleSubmit}
-								>
-									<Button type="submit">continue as guest</Button>
-								</form>
-							</Dialog.Footer>
+							<form
+								class="flex flex-row justify-center gap-x-5 w-full"
+								method="post"
+								on:submit|preventDefault={handleSubmit}
+							>
+								<Button type="submit" class="w-full">continue as guest</Button>
+							</form>
+							<Button
+								type="button"
+								on:click={() => goto('/auth/login')}
+								class="w-full"
+								variant="outline">create account</Button
+							>
 						</Dialog.Content>
 					</Dialog.Root>
 				{/if}
