@@ -17,7 +17,7 @@
 		<!-- Contact Information -->
 		<div class="w-full sm:w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 mb-4 sm:mb-0">
 			<h3 class=" font-semibold mb-2">Contact Us</h3>
-			<p>Email: support@sedimentart.com</p>
+			<p>Email: bmd.yt.channel@gmail.com</p>
 		</div>
 
 		<!-- Social Media Links -->
