@@ -73,7 +73,7 @@
 	<div class="w-full">
 		<h2 class="font-jura sm:text-4xl text-3xl text-center py-8">Natural Beauty in Glass</h2>
 		<p class="font-jura text-xl text-center pb-12">
-			Artisan images of the nature's art, preserved in glass.
+			Artisan images of nature's art, preserved in glass.
 		</p>
 	</div>
 	{#each data.collections as collection}
