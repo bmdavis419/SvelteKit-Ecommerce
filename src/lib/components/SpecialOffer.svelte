@@ -7,6 +7,8 @@
 	let showModal = false;
 
 	export let isSoldOut: boolean;
+
+	export let remaining: number;
 </script>
 
 <button
@@ -17,7 +19,7 @@
 	{#if isSoldOut}
 		Sold Out, Sign up to receive updates on when we will be back in stock!
 	{:else}
-		Launch event, only 10 pieces available, order now!
+		Launch event, only {remaining} pieces available, order now!
 	{/if}
 </button>
 

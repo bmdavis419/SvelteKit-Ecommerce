@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Moon from '$lib/client/images/moon.jpg';
-	import { CldImage } from 'svelte-cloudinary';
 	import MobileLogo from '$lib/client/images/mobile_logo.png';
 	import ImageCollection from '$lib/components/ImageCollection.svelte';
 	import homepageImage1 from '$lib/assets/homepage_image1.png';

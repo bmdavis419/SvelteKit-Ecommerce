@@ -1,10 +1,8 @@
 <script lang="ts">
 	import * as Alert from '$lib/components/ui/alert';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import * as Card from '$lib/components/ui/card';
 	import { CldImage } from 'svelte-cloudinary';
 	import { fade } from 'svelte/transition';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { addToCart } from '$lib/client/cart';
 
 	export let data;
@@ -74,7 +72,7 @@
 			<div class="absolute bottom-8 left-1/2 translate-x-[-50%] flex gap-x-2">
 				{#each data.product.images as _, i}
 					<button
-						on:click={() => handleSetTopScroll(i)}
+						on:click={() => (curIdx = i)}
 						class={`w-[10px] h-[10px] ${
 							i === curIdx && 'bg-white'
 						} rounded-full border border-white`}
@@ -123,16 +121,18 @@
 			</button>
 		</div>
 
-		<div class="sm:p-4 py-6 flex flex-col gap-6 sm:h-[85vh] sm:overflow-scroll no-scroll">
+		<div class="sm:p-4 py-6 flex flex-col gap-4 sm:h-[85vh] sm:overflow-scroll no-scroll">
 			<div
-				class={`text-4xl font-jura bg-gradient-to-r ${data.product.gradientColorStart} ${data.product.gradientColorVia} ${data.product.gradientColorStop} text-transparent bg-clip-text`}
+				class={`text-4xl font-jura text-transparent bg-clip-text`}
+				style={`background-image: linear-gradient(to right bottom, ${data.product.gradientColorStart}, ${data.product.gradientColorVia}, ${data.product.gradientColorStop} );`}
 			>
 				{data.product.name}
 			</div>
 			<div class="text-lg text-gray-500 font-light">{data.product.desc}</div>
 			<div>
 				<span
-					class={`text-3xl font-jura bg-gradient-to-r ${data.product.gradientColorStart} ${data.product.gradientColorVia} ${data.product.gradientColorStop} text-transparent bg-clip-text`}
+					class={`text-3xl font-jura   text-transparent bg-clip-text`}
+					style={`background-image: linear-gradient(to right bottom, ${data.product.gradientColorStart}, ${data.product.gradientColorVia}, ${data.product.gradientColorStop} );`}
 					>Sizes.</span
 				>
 				<span class=" text-2xl text-gray-500 font-jura">Which one fits you best?</span>
@@ -140,16 +140,13 @@
 
 			{#each data.product.sizes as size, i}
 				<div
-					class={`${size.isAvailable ? '' : 'opacity-50 pointer-events-none'} w-full rounded-lg ${
-						selectedSizeIdx == i
-							? 'bg-gradient-to-r ' +
-							  data.product.gradientColorStart +
-							  ' ' +
-							  data.product.gradientColorVia +
-							  ' ' +
-							  data.product.gradientColorStop
-							: ''
-					} p-[2px]`}
+					class={`${
+						size.isAvailable ? '' : 'opacity-50 pointer-events-none'
+					} w-full rounded-lg p-[2px]`}
+					style={`${
+						selectedSizeIdx === i &&
+						`background-image: linear-gradient(to right bottom, ${data.product.gradientColorStart}, ${data.product.gradientColorVia}, ${data.product.gradientColorStop} );`
+					}`}
 				>
 					<button
 						on:click={() => (selectedSizeIdx = i)}
@@ -189,7 +186,8 @@
 				}}
 			>
 				<div
-					class={`bg-gradient-to-r ${data.product.gradientColorStart} ${data.product.gradientColorVia} ${data.product.gradientColorStop} text-transparent bg-clip-text `}
+					class={` text-transparent bg-clip-text `}
+					style={`background-image: linear-gradient(to right bottom, ${data.product.gradientColorStart}, ${data.product.gradientColorVia}, ${data.product.gradientColorStop} );`}
 				>
 					{#if data.isSoldOut}
 						Sold Out
@@ -215,6 +213,8 @@
 {/if}
 
 <style>
+	.test {
+	}
 	.slides::-webkit-scrollbar-thumb {
 		background: black;
 		border-radius: 10px;

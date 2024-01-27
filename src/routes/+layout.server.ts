@@ -52,7 +52,7 @@ export const load = async ({ locals }) => {
 		user: locals.user,
 		collections: reducedCollections,
 		isSoldOut: orders.length >= 10,
-		numberLeft: 9 - orders.length,
+		numberLeft: 10 - orders.length,
 		pieces
 	};
 };

@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db';
-import { product, productImage } from '$lib/server/db/schema';
+import { product, productImage, productSize } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
-import { desc, eq } from 'drizzle-orm';
+import { and, asc, desc, eq } from 'drizzle-orm';
 
 export const load = async ({ params }) => {
 	const firstProduct = await db.query.product.findFirst({
@@ -9,14 +9,16 @@ export const load = async ({ params }) => {
 		with: {
 			images: {
 				orderBy: desc(productImage.isPrimary),
-				where: eq(productImage.isVertical, false)
+				where: and(eq(productImage.isVertical, false), eq(productImage.isPrimary, false))
 			},
 			tags: {
 				with: {
 					tag: true
 				}
 			},
-			sizes: true
+			sizes: {
+				orderBy: asc(productSize.price)
+			}
 		}
 	});
 
