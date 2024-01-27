@@ -9,6 +9,7 @@
 	import homepageImage2Mobile from '$lib/assets/homepage_image2_mobile.png';
 	import homepageImage3Mobile from '$lib/assets/homepage_image3_mobile.png';
 	import homepageImage4Mobile from '$lib/assets/homepage_image4_mobile.png';
+	import { CldImage } from 'svelte-cloudinary';
 
 	let imgNum: number = 0;
 	let imgs = [homepageImage1, homepageImage2, homepageImage3, homepageImage4];
@@ -47,7 +48,7 @@
 			>
 		</div>
 
-		<div class="absolute bottom-0 left-1/2 translate-x-[-50%] p-4">
+		<!-- <div class="absolute bottom-0 left-1/2 translate-x-[-50%] p-4">
 			<div class="flex gap-x-2">
 				{#each imgs as _, i}
 					<button
@@ -58,8 +59,19 @@
 					/>
 				{/each}
 			</div>
+		</div> -->
+		<div
+			class="object-cover w-full h-[80vh] flex transition-all ease-in-out duration-300 bg-blue-400"
+		>
+			<CldImage
+				src={'products/kmqvpskg70djyzlv6l0x'}
+				width={1920}
+				height={900}
+				objectFit="cover"
+				alt="home banner"
+			/>
 		</div>
-		<img
+		<!-- <img
 			class={`object-cover w-full h-[80vh] hidden sm:flex transition-all ease-in-out duration-300`}
 			alt="The project logo"
 			src={imgs[imgNum]}
@@ -68,7 +80,7 @@
 			class={`object-cover w-full h-[80vh] sm:hidden flex transition-all ease-in-out duration-300`}
 			alt="The project logo"
 			src={mobileImgs[imgNum]}
-		/>
+		/> -->
 	</div>
 	<div class="w-full">
 		<h2 class="font-jura sm:text-4xl text-3xl text-center py-8">Natural Beauty in Glass</h2>
