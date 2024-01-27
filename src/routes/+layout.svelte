@@ -4,6 +4,7 @@
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import SpecialOffer from '$lib/components/SpecialOffer.svelte';
 	import { navigating } from '$app/stores';
+	import { CldOgImage } from 'svelte-cloudinary';
 
 	export let data;
 	const handleRemoveMenu = () => {
@@ -23,9 +24,19 @@
 	}
 </script>
 
-<head>
-	<title>sediment</title>
-</head>
+<svelte:head>
+	<title>Sediment Art</title>
+	<meta
+		name="description"
+		content="Sediment Art, beauty crystalized and shipped straight to you."
+	/>
+</svelte:head>
+
+<CldOgImage
+	src="xpihugvw2rd4bg94vl4q"
+	alt="Sediment Art, Beauty Crystalized"
+	twitterTitle="Sediment Art, Beauty Crystalized"
+/>
 
 <body class="flex justify-between w-full flex-col min-h-screen">
 	<div

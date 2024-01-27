@@ -1,24 +1,10 @@
 <script lang="ts">
 	import { deserialize } from '$app/forms';
 	import ProductCard from '$lib/components/ProductCard.svelte';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
 	import { page } from '$app/stores';
 	import { goto, pushState } from '$app/navigation';
-	import { X } from 'lucide-svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../lib/components/ui/tabs';
 	import ProductPage from './[productId]/+page.svelte';
-	import {
-		Drawer,
-		DrawerClose,
-		DrawerContent,
-		DrawerDescription,
-		DrawerFooter,
-		DrawerHeader,
-		DrawerTitle,
-		DrawerTrigger
-	} from '../../lib/components/ui/drawer';
 	import { fade, fly } from 'svelte/transition';
 
 	export let data;
