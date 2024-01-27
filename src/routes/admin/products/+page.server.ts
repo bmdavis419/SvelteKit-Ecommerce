@@ -27,6 +27,9 @@ type CSVRecord = {
 	'Billing Scheme': string;
 	'Trial Period Days': number;
 	'Tax Behavior': string;
+	Code: string;
+	Width: number;
+	Height: number;
 };
 
 export const actions = {
@@ -50,14 +53,14 @@ export const actions = {
 			const productIdx = createdProducts.findIndex((v) => v.name === entryProductName);
 			if (productIdx >= 0) {
 				await db.insert(productSize).values({
-					width: 5,
-					height: 5,
 					name: entry['Product Name'].split(',')[1].trim() ?? '',
 					price: entry.Amount * 100,
 					stripePriceId: entry['Price ID'],
 					stripeProductId: entry['Product ID'],
 					productId: createdProducts[productIdx].id,
-					code: generateId(50)
+					width: entry.Width,
+					height: entry.Height,
+					code: entry.Code
 				});
 			} else {
 				// create the product
@@ -75,14 +78,14 @@ export const actions = {
 				});
 
 				await db.insert(productSize).values({
-					width: 5,
-					height: 5,
+					width: entry.Width,
+					height: entry.Height,
+					code: entry.Code,
 					name: entry['Product Name'].split(',')[1].trim() ?? '',
 					price: entry.Amount * 100,
 					stripePriceId: entry['Price ID'],
 					stripeProductId: entry['Product ID'],
-					productId: nId,
-					code: generateId(50)
+					productId: nId
 				});
 			}
 		}

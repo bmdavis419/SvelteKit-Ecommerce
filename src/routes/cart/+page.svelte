@@ -27,7 +27,9 @@
 	}
 </script>
 
-<div class="w-full h-[100vh] flex flex-row p-20 gap-x-16 bg-neutral-100">
+<div
+	class="w-full h-[100vh] flex md:flex-row md:p-20 md:gap-x-16 bg-neutral-100 flex-col gap-4 p-2"
+>
 	<Table.Root class="grow">
 		<Table.Caption>your cart</Table.Caption>
 		<Table.Header>
@@ -66,7 +68,7 @@
 		</Table.Body>
 	</Table.Root>
 
-	<Card.Root class="w-1/3">
+	<Card.Root class="md:w-1/3 w-full">
 		<Card.Header>
 			<Card.Title>your cart</Card.Title>
 			<Card.Description>all items currently in your cart</Card.Description>
@@ -85,7 +87,7 @@
 								};
 							}).size.price / 100
 					  ).toFixed(2)
-					: '$0.00'}
+					: '0.00'}
 			</h3>
 			<Separator />
 			<h3 class="py-3 italic">free shipping!</h3>

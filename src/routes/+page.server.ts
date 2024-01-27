@@ -41,7 +41,7 @@ export const load = async () => {
 	collections.forEach((c) => {
 		if (c.products.length > 0) {
 			sendData.push({
-				dark: false,
+				dark: true,
 				collectionTag: c.name,
 				name: c.name,
 				tagLine: c.desc,

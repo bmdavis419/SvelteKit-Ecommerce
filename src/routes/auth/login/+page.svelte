@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
-	import { Github, Apple, Chrome } from 'lucide-svelte';
+	import { Github, Chrome } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 </script>
 
@@ -11,9 +11,9 @@
 	</Card.Header>
 	<Card.Content>
 		<div class="flex flex-col justify-center items-center w-full gap-4">
-			<Button href="/auth/login/google" class="w-full">
+			<Button class="w-full bg-neutral-700">
 				<Chrome class="mr-2 h-4 w-4" />
-				Sign In With Google
+				Coming Soon...
 			</Button>
 			<Button href="/auth/login/github" class="w-full">
 				<Github class="mr-2 h-4 w-4" />
