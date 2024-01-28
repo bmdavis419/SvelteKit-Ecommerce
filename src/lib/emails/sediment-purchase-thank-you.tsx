@@ -2,7 +2,6 @@ import {
 	Body,
 	Container,
 	Head,
-	Hr,
 	Html,
 	Img,
 	Link,
@@ -13,20 +12,11 @@ import {
 import { Tailwind } from '@react-email/tailwind';
 import * as React from 'react';
 
-interface SedimentListThankYouProps {
-	key: string;
-	email: string;
-}
-
-const baseUrl = process.env.VERCEL_URL
-	? `https://${process.env.VERCEL_URL}`
-	: 'http://localhost:5173';
-
-export const SedimentListThankYou = ({ key, email }: SedimentListThankYouProps) => {
+export const SedimentPurchaseThankYou = () => {
 	return (
 		<Html>
 			<Head />
-			<Preview>Welcome to Sediment Art!</Preview>
+			<Preview>Sediment Art: Thank you for your order!</Preview>
 			<Tailwind>
 				<Body className="bg-white my-auto mx-auto font-sans px-2">
 					<Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[465px]">
@@ -39,14 +29,28 @@ export const SedimentListThankYou = ({ key, email }: SedimentListThankYouProps) 
 								className="my-0 mx-auto"
 							/>
 						</Section>
-						<Text className="text-black text-[14px] leading-[24px]">Welcome to Sediment Art! </Text>
+						<Text className="text-black text-[14px] leading-[24px]">Thank you for ordering!</Text>
+
 						<Text className="text-black text-[14px] leading-[24px]">
-							Dive into a world of captivating natural art, of rocks expertly photographed that are
-							millions of years old, encased in glass.
+							You are one of the very first (among the first 10) to order from us, and we could not
+							be more grateful. We have included for free an exclusive piece from a currently
+							unreleased collection that will be sent with your order.
+						</Text>
+						<Text className="text-black text-[14px] leading-[24px]">
+							We're thrilled to be getting one of our pieces in your hands. We'll keep you updated
+							as we get your order fulfilled.
+						</Text>
+						<Text className="text-black text-[14px] leading-[24px]">
+							Remember that our pieces are made to order, so expect at least a week before your's
+							arrives.
+						</Text>
+						<Text className="text-black text-[14px] leading-[24px]">
+							We use Fracture for our fulfillment, so your package will arrive in Fracture
+							packaging, as they have the best systems in place for keeping your glass pristine!
 						</Text>
 
 						<Text className="text-black text-[14px] leading-[24px]">
-							For updates and inquiries, reach us at{' '}
+							For inquiries, reach us at{' '}
 							<Link href="mailto:bmd.yt.channel@gmail.com">bmd.yt.channel@gmail.com</Link>
 						</Text>
 
@@ -55,13 +59,6 @@ export const SedimentListThankYou = ({ key, email }: SedimentListThankYouProps) 
 						<Text className="text-black text-[12px] leading-[4px] ml-1 italic">
 							Sediment Art Team
 						</Text>
-						<Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
-						<Link
-							className="text-[#666666] text-[12px] leading-[24px]"
-							href={`${baseUrl}/auth/list/remove?key=${key}&email=${email}`}
-						>
-							unsubscribe
-						</Link>
 					</Container>
 				</Body>
 			</Tailwind>
@@ -69,4 +66,4 @@ export const SedimentListThankYou = ({ key, email }: SedimentListThankYouProps) 
 	);
 };
 
-export default SedimentListThankYou;
+export default SedimentPurchaseThankYou;

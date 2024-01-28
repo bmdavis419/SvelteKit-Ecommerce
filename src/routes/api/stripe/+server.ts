@@ -2,6 +2,7 @@ import { env } from '$env/dynamic/private';
 import { createNewOrder, createNewOrderProduct } from '$lib/server/data/orders';
 import { db } from '$lib/server/db/index';
 import { user } from '$lib/server/db/schema';
+import { sendThankYouPurchaseEmail } from '$lib/server/resend.js';
 import { stripe } from '$lib/server/stripe';
 import { error, json } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
@@ -66,6 +67,10 @@ export const POST = async ({ request }) => {
 						status: 'placed',
 						orderId: sessionWithCustomer.id
 					});
+				}
+
+				if (sessionWithCustomer.customer_details?.email) {
+					await sendThankYouPurchaseEmail(sessionWithCustomer.customer_details.email);
 				}
 			}
 		}
