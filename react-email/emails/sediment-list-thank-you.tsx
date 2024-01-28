@@ -32,28 +32,29 @@ export const SedimentListThankYou = ({ key, email }: SedimentListThankYouProps) 
 					<Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[465px]">
 						<Section className="mt-[32px]">
 							<Img
-								src="https://res.cloudinary.com/insiderviz/image/upload/f_auto,q_auto/xpihugvw2rd4bg94vl4q"
+								src="https://res.cloudinary.com/insiderviz/image/upload/f_auto,q_auto/ly9xqkjkn8rat1l3lxex"
 								alt="Sediment Art"
 								width="300"
 								height="102"
 								className="my-0 mx-auto"
 							/>
 						</Section>
+						<Text className="text-black text-[14px] leading-[24px]">Welcome to Sediment Art! </Text>
 						<Text className="text-black text-[14px] leading-[24px]">
-							Welcome to Sediment Art! 🎨 Dive into a world of captivating natural art encased in
-							glass.
-						</Text>
-						<Text className="text-black text-[14px] leading-[24px]">
-							For updates and inquiries, reach us at{' '}
-							<Link href="mailto:support@sedimentart.com">support@sedimentart.com</Link>.
+							Dive into a world of captivating natural art, of rocks expertly photographed that are
+							millions of years old, encased in glass.
 						</Text>
 
 						<Text className="text-black text-[14px] leading-[24px]">
-							Let's create something extraordinary together!
+							For updates and inquiries, reach us at{' '}
+							<Link href="mailto:bmd.yt.channel@gmail.com">bmd.yt.channel@gmail.com</Link>
 						</Text>
-						<Text className="text-black text-[12px] leading-[4px]">Best,</Text>
-						<Text className="text-black text-[12px] leading-[4px]">Ben Davis</Text>
-						<Text className="text-black text-[12px] leading-[4px]">Sediment Art Team</Text>
+
+						<Text className="text-black text-[12px] leading-[4px] pt-4">Best,</Text>
+						<Text className="text-black text-[12px] leading-[4px] ml-1">Ben Davis</Text>
+						<Text className="text-black text-[12px] leading-[4px] ml-1 italic">
+							Sediment Art Team
+						</Text>
 						<Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
 						<Link
 							className="text-[#666666] text-[12px] leading-[24px]"

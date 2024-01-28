@@ -39,7 +39,7 @@
 	</button>
 
 	<div
-		class="h-[400px] bg-white absolute drop-shadow-md border-t-[1px] border-solid border-neutral-300 w-full -mx-12 top-[78px] text-center z-50 grid grid-cols-3"
+		class="h-[400px] bg-white absolute drop-shadow-md border-t-[1px] border-solid border-neutral-300 w-full -mx-12 top-[78px] text-center z-50 grid grid-cols-3 hidden"
 		id="drop-menu"
 	>
 		<div class="col-span-1 w-full overflow-hidden">
