@@ -29,7 +29,13 @@
 		}[];
 	};
 
-	let addedProduct = false;
+	const handleAddedToCart = () => {
+		const el = document.getElementById('added-to-cart')
+		el?.classList.remove('hidden')
+		setTimeout(() => {
+			el?.classList.add('hidden')
+		}, 4000);
+	}
 
 	let selectedSizeIdx = 0;
 	while (selectedSizeIdx < itemData.sizes.length && !itemData.sizes[selectedSizeIdx].isAvailable)
@@ -99,10 +105,7 @@
 						},
 						quantity: 1
 					});
-					addedProduct = true;
-					setTimeout(() => {
-						addedProduct = false;
-					}, 4000);
+					handleAddedToCart();
 				}}
 				class={`${
 					size.isAvailable
@@ -120,15 +123,6 @@
 	</div>
 </div>
 
-<!-- this thing doesnt really work -->
-{#if addedProduct}
-	<div transition:fade class="absolute bottom-12 right-12">
-		<Alert.Root class="w-[500px] bg-black text-white">
-			<Alert.Title>Added to Your Cart!</Alert.Title>
-			<Alert.Description>Please proceed to the cart to checkout.</Alert.Description>
-		</Alert.Root>
-	</div>
-{/if}
 
 <div
 	class={`flex sm:hidden flex-col sm:items-center sm:gap-x-8 sm:gap-y-0 gap-y-2 p-1 sm:p-4 ${
@@ -215,10 +209,7 @@
 									},
 									quantity: 1
 								});
-								addedProduct = true;
-								setTimeout(() => {
-									addedProduct = false;
-								}, 4000);
+								handleAddedToCart();
 							}}>Add to cart ${(itemData.sizes[selectedSizeIdx].price / 100).toFixed()}</Button
 						>
 						<Drawer.Close>Cancel</Drawer.Close>
@@ -329,10 +320,7 @@
 											},
 											quantity: 1
 										});
-										addedProduct = true;
-										setTimeout(() => {
-											addedProduct = false;
-										}, 4000);
+										handleAddedToCart();
 									}}>Add to cart ${(itemData.sizes[selectedSizeIdx].price / 100).toFixed()}</Button
 								>
 								<Drawer.Close>Cancel</Drawer.Close>

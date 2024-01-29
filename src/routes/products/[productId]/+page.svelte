@@ -1,5 +1,4 @@
 <script lang="ts">
-	import * as Alert from '$lib/components/ui/alert';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { CldImage } from 'svelte-cloudinary';
 	import { fade } from 'svelte/transition';
@@ -14,7 +13,13 @@
 	)
 		selectedSizeIdx++;
 
-	let addedProduct = false;
+	const handleAddedToCart = () => {
+		const el = document.getElementById('added-to-cart')
+		el?.classList.remove('hidden')
+		setTimeout(() => {
+			el?.classList.add('hidden')
+		}, 4000);
+	}
 
 	// for top section spinny thing
 	let curIdx = 0;
@@ -179,10 +184,7 @@
 						},
 						quantity: 1
 					});
-					addedProduct = true;
-					setTimeout(() => {
-						addedProduct = false;
-					}, 4000);
+					handleAddedToCart();
 				}}
 			>
 				<div
@@ -202,15 +204,6 @@
 		</div>
 	</div>
 </div>
-
-{#if addedProduct}
-	<div transition:fade class="absolute bottom-12 right-12">
-		<Alert.Root class="w-[500px] bg-black text-white">
-			<Alert.Title>Added to Your Cart!</Alert.Title>
-			<Alert.Description>Please proceed to the cart to checkout.</Alert.Description>
-		</Alert.Root>
-	</div>
-{/if}
 
 <style>
 	.test {

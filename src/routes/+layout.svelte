@@ -5,6 +5,8 @@
 	import SpecialOffer from '$lib/components/SpecialOffer.svelte';
 	import { navigating } from '$app/stores';
 	import { CldOgImage } from 'svelte-cloudinary';
+	import { fade } from 'svelte/transition';
+	import * as Alert from '$lib/components/ui/alert';
 
 	export let data;
 	const handleRemoveMenu = () => {
@@ -68,6 +70,12 @@
 				</div>
 			</div>
 		{/each}
+	</div>
+	<div transition:fade class="fixed sm:bottom-12 sm:right-12 bottom-1 right-0 z-[100] hidden" id="added-to-cart">
+		<Alert.Root class="w-[500px] bg-black text-white max-w-[100vw]">
+			<Alert.Title>Added to Your Cart!</Alert.Title>
+			<Alert.Description>Please proceed to the cart to checkout.</Alert.Description>
+		</Alert.Root>
 	</div>
 	<SpecialOffer isSoldOut={data.isSoldOut} remaining={data.numberLeft} />
 	<NavBar user={data.user} pieces={data.pieces} />

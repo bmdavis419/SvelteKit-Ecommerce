@@ -39,7 +39,7 @@
 	</button>
 
 	<div
-		class="h-[400px] bg-white absolute drop-shadow-md border-t-[1px] border-solid border-neutral-300 w-full -mx-12 top-[78px] text-center z-50 grid grid-cols-3 hidden"
+		class="h-[400px] bg-white absolute drop-shadow-md border-t-[1px] border-solid border-neutral-300 w-full -mx-12 top-[78px] text-center z-50 grid grid-cols-3 hidden no-scroll"
 		id="drop-menu"
 	>
 		<div class="col-span-1 w-full overflow-hidden">
@@ -222,3 +222,18 @@
 		{/if}
 	</div>
 </nav>
+<style>
+	.no-scroll::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	.no-scroll::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	.no-scroll {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+</style>
