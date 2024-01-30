@@ -73,6 +73,17 @@
 			src={mobileImgs[imgNum]}
 		/> -->
 	</div>
+	<div class="w-full flex flex-col py-4 px-2 bg-black text-white">
+		<h3 class="text-center font-jura text-5xl pb-8">What is Sediment Art?</h3>
+		<p class="text-center text-lg font-light pb-4">
+			We take photos of the natural beauty in nature and the world, and print them onto glass for
+			you to display in your home or office.
+		</p>
+
+		<p class="text-center text-lg font-light pb-8">
+			We sell made to order prints, and have them delivered right to your door.
+		</p>
+	</div>
 	<div class="w-full md:w-3/4 m-auto">
 		<h2 class="font-jura sm:text-4xl text-3xl text-center pt-8 pb-4">Natural Beauty in Glass</h2>
 		<p class=" text-lg text-center px-4 md:px-16 font-light">

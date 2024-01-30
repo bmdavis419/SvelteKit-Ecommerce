@@ -14,12 +14,12 @@
 		selectedSizeIdx++;
 
 	const handleAddedToCart = () => {
-		const el = document.getElementById('added-to-cart')
-		el?.classList.remove('hidden')
+		const el = document.getElementById('added-to-cart');
+		el?.classList.remove('hidden');
 		setTimeout(() => {
-			el?.classList.add('hidden')
+			el?.classList.add('hidden');
 		}, 4000);
-	}
+	};
 
 	// for top section spinny thing
 	let curIdx = 0;
@@ -194,7 +194,7 @@
 					{#if data.isSoldOut}
 						Sold Out
 					{:else}
-						Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed()}
+						Add to Cart ${(data.product.sizes[selectedSizeIdx].price / 100).toFixed(2)}
 					{/if}
 				</div>
 			</Button>

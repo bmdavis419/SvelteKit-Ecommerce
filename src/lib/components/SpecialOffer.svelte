@@ -72,7 +72,7 @@
 							Sediment Art is live, our first run of cohort 1 will only have 10 orders available, so
 							make sure to order soon!
 						</p>
-						<p>Every order will in cohort 1 will get a free exclusive print!</p>
+						<p>Every order of a Medium size (11x14 or 11x11) will receive free exclusive print!</p>
 						<div>
 							<Button
 								on:click={() => {

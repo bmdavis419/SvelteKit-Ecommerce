@@ -101,6 +101,7 @@
 				<path d="M7 21.7705L12 33.2288L17 21.7705H7Z" fill="black" />
 			</svg>
 		</a>
+		<a href="/about/faq" class="text-black uppercase font-jura flex flex-row items-center"> FAQ </a>
 		{#if user}
 			<a href="/profile">
 				<svg
@@ -222,6 +223,7 @@
 		{/if}
 	</div>
 </nav>
+
 <style>
 	.no-scroll::-webkit-scrollbar-track {
 		background: transparent;

@@ -30,45 +30,50 @@
 <div
 	class="w-full h-[100vh] flex md:flex-row md:p-20 md:gap-x-16 bg-neutral-100 flex-col gap-4 p-2"
 >
-	<Table.Root class="grow">
-		<Table.Caption>your cart</Table.Caption>
-		<Table.Header>
-			<Table.Row>
-				<Table.Head class="w-[300px]">name</Table.Head>
-				<Table.Head>size</Table.Head>
-				<Table.Head>quantity</Table.Head>
-				<Table.Head>price</Table.Head>
-				<Table.Head class="text-right">remove</Table.Head>
-			</Table.Row>
-		</Table.Header>
-		<Table.Body>
-			{#each cart as cartItem, i}
+	<div class="grow">
+		<Table.Root>
+			<Table.Header>
 				<Table.Row>
-					<Table.Cell class="font-medium flex flex-row items-center gap-x-2 w-[300px]">
-						<div class="w-[60px] h-[40px] rounded-lg overflow-hidden">
-							<CldImage src={cartItem.productImage} width={120} height={80} objectFit="cover" />
-						</div>
-						{cartItem.productName}</Table.Cell
-					>
-					<Table.Cell>{cartItem.size.width} x {cartItem.size.height}</Table.Cell>
-					<Table.Cell>{cartItem.quantity}</Table.Cell>
-					<Table.Cell>${(cartItem.size.price / 100).toFixed(2)}</Table.Cell>
-					<Table.Cell class="text-right"
-						><Button
-							on:click={() => {
-								removeFromCart(i);
-								cart = getCart();
-							}}
-						>
-							<Trash class="w-4 h-4" />
-						</Button></Table.Cell
-					>
+					<Table.Head class="w-[300px]">name</Table.Head>
+					<Table.Head>size</Table.Head>
+					<Table.Head>quantity</Table.Head>
+					<Table.Head>price</Table.Head>
+					<Table.Head class="text-right">remove</Table.Head>
 				</Table.Row>
-			{/each}
-		</Table.Body>
-	</Table.Root>
+			</Table.Header>
+			<Table.Body>
+				{#each cart as cartItem, i}
+					<Table.Row>
+						<Table.Cell class="font-medium flex flex-row items-center gap-x-2 w-[300px]">
+							<div class="w-[60px] h-[40px] rounded-lg overflow-hidden">
+								<CldImage src={cartItem.productImage} width={120} height={80} objectFit="cover" />
+							</div>
+							{cartItem.productName}</Table.Cell
+						>
+						<Table.Cell>{cartItem.size.width} x {cartItem.size.height}</Table.Cell>
+						<Table.Cell>{cartItem.quantity}</Table.Cell>
+						<Table.Cell>${(cartItem.size.price / 100).toFixed(2)}</Table.Cell>
+						<Table.Cell class="text-right"
+							><Button
+								on:click={() => {
+									removeFromCart(i);
+									cart = getCart();
+								}}
+							>
+								<Trash class="w-4 h-4" />
+							</Button></Table.Cell
+						>
+					</Table.Row>
+				{/each}
+			</Table.Body>
+		</Table.Root>
 
-	<Card.Root class="md:w-1/3 w-full">
+		<h1 class="text-lg italic w-full text-center">
+			All orders which include a Medium print (11x14 or 11x11) will include an exclusive free print!
+		</h1>
+	</div>
+
+	<Card.Root class="md:w-1/4 w-full">
 		<Card.Header>
 			<Card.Title>your cart</Card.Title>
 			<Card.Description>all items currently in your cart</Card.Description>
