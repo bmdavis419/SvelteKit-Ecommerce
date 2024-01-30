@@ -74,8 +74,8 @@
 		/> -->
 	</div>
 	<div class="w-full flex flex-col py-4 px-2 bg-black text-white">
-		<h3 class="text-center font-jura text-5xl pb-8">What is Sediment Art?</h3>
-		<p class="text-center text-lg font-light pb-4">
+		<h3 class="text-center font-jura text-5xl pb-8 px-3">What is Sediment Art?</h3>
+		<p class="text-center text-lg font-light pb-4 px-3">
 			We take photos of the natural beauty in nature and the world, and print them onto glass for
 			you to display in your home or office.
 		</p>
