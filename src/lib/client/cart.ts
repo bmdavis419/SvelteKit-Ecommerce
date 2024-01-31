@@ -46,6 +46,18 @@ export const addToCart = (data: TCartEntry) => {
 	}
 };
 
+export const decrementQuantity = (idx: number) => {
+	if (!browser) return;
+	
+	const cur = localStorage.getItem('cart');
+	if (cur) {
+		const items = JSON.parse(cur) as TCartEntry[];
+		items[idx].quantity -= 1
+		localStorage.setItem('cart', JSON.stringify(items));
+		
+	}
+}
+
 export const clearCart = () => {
 	if (!browser) return;
 

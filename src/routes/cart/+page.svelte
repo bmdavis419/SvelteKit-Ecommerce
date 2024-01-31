@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { clearCart, getCart, removeFromCart } from '$lib/client/cart';
+	import { clearCart, getCart, removeFromCart, addToCart, decrementQuantity } from '$lib/client/cart';
 	import { applyAction, deserialize } from '$app/forms';
 	import type { ActionResult } from '@sveltejs/kit';
 	import * as Table from '$lib/components/ui/table';
@@ -28,109 +28,115 @@
 </script>
 
 <div
-	class="w-full h-[100vh] flex md:flex-row md:p-20 md:gap-x-16 bg-neutral-100 flex-col gap-4 p-2"
+	class="w-full flex md:flex-row md:p-20 md:gap-x-16 bg-neutral-100 flex-col-reverse gap-4 "
 >
-	<div class="grow">
-		<Table.Root>
-			<Table.Header>
-				<Table.Row>
-					<Table.Head class="w-[300px]">name</Table.Head>
-					<Table.Head>size</Table.Head>
-					<Table.Head>quantity</Table.Head>
-					<Table.Head>price</Table.Head>
-					<Table.Head class="text-right">remove</Table.Head>
-				</Table.Row>
-			</Table.Header>
-			<Table.Body>
-				{#each cart as cartItem, i}
-					<Table.Row>
-						<Table.Cell class="font-medium flex flex-row items-center gap-x-2 w-[300px]">
-							<div class="w-[60px] h-[40px] rounded-lg overflow-hidden">
-								<CldImage src={cartItem.productImage} width={120} height={80} objectFit="cover" />
-							</div>
-							{cartItem.productName}</Table.Cell
-						>
-						<Table.Cell>{cartItem.size.width} x {cartItem.size.height}</Table.Cell>
-						<Table.Cell>{cartItem.quantity}</Table.Cell>
-						<Table.Cell>${(cartItem.size.price / 100).toFixed(2)}</Table.Cell>
-						<Table.Cell class="text-right"
-							><Button
-								on:click={() => {
-									removeFromCart(i);
-									cart = getCart();
-								}}
-							>
-								<Trash class="w-4 h-4" />
-							</Button></Table.Cell
-						>
-					</Table.Row>
-				{/each}
-			</Table.Body>
-		</Table.Root>
+	<div class="bg-white md:bg-transparent p-2 md:rounded-lg">
+		<div class="hidden md:flex text-3xl text-neutral-600">Shopping Cart</div>
+		<div class="flex flex-col md:flex-row flex-wrap">
+			{#each cart as cartItem, i}
+			<div class="w-full md:w-1/2 py-2 flex flex-row gap-2 p-2">
 
-		<h1 class="text-lg italic w-full text-center">
-			All orders which include a Medium print (11x14 or 11x11) will include an exclusive free print!
-		</h1>
+					<div class="w-1/2 md:w-2/3 rounded-lg overflow-hidden">
+						<CldImage src={cartItem.productImage} width={1000} height={1000} objectFit="cover" />
+					</div>
+					<div class="flex flex-col gap-1 w-1/2">
+						<div class="text-2xl md:text-4xl font-jura">{cartItem.productName}</div>
+						<div class="text-md text-neutral-600">{cartItem.size.width}" x {cartItem.size.height}"</div>
+						<div class="text-lg font-bold">${(cartItem.size.price / 100).toFixed(2)}</div>
+						<div class="flex flex-row items-center gap-3 ">
+							<Button variant='outline' disabled={cartItem.quantity == 0} on:click={() => {
+								decrementQuantity(i);
+								if (cartItem.quantity == 0) {
+									removeFromCart(i);
+								}
+								cart = getCart();
+							}}>-</Button>
+							{cartItem.quantity}
+							<Button variant='outline' on:click={() => {
+								addToCart(cartItem);
+								cart = getCart();
+							}}>+</Button>
+							
+						</div>
+						<Button variant='outline' class="p-0" on:click={() => {
+							removeFromCart(i);
+							cart = getCart();
+						}}>Delete</Button>
+					</div>
+				
+			</div>
+			
+			{/each}
+		</div>
+
+		
 	</div>
 
-	<Card.Root class="md:w-1/4 w-full">
-		<Card.Header>
-			<Card.Title>your cart</Card.Title>
-			<Card.Description>all items currently in your cart</Card.Description>
-		</Card.Header>
-		<Card.Content>
-			<h3 class="py-3">
-				total: ${cart.length > 0
+	<div class="w-full md:w-1/4 flex flex-col gap-3 md:bg-white md:rounded-lg h-fit p-4">
+		<div class="text-xl font-light">
+			Subtotal <span class="font-bold text-2xl">
+				${cart.length > 0
 					? (
 							cart.reduce((prev, curr) => {
 								return {
 									...prev,
 									size: {
 										...prev.size,
-										price: prev.size.price + curr.size.price
+										price: prev.size.price + curr.size.price * curr.quantity
 									}
 								};
 							}).size.price / 100
 					  ).toFixed(2)
 					: '0.00'}
-			</h3>
-			<Separator />
-			<h3 class="py-3 italic">free shipping!</h3>
-			<Separator />
-			<h5 class="italic text-sm font-light text-neutral-400 py-3">
-				taxes are calculated at checkout
-			</h5>
-		</Card.Content>
-		<Card.Footer>
-			<form
+			</span>
+		</div>
+		<div class="flex flex-row gap-1 text-neutral-500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="green"/>
+			</svg>
+			<div><span class="text-green-600">FREE shipping </span>on all launch collection orders</div></div>
+			
+		{#if cart.find(el => el.size.width >= 11) != undefined}
+			<div class="flex flex-row gap-1 text-neutral-500">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="green"/>
+					</svg>
+				<div><span class="text-green-600">Your order qualifies</span> for an exclusive FREE print	</div>
+			</div>
+		{:else}
+			<div class="text-neutral-500 italic w-full text-center">
+				All orders which include a Medium print (11x14 or 11x11) will include an exclusive free print, add one now!
+			</div>
+		{/if}
+		
+		<form
 				class="flex flex-row justify-center gap-x-5 w-full"
 				method="post"
 				on:submit|preventDefault={handleSubmit}
 			>
-				<Button
-					class=""
-					type="button"
-					on:click={() => {
-						clearCart();
-						cart = getCart();
-					}}
-				>
-					<XSquare class="w-4 h-4 mr-2" />
-					clear cart</Button
-				>
+				
 
 				{#if data.isSoldOut}
-					<Button type="submit" disabled={true}>sold out</Button>
+					<Button type="submit" disabled={true}>Sold out</Button>
 				{:else if data.user}
-					<Button type="submit">
-						<ShoppingBasket class="w-4 h-4 mr-2" />
-						checkout</Button
-					>
+					<Button disabled={cart.length == 0} class="bg-white md:bg-black drop-shadow-sm hover:bg-neutral-900 text-lg p-6 font-light rounded-lg">
+						<div class="text-transparent bg-clip-text bg-gradient-to-br from-[#dc2626] via-[#a855f7] to-[#818cf8] text-lg">
+							{cart.length > 0 ? `Proceed to checkout (${cart.length} item${cart.length == 1 ? '' : 's'})` : 'Please pick an item first'}
+						</div>
+					</Button>
+				{:else if cart.length == 0}
+					<Button disabled={cart.length == 0} class="bg-white md:bg-black drop-shadow-sm hover:bg-neutral-900 text-lg p-6 font-light rounded-lg">
+						<div class="text-transparent bg-clip-text bg-gradient-to-br from-[#dc2626] via-[#a855f7] to-[#818cf8] text-lg">
+							{cart.length > 0 ? `Proceed to checkout (${cart.length} items)` : 'Please pick an item first'}
+						</div>
+					</Button>
 				{:else}
 					<Dialog.Root>
-						<Dialog.Trigger class={buttonVariants({ variant: 'default' })}>
-							<ShoppingBasket class="w-4 h-4 mr-2" />
-							checkout</Dialog.Trigger
+						<Dialog.Trigger >
+							<Button class="bg-white md:bg-black drop-shadow-sm hover:bg-neutral-900 text-lg p-6 font-light rounded-lg">
+								<div class="text-transparent bg-clip-text bg-gradient-to-br from-[#dc2626] via-[#a855f7] to-[#818cf8] text-lg">
+									{cart.length > 0 ? `Proceed to checkout (${cart.length} item${cart.length == 1 ? '' : 's'})` : 'Please pick an item first'}
+								</div>
+							</Button></Dialog.Trigger
 						>
 						<Dialog.Content class="sm:max-w-[425px]">
 							<Dialog.Header>
@@ -145,18 +151,19 @@
 								method="post"
 								on:submit|preventDefault={handleSubmit}
 							>
-								<Button type="submit" class="w-full">continue as guest</Button>
+								<Button type="submit" class="w-full">Continue as guest</Button>
 							</form>
 							<Button
 								type="button"
 								on:click={() => goto('/auth/login')}
 								class="w-full"
-								variant="outline">create account</Button
+								variant="outline">Create account</Button
 							>
 						</Dialog.Content>
 					</Dialog.Root>
 				{/if}
 			</form>
-		</Card.Footer>
-	</Card.Root>
+	</div>
+
+
 </div>
