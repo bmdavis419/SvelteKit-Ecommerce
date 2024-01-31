@@ -22,13 +22,27 @@ export const addToCart = (data: TCartEntry) => {
 	const cur = localStorage.getItem('cart');
 	if (cur) {
 		const items = JSON.parse(cur) as TCartEntry[];
-		items.push(data);
+		// check if the item is already in the cart
+		const curIdx = items.findIndex((c) => c.productId === data.productId);
+		if (curIdx >= 0) {
+			items[curIdx].quantity += 1;
+		} else {
+			items.push(data);
+		}
 		localStorage.setItem('cart', JSON.stringify(items));
-		cartLengthStore.set(items.length);
+		let cartSize = 0;
+		items.forEach((item) => {
+			cartSize += item.quantity;
+		});
+		cartLengthStore.set(cartSize);
 	} else {
 		const items = [data];
 		localStorage.setItem('cart', JSON.stringify(items));
-		cartLengthStore.set(items.length);
+		let cartSize = 0;
+		items.forEach((item) => {
+			cartSize += item.quantity;
+		});
+		cartLengthStore.set(cartSize);
 	}
 };
 
@@ -47,7 +61,11 @@ export const removeFromCart = (idx: number) => {
 		const items = JSON.parse(cur) as TCartEntry[];
 		items.splice(idx, 1);
 		localStorage.setItem('cart', JSON.stringify(items));
-		cartLengthStore.set(items.length);
+		let cartSize = 0;
+		items.forEach((item) => {
+			cartSize += item.quantity;
+		});
+		cartLengthStore.set(cartSize);
 	}
 };
 
