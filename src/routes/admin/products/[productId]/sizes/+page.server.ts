@@ -1,10 +1,13 @@
+import { ensureAdmin } from '$lib/server/auth';
 import { db } from '$lib/server/db';
 import { productSize } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { zfd } from 'zod-form-data';
 
-export const load = async ({ params }) => {
+export const load = async ({ locals, params }) => {
+	ensureAdmin(locals);
+
 	const sizes = await db
 		.select()
 		.from(productSize)
@@ -14,7 +17,9 @@ export const load = async ({ params }) => {
 };
 
 export const actions = {
-	delete: async ({ request }) => {
+	delete: async ({ locals, request }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
@@ -32,7 +37,9 @@ export const actions = {
 		return { success: true };
 	},
 
-	edit: async ({ request }) => {
+	edit: async ({ locals, request }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
@@ -63,7 +70,9 @@ export const actions = {
 
 		return { success: true };
 	},
-	create: async ({ request, params }) => {
+	create: async ({ locals, request, params }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({

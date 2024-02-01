@@ -1,11 +1,14 @@
-import { error, redirect } from '@sveltejs/kit';
-import { zfd } from 'zod-form-data';
-import { generateId } from 'lucia';
+import { ensureAdmin } from '$lib/server/auth';
 import { db } from '$lib/server/db/index.js';
 import { product } from '$lib/server/db/schema.js';
+import { error, redirect } from '@sveltejs/kit';
+import { generateId } from 'lucia';
+import { zfd } from 'zod-form-data';
 
 export const actions = {
-	default: async ({ request }) => {
+	default: async ({ locals, request }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({

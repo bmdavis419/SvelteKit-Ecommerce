@@ -1,10 +1,13 @@
+import { ensureAdmin } from '$lib/server/auth';
 import { db } from '$lib/server/db';
 import { productImage } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
 import { desc, eq } from 'drizzle-orm';
 import { zfd } from 'zod-form-data';
 
-export const load = async ({ params }) => {
+export const load = async ({ locals, params }) => {
+	ensureAdmin(locals);
+
 	const images = await db
 		.select()
 		.from(productImage)
@@ -15,7 +18,9 @@ export const load = async ({ params }) => {
 };
 
 export const actions = {
-	toggleVertical: async ({ request }) => {
+	toggleVertical: async ({ locals, request }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
@@ -46,7 +51,9 @@ export const actions = {
 
 		return { success: true };
 	},
-	markPrimary: async ({ request, params }) => {
+	markPrimary: async ({ locals, request, params }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
@@ -75,7 +82,9 @@ export const actions = {
 
 		return { success: true };
 	},
-	delete: async ({ request }) => {
+	delete: async ({ locals, request }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
@@ -92,7 +101,9 @@ export const actions = {
 
 		return { success: true };
 	},
-	create: async ({ request, params }) => {
+	create: async ({ locals, request, params }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({

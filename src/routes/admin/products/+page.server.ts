@@ -1,10 +1,13 @@
+import { ensureAdmin } from '$lib/server/auth';
 import { fetchAllProducts } from '$lib/server/data/products';
 import { db } from '$lib/server/db/index.js';
 import { product, productSize } from '$lib/server/db/schema.js';
 import { parse } from 'csv-parse';
 import { generateId } from 'lucia';
 
-export const load = async () => {
+export const load = async ({ locals }) => {
+	ensureAdmin(locals);
+
 	const products = await fetchAllProducts(10, 0);
 
 	return { products };
@@ -34,6 +37,8 @@ type CSVRecord = {
 
 export const actions = {
 	default: async (event) => {
+		ensureAdmin(event.locals);
+
 		const formData = await event.request.formData();
 
 		const priceFile = formData.get('prices') as File;

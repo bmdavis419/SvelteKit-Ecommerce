@@ -1,3 +1,4 @@
+import { ensureAdmin } from '$lib/server/auth';
 import { db } from '$lib/server/db';
 import { order } from '$lib/server/db/schema';
 import { stripe } from '$lib/server/stripe';
@@ -21,7 +22,9 @@ type OrderDetails = {
 	}[];
 };
 
-export const load = async () => {
+export const load = async ({ locals }) => {
+	ensureAdmin(locals);
+
 	// grab the orders
 	const orders = await db.query.order.findMany({
 		orderBy: desc(order.timestamp),
@@ -62,7 +65,9 @@ function isOrderStatus(status: string): status is 'new' | 'placed' | 'packaged' 
 }
 
 export const actions = {
-	setStatus: async ({ request }) => {
+	setStatus: async ({ locals, request }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
