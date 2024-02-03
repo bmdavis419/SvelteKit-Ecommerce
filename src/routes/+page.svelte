@@ -41,6 +41,7 @@
 		<div
 			class="object-cover w-full h-[80vh] hidden sm:flex transition-all ease-in-out duration-300 bg-black"
 		>
+			<!-- CLD IMAGE SWITCH NEEDED -->
 			<CldImage
 				src={'products/kmqvpskg70djyzlv6l0x'}
 				width={1920}
@@ -53,6 +54,7 @@
 		<div
 			class={`object-cover w-full h-[80vh] sm:hidden flex transition-all ease-in-out duration-300 bg-black`}
 		>
+			<!-- CLD IMAGE SWITCH NEEDED -->
 			<CldImage
 				src={'products/qz1ekcqehcdqze9ahg5w'}
 				width={700}

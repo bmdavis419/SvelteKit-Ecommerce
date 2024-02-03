@@ -43,6 +43,7 @@
 		id="drop-menu"
 	>
 		<div class="col-span-1 w-full overflow-hidden">
+			<!-- CLD IMAGE SWITCH NEEDED -->
 			<CldImage
 				width={500 * 2}
 				height={400 * 2}

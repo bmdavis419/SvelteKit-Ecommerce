@@ -30,6 +30,7 @@
 			class="flex shadow-md rounded-lg overflow-hidden md:w-3/5 bg-white z-50 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-auto w-full flex-col md:flex-row"
 		>
 			<div class="md:w-1/2">
+				<!-- CLD IMAGE SWITCH NEEDED -->
 				<CldImage
 					src="products/wjpjrsoj5al37cg4fgku"
 					width={1000}
