@@ -1,10 +1,13 @@
+import { ensureAdmin } from '$lib/server/auth';
 import { db } from '$lib/server/db';
 import { productTag, productToProductTag } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
 import { and, eq, like } from 'drizzle-orm';
 import { zfd } from 'zod-form-data';
 
-export const load = async ({ params }) => {
+export const load = async ({ locals, params }) => {
+	ensureAdmin(locals);
+
 	const tagsRel = await db.query.productToProductTag.findMany({
 		where: eq(productToProductTag.productId, params.productId),
 		with: {
@@ -23,7 +26,9 @@ export const load = async ({ params }) => {
 };
 
 export const actions = {
-	removeTagFromProduct: async ({ request, params }) => {
+	removeTagFromProduct: async ({ locals, request, params }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
@@ -47,7 +52,9 @@ export const actions = {
 
 		return { success: true };
 	},
-	deleteTag: async ({ request }) => {
+	deleteTag: async ({ locals, request }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
@@ -67,7 +74,9 @@ export const actions = {
 
 		return { success: true };
 	},
-	createNewTag: async ({ request, params }) => {
+	createNewTag: async ({ locals, request, params }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
@@ -92,7 +101,9 @@ export const actions = {
 
 		return { success: true };
 	},
-	editTag: async ({ request }) => {
+	editTag: async ({ locals, request }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
@@ -115,7 +126,9 @@ export const actions = {
 
 		return { success: true };
 	},
-	addTagToProduct: async ({ request, params }) => {
+	addTagToProduct: async ({ locals, request, params }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
@@ -135,7 +148,9 @@ export const actions = {
 
 		return { success: true };
 	},
-	search: async ({ request, params }) => {
+	search: async ({ locals, request, params }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({

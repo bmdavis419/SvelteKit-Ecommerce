@@ -1,12 +1,13 @@
-import { Lucia } from 'lucia';
-import { DrizzleMySQLAdapter } from '@lucia-auth/adapter-drizzle';
-import { GitHub, Google } from 'arctic';
 import {
 	GITHUB_CLIENT_ID,
 	GITHUB_CLIENT_SECRET,
 	GOOGLE_CLIENT_ID,
 	GOOGLE_CLIENT_SECRET
 } from '$env/static/private';
+import { DrizzleMySQLAdapter } from '@lucia-auth/adapter-drizzle';
+import { redirect } from '@sveltejs/kit';
+import { GitHub, Google } from 'arctic';
+import { Lucia } from 'lucia';
 import { db } from './db';
 import { session, user } from './db/schema';
 
@@ -50,5 +51,15 @@ declare module 'lucia' {
 			email: string;
 			stripeCustomerId: string | null;
 		};
+	}
+}
+
+export function ensureAdmin(locals: App.Locals) {
+	if (!locals.user || !locals.session) {
+		redirect(303, '/auth/login');
+	}
+
+	if (!locals.user.isAdmin) {
+		redirect(303, '/');
 	}
 }

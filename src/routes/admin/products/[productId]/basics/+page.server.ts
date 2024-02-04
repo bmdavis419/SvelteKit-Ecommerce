@@ -1,3 +1,4 @@
+import { ensureAdmin } from '$lib/server/auth';
 import { db } from '$lib/server/db/index.js';
 import { product } from '$lib/server/db/schema.js';
 import { error } from '@sveltejs/kit';
@@ -5,7 +6,9 @@ import { eq } from 'drizzle-orm';
 import { zfd } from 'zod-form-data';
 
 export const actions = {
-	default: async ({ request, params }) => {
+	default: async ({ locals, request, params }) => {
+		ensureAdmin(locals);
+
 		const data = await request.formData();
 
 		const schema = zfd.formData({
