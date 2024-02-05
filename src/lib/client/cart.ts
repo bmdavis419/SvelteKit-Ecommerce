@@ -54,7 +54,11 @@ export const decrementQuantity = (idx: number) => {
 		const items = JSON.parse(cur) as TCartEntry[];
 		items[idx].quantity -= 1
 		localStorage.setItem('cart', JSON.stringify(items));
-		
+		let cartSize = 0;
+		items.forEach((item) => {
+			cartSize += item.quantity;
+		});
+		cartLengthStore.set(cartSize);
 	}
 }
 

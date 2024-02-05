@@ -1,11 +1,14 @@
-import { error, redirect } from '@sveltejs/kit';
-import { zfd } from 'zod-form-data';
-import { z } from 'zod';
+import { ensureAdmin } from '$lib/server/auth';
 import { db } from '$lib/server/db/index.js';
 import { product, productImage } from '$lib/server/db/schema.js';
+import { error, redirect } from '@sveltejs/kit';
+import { z } from 'zod';
+import { zfd } from 'zod-form-data';
 
 export const actions = {
 	default: async (event) => {
+		ensureAdmin(event.locals);
+
 		const data = await event.request.formData();
 
 		const imageSchema = z.object({

@@ -80,7 +80,7 @@
 	<SpecialOffer isSoldOut={data.isSoldOut} remaining={data.numberLeft} />
 	<NavBar user={data.user} pieces={data.pieces} />
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<span on:mouseenter={handleRemoveMenu} class="min-h-[100vh] bg-neutral-100">
+	<span on:mouseenter={handleRemoveMenu} class="sm:min-h-[100vh] bg-neutral-100">
 		<slot />
 	</span>
 
