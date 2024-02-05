@@ -33,7 +33,7 @@
 	}
 </script>
 
-<div class="w-full sm:min-h-[100vh] flex md:px-20 md:py-4 md:gap-x-16 bg-white flex-col gap-3 px-2">
+<div class="w-full flex md:px-20 md:py-4 md:gap-x-16 bg-white flex-col gap-3 px-2 grow">
 	<div class="md:text-4xl text-3xl font-semibold text-black">Review Shopping Cart</div>
 
 	<div
