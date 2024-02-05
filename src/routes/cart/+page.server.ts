@@ -12,16 +12,16 @@ export const actions = {
 		const customerId = user ? user.stripeCustomerId ?? undefined : undefined;
 
 		// see if shipping should be added...
-		const total =
-			body.reduce((prev, curr) => {
-				return {
-					...prev,
-					size: {
-						...prev.size,
-						price: prev.size.price + curr.size.price * curr.quantity
-					}
-				};
-			}).size.price / 100;
+		// const total =
+		// 	body.reduce((prev, curr) => {
+		// 		return {
+		// 			...prev,
+		// 			size: {
+		// 				...prev.size,
+		// 				price: prev.size.price + curr.size.price * curr.quantity
+		// 			}
+		// 		};
+		// 	}).size.price / 100;
 
 		const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [
 			...body.map((item) => {
@@ -32,20 +32,19 @@ export const actions = {
 			})
 		];
 
-		if (total < 100) {
-			// add shipping to total
-			line_items.push({
-				price_data: {
-					currency: 'USD',
-					product_data: {
-						name: 'US Shipping'
-					},
-					unit_amount: 1300
-				},
-				quantity: 1
-			});
-		}
-		console.log(line_items);
+		// if (total < 100) {
+		// 	// add shipping to total
+		// 	line_items.push({
+		// 		price_data: {
+		// 			currency: 'USD',
+		// 			product_data: {
+		// 				name: 'US Shipping'
+		// 			},
+		// 			unit_amount: 1300
+		// 		},
+		// 		quantity: 1
+		// 	});
+		// }
 
 		const session = await stripe.checkout.sessions.create({
 			shipping_address_collection: {
