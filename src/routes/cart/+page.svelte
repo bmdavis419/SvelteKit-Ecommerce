@@ -33,10 +33,25 @@
 	}
 </script>
 
-<div class="w-full  sm:min-h-[100vh] flex md:px-20 md:py-4 md:gap-x-16 bg-white flex-col gap-3 px-2">
-	<div class="md:text-4xl text-3xl font-semibold text-black ">Review Shopping Cart</div>
-		
-		<div class="flex flex-row items-center gap-1 text-neutral-500 md:text-2xl sm:text-xl sm:font-light">
+<div class="w-full sm:min-h-[100vh] flex md:px-20 md:py-4 md:gap-x-16 bg-white flex-col gap-3 px-2">
+	<div class="md:text-4xl text-3xl font-semibold text-black">Review Shopping Cart</div>
+
+	<div
+		class="flex flex-row items-center gap-1 text-neutral-500 md:text-2xl sm:text-xl sm:font-light"
+	>
+		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path
+				d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"
+				fill="green"
+			/>
+		</svg>
+		<div><span class="text-green-600">FREE shipping </span>on all launch collection orders</div>
+	</div>
+
+	{#if cart.find((el) => el.size.width >= 11) != undefined}
+		<div
+			class="flex flex-row gap-1 items-center text-neutral-500 md:text-2xl sm:text-xl sm:font-light"
+		>
 			<svg
 				width="24"
 				height="24"
@@ -49,48 +64,28 @@
 					fill="green"
 				/>
 			</svg>
-			<div><span class="text-green-600">FREE shipping </span>on all launch collection orders</div>
+			<div>
+				<span class="text-green-600">Your order qualifies</span> for an exclusive FREE print
+			</div>
 		</div>
+	{:else}
+		<div class="text-neutral-500 italic w-full text-center">
+			All orders which include a Medium print (11x14 or 11x11) will include an exclusive free print,
+			add one now!
+		</div>
+	{/if}
 
-		{#if cart.find((el) => el.size.width >= 11) != undefined}
-			<div class="flex flex-row gap-1 items-center text-neutral-500 md:text-2xl sm:text-xl sm:font-light">
-				<svg
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"
-						fill="green"
-					/>
-				</svg>
-				<div>
-					<span class="text-green-600">Your order qualifies</span> for an exclusive FREE print
-				</div>
-			</div>
-		{:else}
-			<div class="text-neutral-500 italic w-full text-center">
-				All orders which include a Medium print (11x14 or 11x11) will include an exclusive free
-				print, add one now!
-			</div>
-		{/if}
-		
-		<div class="flex flex-row justify-center items-center sm:justify-end sm:top-[77px] w-full sticky top-[62px] bg-white p-3">
-			<div class="text-xl font-light text-neutral-600 px-3">
-				Subtotal <span class="text-xl font-semibold text-black">
-					${cart.length > 0
-						? (
-								cart.reduce((sum, el) => sum + el.size.price * el.quantity, 0) / 100
-						  ).toFixed(2)
-						: '0.00'}
-				</span>
-			</div>
-			<form
-			method="post"
-			on:submit|preventDefault={handleSubmit}
-		>
+	<div
+		class="flex flex-row justify-center items-center sm:justify-end sm:top-[77px] w-full sticky top-[62px] bg-white p-3"
+	>
+		<div class="text-xl font-light text-neutral-600 px-3">
+			Subtotal <span class="text-xl font-semibold text-black">
+				${cart.length > 0
+					? (cart.reduce((sum, el) => sum + el.size.price * el.quantity, 0) / 100).toFixed(2)
+					: '0.00'}
+			</span>
+		</div>
+		<form method="post" on:submit|preventDefault={handleSubmit}>
 			{#if data.isSoldOut}
 				<Button type="submit" disabled={true}>Sold out</Button>
 			{:else if data.user}
@@ -107,9 +102,7 @@
 					disabled={cart.length == 0}
 					class="bg-[#0071e3] drop-shadow-sm hover:bg-neutral-900 text-lg p-6 font-light rounded-lg"
 				>
-					{cart.length > 0
-						? `Check Out (${cart.length} items)`
-						: 'Please pick an item first'}
+					{cart.length > 0 ? `Check Out (${cart.length} items)` : 'Please pick an item first'}
 				</Button>
 			{:else}
 				<Dialog.Root>
@@ -147,11 +140,10 @@
 				</Dialog.Root>
 			{/if}
 		</form>
-		</div>
-		<div class="bg-neutral-300 h-[1px] w-full"></div>
-		
+	</div>
+	<div class="bg-neutral-300 h-[1px] w-full" />
+
 	<div class=" md:rounded-lg">
-		
 		<div class="flex flex-col md:flex-row flex-wrap">
 			{#each cart as cartItem, i}
 				<div class="w-full md:mx-auto py-2 justify-center flex flex-row gap-2 md:gap-10 p-2">
@@ -161,8 +153,9 @@
 					<div class="flex flex-col gap-1 sm:gap-3 w-1/2">
 						<div class="flex flex-col sm:flex-row sm:items-center justify-between">
 							<div class="text-2xl md:text-4xl font-jura">{cartItem.productName}</div>
-							<div class="text-xl font-bold">${(cartItem.size.price * cartItem.quantity / 100).toFixed(2)}</div>
-
+							<div class="text-xl font-bold">
+								${((cartItem.size.price * cartItem.quantity) / 100).toFixed(2)}
+							</div>
 						</div>
 						<div class="text-xl text-neutral-600">
 							{cartItem.size.width}" x {cartItem.size.height}"
@@ -185,10 +178,13 @@
 								}}>+</Button
 							>
 						</div>
-						<button class="text-blue-600 text-left" on:click={() => {
-							removeFromCart(i);
-							cart = getCart();
-						}}>Remove</button>
+						<button
+							class="text-blue-600 text-left"
+							on:click={() => {
+								removeFromCart(i);
+								cart = getCart();
+							}}>Remove</button
+						>
 						<!-- <Button
 							variant="ghost"
 							class="p-0"
@@ -199,8 +195,7 @@
 						> -->
 					</div>
 				</div>
-				<div class="bg-neutral-300 h-[1px] w-2/3 mx-auto"></div>
-
+				<div class="bg-neutral-300 h-[1px] w-2/3 mx-auto" />
 			{/each}
 		</div>
 	</div>
