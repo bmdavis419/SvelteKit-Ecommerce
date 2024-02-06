@@ -1,5 +1,6 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
+import { track } from '@vercel/analytics';
 
 export type TCartEntry = {
 	productId: string;
@@ -18,6 +19,8 @@ export type TCartEntry = {
 // methods for handling the cart
 export const addToCart = (data: TCartEntry) => {
 	if (!browser) return;
+
+	track('AddedToCart', { productName: data.productName });
 
 	const cur = localStorage.getItem('cart');
 	if (cur) {

@@ -2,6 +2,7 @@ import type { TCartEntry } from '$lib/client/cart.js';
 import { stripe } from '$lib/server/stripe';
 import { error, redirect } from '@sveltejs/kit';
 import type Stripe from 'stripe';
+import { track } from '@vercel/analytics/server';
 
 export const actions = {
 	default: async (event) => {
@@ -75,6 +76,7 @@ export const actions = {
 		});
 
 		if (session.url) {
+			await track('StartedCheckout', { total });
 			redirect(307, session.url);
 		}
 
