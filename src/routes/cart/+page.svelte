@@ -1,25 +1,28 @@
 <script lang="ts">
-	import {
-		clearCart,
-		getCart,
-		removeFromCart,
-		addToCart,
-		decrementQuantity
-	} from '$lib/client/cart';
+	import { getCart, removeFromCart, addToCart, decrementQuantity } from '$lib/client/cart';
 	import { applyAction, deserialize } from '$app/forms';
 	import type { ActionResult } from '@sveltejs/kit';
-	import * as Table from '$lib/components/ui/table';
-	import { Trash, XSquare, ShoppingBasket } from 'lucide-svelte';
-	import * as Card from '$lib/components/ui/card';
-	import { Separator } from '$lib/components/ui/separator';
 	import { CldImage } from 'svelte-cloudinary';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { Button } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { goto } from '$app/navigation';
 
 	export let data;
 
 	$: cart = getCart();
+
+	$: total =
+		cart.length > 0
+			? cart.reduce((prev, curr) => {
+					return {
+						...prev,
+						size: {
+							...prev.size,
+							price: prev.size.price + curr.size.price * curr.quantity
+						}
+					};
+			  }).size.price / 100
+			: 0;
 
 	async function handleSubmit(event: { currentTarget: EventTarget & HTMLFormElement }) {
 		const response = await fetch(event.currentTarget.action, {
@@ -36,17 +39,31 @@
 <div class="w-full flex md:px-20 md:py-4 md:gap-x-16 bg-white flex-col gap-3 px-2 grow">
 	<div class="md:text-4xl text-3xl font-semibold text-black">Review Shopping Cart</div>
 
-	<div
-		class="flex flex-row items-center gap-1 text-neutral-500 md:text-2xl sm:text-xl sm:font-light"
-	>
-		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path
-				d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"
-				fill="green"
-			/>
-		</svg>
-		<div><span class="text-green-600">FREE shipping </span>on all launch collection orders</div>
-	</div>
+	{#if total < 125}
+		<div
+			class="flex flex-row items-center gap-1 text-neutral-500 md:text-2xl sm:text-xl sm:font-light"
+		>
+			<div>All orders over $125.00 will receive free shipping!</div>
+		</div>
+	{:else}
+		<div
+			class="flex flex-row items-center gap-1 text-neutral-500 md:text-2xl sm:text-xl sm:font-light"
+		>
+			<svg
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"
+					fill="green"
+				/>
+			</svg>
+			<div>Your order qualifies for <span class="text-green-600">FREE shipping!</span></div>
+		</div>
+	{/if}
 
 	{#if cart.find((el) => el.size.width >= 11) != undefined}
 		<div
@@ -69,7 +86,9 @@
 			</div>
 		</div>
 	{:else}
-		<div class="text-neutral-500 italic w-full text-center">
+		<div
+			class="flex flex-row items-center gap-1 text-neutral-500 md:text-2xl sm:text-xl sm:font-light"
+		>
 			All orders which include a Medium print (11x14 or 11x11) will include an exclusive free print,
 			add one now!
 		</div>
