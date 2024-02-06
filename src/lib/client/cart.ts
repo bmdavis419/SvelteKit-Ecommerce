@@ -23,7 +23,7 @@ export const addToCart = (data: TCartEntry) => {
 	if (cur) {
 		const items = JSON.parse(cur) as TCartEntry[];
 		// check if the item is already in the cart
-		const curIdx = items.findIndex((c) => c.productId === data.productId);
+		const curIdx = items.findIndex((c) => c.size.code === data.size.code);
 		if (curIdx >= 0) {
 			items[curIdx].quantity += 1;
 		} else {
@@ -48,11 +48,11 @@ export const addToCart = (data: TCartEntry) => {
 
 export const decrementQuantity = (idx: number) => {
 	if (!browser) return;
-	
+
 	const cur = localStorage.getItem('cart');
 	if (cur) {
 		const items = JSON.parse(cur) as TCartEntry[];
-		items[idx].quantity -= 1
+		items[idx].quantity -= 1;
 		localStorage.setItem('cart', JSON.stringify(items));
 		let cartSize = 0;
 		items.forEach((item) => {
@@ -60,7 +60,7 @@ export const decrementQuantity = (idx: number) => {
 		});
 		cartLengthStore.set(cartSize);
 	}
-}
+};
 
 export const clearCart = () => {
 	if (!browser) return;
