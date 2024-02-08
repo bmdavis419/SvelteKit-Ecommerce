@@ -203,11 +203,24 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="flex flex-col items-center gap-y-4 md:w-1/2 m-auto text-center px-3">
+		<h2 class="font-jura text-5xl py-6 text-neutral-800">Enhance Your Space</h2>
+		<p class="text-xl font-light text-neutral-700">
+			Sediment Art pieces are the perfect accent to your office, living room, or any other space.
+		</p>
+		<p class="text-xl font-bold text-neutral-700">
+			Our prints are thin, exceptionally high quality, edge to edge glass, and manufactured/shipped
+			in the US.
+		</p>
+		<p class="text-xl font-light text-neutral-700 pb-8">
+			Each piece is made to order. We are just starting out and hope to have you on this journey
+			with us.
+		</p>
+	</div>
 </div>
 
 <style>
-	.test {
-	}
 	.slides::-webkit-scrollbar-thumb {
 		background: black;
 		border-radius: 10px;

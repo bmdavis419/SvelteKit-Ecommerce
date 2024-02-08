@@ -69,6 +69,7 @@ In order to run this project you will need to setup **Cloudinary, Stripe, GitHub
 - [llmaboi](https://github.com/llmaboi)
 - [Peter Buschenreiter](https://github.com/Peter-512)
 - [Miguel Gargallo](https://github.com/miguelgargallo)
+- [Patrick](https://github.com/PatrickG)
 
 ## License
 
