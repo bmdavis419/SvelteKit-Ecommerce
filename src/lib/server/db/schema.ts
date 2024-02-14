@@ -59,6 +59,7 @@ export const product = mysqlTable('product', {
 	id: varchar('id', { length: 100 }).primaryKey(),
 	name: varchar('name', { length: 100 }).notNull(),
 	desc: text('desc').notNull(),
+	helloFromVideo: text('hello_from_video').default('hi').notNull(),
 	gradientColorStart: varchar('gradient_color_start', { length: 20 })
 		.notNull()
 		.default('from-red-600'),
