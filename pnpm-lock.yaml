@@ -29,6 +29,9 @@ dependencies:
   bits-ui:
     specifier: ^0.9.9
     version: 0.9.9(svelte@4.2.9)
+  cloudinary:
+    specifier: ^2.0.1
+    version: 2.0.1
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
@@ -3527,6 +3530,14 @@ packages:
     dependencies:
       cloudinary-core: 2.13.0(lodash@4.17.21)
       core-js: 3.35.1
+      lodash: 4.17.21
+      q: 1.5.1
+    dev: false
+
+  /cloudinary@2.0.1:
+    resolution: {integrity: sha512-+j5GswtCwjAmLhjs/K26id4Zvh53zL/YWzgyenxgbdXdXmdFM8d5H1FV1sJCkpS77AqylJKBzyztySdILM+F+A==}
+    engines: {node: '>=9'}
+    dependencies:
       lodash: 4.17.21
       q: 1.5.1
     dev: false

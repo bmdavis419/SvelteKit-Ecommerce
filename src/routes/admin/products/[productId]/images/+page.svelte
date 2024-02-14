@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CldImage, CldUploadButton } from 'svelte-cloudinary';
+	import { CldImage, CldUploadButton, CldUploadWidget } from 'svelte-cloudinary';
 	import { FolderKanban, Trash, Crown, ToggleRight } from 'lucide-svelte';
 	import { invalidateAll } from '$app/navigation';
 	import { deserialize } from '$app/forms';
@@ -110,6 +110,7 @@
 	<div class="w-full flex flex-row justify-end">
 		<CldUploadButton
 			uploadPreset={env.PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+			signatureEndpoint="/api/cloudinary"
 			class="px-4 py-2 rounded-lg border-gray-900 bg-white text-gray-900 border font-semibold hover:bg-gray-200"
 			onUpload={(res) => {
 				if (res.event === 'success') {
